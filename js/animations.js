@@ -140,3 +140,78 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 40); // 40ms interval
 });
+
+// ==========================================================================
+// Modern Custom Cursor & Magnetic Buttons
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Create Cursor Elements
+    const cursor = document.createElement('div');
+    cursor.classList.add('custom-cursor');
+    const follower = document.createElement('div');
+    follower.classList.add('custom-cursor-follower');
+    
+    document.body.appendChild(cursor);
+    document.body.appendChild(follower);
+
+    let mouseX = 0, mouseY = 0;
+    let followerX = 0, followerY = 0;
+
+    // 2. Track Mouse Movement
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        // Instant movement for small dot
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
+    });
+
+    // Smooth movement for follower ring
+    function animateFollower() {
+        // Linear interpolation for smooth trailing
+        followerX += (mouseX - followerX) * 0.15;
+        followerY += (mouseY - followerY) * 0.15;
+        
+        follower.style.left = followerX + 'px';
+        follower.style.top = followerY + 'px';
+        
+        requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+
+    // 3. Hover Effects on Links and Buttons
+    const interactables = document.querySelectorAll('a, button, input, .magnetic, .hover-lift, .nft-card');
+    interactables.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.classList.add('hover');
+            follower.classList.add('hover');
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.classList.remove('hover');
+            follower.classList.remove('hover');
+        });
+    });
+
+    // 4. Magnetic Buttons Logic
+    const magnetics = document.querySelectorAll('.magnetic');
+    magnetics.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            // Move button slightly towards cursor
+            btn.style.transform = "translate(" + (x * 0.3) + "px, " + (y * 0.3) + "px)";
+        });
+        btn.addEventListener('mouseleave', () => {
+            // Reset position
+            btn.style.transform = 'translate(0px, 0px)';
+            btn.style.transition = 'transform 0.3s ease-out';
+        });
+        btn.addEventListener('mouseenter', () => {
+            btn.style.transition = 'none';
+        });
+    });
+});
+

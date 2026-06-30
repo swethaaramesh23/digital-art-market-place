@@ -71,14 +71,14 @@
 
             <!-- Collection Tabs -->
             <div style="display: flex; gap: 20px; border-bottom: 1px solid var(--border-glass); margin-bottom: 30px;" class="gsap-reveal">
-                <a href="#" style="padding: 10px 20px; color: var(--text-primary); border-bottom: 2px solid var(--accent-neon-blue); font-weight: 600;">Items Grid</a>
-                <a href="#" style="padding: 10px 20px; color: var(--text-secondary);">Activity</a>
-                <a href="#" style="padding: 10px 20px; color: var(--text-secondary);">Analytics</a>
+                <a href="404.html" style="padding: 10px 20px; color: var(--text-primary); border-bottom: 2px solid var(--accent-neon-blue); font-weight: 600;">Items Grid</a>
+                <a href="404.html" style="padding: 10px 20px; color: var(--text-secondary);">Activity</a>
+                <a href="404.html" style="padding: 10px 20px; color: var(--text-secondary);">Analytics</a>
             </div>
 
             <!-- Collection Items Grid -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;" class="gsap-reveal">
-                <div style="display: flex; gap: 10px;">
+                <div style="display: flex; ">
                     <div class="input-group" style="margin-bottom: 0; width: 300px;">
                         <input type="text" placeholder="Search items in collection..." style="padding: 10px 10px 10px 40px; border-radius: var(--radius-md);">
                         <i class="fa-solid fa-search" style="position: absolute; left: 15px; top: 12px; color: var(--text-secondary);"></i>
@@ -148,7 +148,7 @@
                         <li><a href="marketplace.html">Explore</a></li>
                         <li><a href="artists.html">Artists</a></li>
                         <li><a href="collections.html">Collections</a></li>
-                        <li><a href="#">Activity</a></li>
+                        <li><a href="404.html">Activity</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -156,8 +156,8 @@
                     <ul class="footer-links">
                         <li><a href="user-dashboard.html">User Dashboard</a></li>
                         <li><a href="artist-dashboard.html">Artist Dashboard</a></li>
-                        <li><a href="#">Watchlist</a></li>
-                        <li><a href="#">Settings</a></li>
+                        <li><a href="404.html">Watchlist</a></li>
+                        <li><a href="404.html">Settings</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -167,7 +167,7 @@
                         <li><a href="contact.html">Contact Us</a></li>
                         <li><a href="blog.html">Blog</a>
                 <a href="contact.html">Contact</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="404.html">FAQ</a></li>
                     </ul>
                 </div>
             </div>
@@ -189,12 +189,24 @@
         <script>
         document.addEventListener('DOMContentLoaded', () => {
             if(typeof renderNFTCards === 'function') {
-                renderNFTCards('collection-items', mockData.nfts.length);
+                renderNFTCards('collection-items', 8);
+                // Make dynamically rendered cards visible since they bypassed the initial observer
+                setTimeout(() => {
+                    const cards = document.querySelectorAll('#collection-items .gsap-reveal');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => card.classList.add('visible'), index * 100);
+                    });
+                }, 300);
             }
         });
     </script>
 </body>
 </html>
+
+
+
+
+
 
 
 

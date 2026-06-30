@@ -101,24 +101,29 @@
                         <a href="signup.html" class="btn btn-glass magnetic">Create Account</a>
                     </div>
                 </div>
-                <div class="hero-image floating-animate hero-animate" style="position: relative;">
-                    <!-- Floating Art Card 1 -->
-                    <div class="glass-card" style="padding: 15px; position: relative; z-index: 2;">
-                        <img src="image-digi/real_art_3.webp" alt="Hero NFT" style="border-radius: var(--radius-lg);">
-                        <div style="display: flex; justify-content: space-between; margin-top: 20px; padding: 0 10px;">
-                            <div>
-                                <h4 style="font-size: 1.2rem;">Cosmic Perspective</h4>
-                                <p class="text-secondary">@Nova_Art</p>
-                            </div>
-                            <div style="text-align: right;">
-                                <p class="text-secondary" style="font-size: 0.8rem;">Current Bid</p>
-                                <h4 style="color: var(--accent-neon-blue); font-size: 1.2rem;">4.89 ETH</h4>
+                <div class="hero-slider hero-animate hero-3d-anim" style="position: relative; overflow: hidden; border-radius: var(--radius-lg); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+                    <div class="slider-track" id="heroSlider" style="display: flex; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); height: 500px;">
+                        <div class="slide" style="min-width: 100%; position: relative;">
+                            <img src="image-digi/real_art_1.webp" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(transparent, rgba(0,0,0,0.9));">
+                                <h3 style="font-size: 1.5rem; color: #fff;">Neon Genesis</h3>
+                                <p style="color: var(--accent-neon-blue);">2.5 ETH</p>
                             </div>
                         </div>
-                    </div>
-                    <!-- Floating Art Card 2 (Background) -->
-                    <div class="glass-card" style="padding: 10px; position: absolute; top: -30px; right: -30px; width: 70%; z-index: 1; opacity: 0.5; filter: blur(2px); transform: rotate(5deg);">
-                        <img src="image-digi/real_art_4.webp" style="border-radius: var(--radius-md);">
+                        <div class="slide" style="min-width: 100%; position: relative;">
+                            <img src="image-digi/real_art_2.webp" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(transparent, rgba(0,0,0,0.9));">
+                                <h3 style="font-size: 1.5rem; color: #fff;">Digital Dream</h3>
+                                <p style="color: var(--accent-pink);">1.8 ETH</p>
+                            </div>
+                        </div>
+                        <div class="slide" style="min-width: 100%; position: relative;">
+                            <img src="image-digi/real_art_3.webp" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(transparent, rgba(0,0,0,0.9));">
+                                <h3 style="font-size: 1.5rem; color: #fff;">Cyber Punk City</h3>
+                                <p style="color: var(--accent-purple);">4.2 ETH</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -205,7 +210,15 @@
                     <p class="text-secondary">Most loved and viewed NFTs right now</p>
                 </div>
             </div>
-            <div id="trending-nfts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px;">
+                        <style>
+            .marquee-wrapper { overflow: hidden; position: relative; width: 100%; padding: 20px 0; }
+            .marquee-track { display: flex; gap: 30px; width: max-content; animation: marquee-scroll 30s linear infinite; }
+            .marquee-track:hover { animation-play-state: paused; }
+            @keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 15px)); } }
+            .marquee-track .nft-card { width: 300px; flex-shrink: 0; }
+            </style>
+            <div class="marquee-wrapper">
+                <div id="trending-nfts" class="marquee-track">
                 <!-- JS Populated -->
             </div>
         </section>
@@ -333,7 +346,7 @@
             <div class="glass-card gsap-reveal" style="text-align: center; padding: 80px 40px; background: linear-gradient(135deg, rgba(18,18,37,0.8), rgba(138,43,226,0.1)); border: 1px solid var(--accent-purple); border-radius: var(--radius-xl);">
                 <h2 style="font-size: 3.5rem; margin-bottom: 20px;">Join the Stackly Revolution</h2>
                 <p class="text-secondary" style="max-width: 600px; margin: 0 auto 40px; font-size: 1.2rem;">Get exclusive updates, feature releases, and drops directly in your inbox. Be part of the future of digital art.</p>
-                <form class="input-group" style="max-width: 500px; margin: 0 auto 40px; display: flex; gap: 10px;">
+                <form class="input-group" style="max-width: 500px; margin: 0 auto 40px; display: flex; ">
                     <input type="email" placeholder="Your Email Address" required style="flex: 1;">
                     <button type="submit" class="btn btn-primary magnetic">Subscribe</button>
                 </form>
@@ -366,7 +379,7 @@
                         <li><a href="marketplace.html">Explore</a></li>
                         <li><a href="artists.html">Artists</a></li>
                         <li><a href="collections.html">Collections</a></li>
-                        <li><a href="#">Activity</a></li>
+                        <li><a href="404.html">Activity</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -374,8 +387,8 @@
                     <ul class="footer-links">
                         <li><a href="user-dashboard.html">User Dashboard</a></li>
                         <li><a href="artist-dashboard.html">Artist Dashboard</a></li>
-                        <li><a href="#">Watchlist</a></li>
-                        <li><a href="#">Settings</a></li>
+                        <li><a href="404.html">Watchlist</a></li>
+                        <li><a href="404.html">Settings</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -385,7 +398,7 @@
                         <li><a href="contact.html">Contact Us</a></li>
                         <li><a href="blog.html">Blog</a>
                 <a href="contact.html">Contact</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="404.html">FAQ</a></li>
                     </ul>
                 </div>
             </div>
@@ -408,6 +421,13 @@
         document.addEventListener('DOMContentLoaded', () => {
             if(typeof renderNFTCards === 'function') {
                 renderNFTCards('trending-nfts', 8);
+                // Make dynamically rendered cards visible since they bypassed the initial observer
+                setTimeout(() => {
+                    const cards = document.querySelectorAll('#trending-nfts .gsap-reveal');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => card.classList.add('visible'), index * 100);
+                    });
+                }, 300);
             }
             
             // Basic FAQ Accordion Toggle functionality if needed for icon swapping
@@ -428,6 +448,14 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
 
 
 

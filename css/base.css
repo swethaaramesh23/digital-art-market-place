@@ -125,3 +125,19 @@ h1, h2, h3, h4, h5, h6 {
     mix-blend-mode: screen;
     transition: width 0.3s, height 0.3s;
 }
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.text-center {
+    text-align: center;
+}
+.text-left {
+    text-align: left;
+}

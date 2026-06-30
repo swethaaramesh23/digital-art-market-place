@@ -48,9 +48,9 @@
                         <div>
                             <div class="badge" style="margin-bottom: 15px; display: inline-block;">#124 Trending on Stackly</div>
                             <h1 style="font-size: 3rem; line-height: 1.1; margin-bottom: 15px;">Neon Genesis #01</h1>
-                            <p class="text-secondary">Owned by <a href="#" style="color: var(--accent-neon-blue);">@0xPlasma</a></p>
+                            <p class="text-secondary">Owned by <a href="404.html" style="color: var(--accent-neon-blue);">@0xPlasma</a></p>
                         </div>
-                        <div style="display: flex; gap: 10px;">
+                        <div style="display: flex; ">
                             <button class="btn btn-icon btn-glass"><i class="fa-solid fa-heart"></i></button>
                             <button class="btn btn-icon btn-glass"><i class="fa-solid fa-share-nodes"></i></button>
                             <button class="btn btn-icon btn-glass"><i class="fa-solid fa-ellipsis"></i></button>
@@ -78,18 +78,29 @@
                         <p class="text-secondary" style="margin-bottom: 10px;">Sale ends in 12 hours, 45 minutes</p>
                         <p class="text-secondary" style="margin-bottom: 10px;">Current Bid</p>
                         <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: var(--accent-neon-blue);">2.4 ETH <span style="font-size: 1rem; color: var(--text-secondary); font-weight: normal;">($4,230.12)</span></h2>
-                        <div style="display: flex; gap: 15px;">
-                            <button class="btn btn-primary" style="flex: 1; padding: 15px;"><i class="fa-solid fa-wallet"></i> Place a bid</button>
-                            <button class="btn btn-glass" style="flex: 1; padding: 15px;">Make Offer</button>
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <div style="display: flex; gap: 15px;">
+                                <button class="btn btn-primary magnetic" id="addToCartBtn" style="flex: 1; padding: 15px; position: relative; overflow: hidden;">
+                                    <span class="btn-text"><i class="fa-solid fa-cart-shopping"></i> Add to Cart</span>
+                                    <span class="success-icon" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0; transition: all 0.3s;"><i class="fa-solid fa-check"></i> Added</span>
+                                </button>
+                                <button class="btn btn-glass magnetic" style="flex: 1; padding: 15px;"><i class="fa-solid fa-bolt"></i> Buy Now</button>
+                            </div>
+                            <div style="display: flex; justify-content: center; gap: 15px; margin-top: 10px;">
+                                <span class="text-secondary" style="font-size: 0.9rem; align-self: center;">Share this piece:</span>
+                                <button class="btn btn-icon btn-glass" style="width: 35px; height: 35px;"><i class="fa-brands fa-twitter"></i></button>
+                                <button class="btn btn-icon btn-glass" style="width: 35px; height: 35px;"><i class="fa-brands fa-instagram"></i></button>
+                                <button class="btn btn-icon btn-glass" style="width: 35px; height: 35px;"><i class="fa-solid fa-link"></i></button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="glass-card">
-                        <h3 style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-align-left text-secondary"></i> Description</h3>
+                        <h3 style="margin-bottom: 15px; display: flex; align-items: center; "><i class="fa-solid fa-align-left text-secondary"></i> Description</h3>
                         <p class="text-secondary" style="margin-bottom: 20px;">A unique 1/1 piece representing the digital renaissance of the 21st century. The neon highlights represent the ever-flowing data through the internet's veins. Exclusively minted on Stackly.</p>
                         
-                        <h3 style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-list-check text-secondary"></i> Properties</h3>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                        <h3 style="margin-bottom: 15px; display: flex; align-items: center; "><i class="fa-solid fa-list-check text-secondary"></i> Properties</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; ">
                             <div style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); padding: 10px; border-radius: var(--radius-sm); text-align: center;">
                                 <p style="color: var(--accent-neon-blue); font-size: 0.8rem; text-transform: uppercase;">Background</p>
                                 <p style="font-weight: bold;">Neon Grid</p>
@@ -106,13 +117,28 @@
                                 <p class="text-secondary" style="font-size: 0.7rem;">1% have this trait</p>
                             </div>
                         </div>
+
+                        <h3 style="margin-top: 30px; margin-bottom: 15px; display: flex; align-items: center; "><i class="fa-solid fa-star text-secondary"></i> Collector Reviews</h3>
+                        <div style="border-top: 1px solid var(--border-glass); padding-top: 15px;">
+                            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                                <img src="image-digi/real_art_15.webp" style="width: 40px; height: 40px; border-radius: 50%;">
+                                <div>
+                                    <div style="display: flex; gap: 5px; color: #FFD700; font-size: 0.8rem; margin-bottom: 5px;">
+                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <p style="font-size: 0.9rem; margin-bottom: 5px;">"Absolutely stunning details. The neon colors pop perfectly on a high-res display. CyberArtist never disappoints!"</p>
+                                    <p class="text-secondary" style="font-size: 0.8rem;">- @CryptoWhale</p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
             
             <!-- History / Bids Table -->
             <div class="glass-card gsap-reveal" style="margin-top: 50px; margin-bottom: 60px;">
-                <h3 style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-list-ul text-secondary"></i> Bidding History</h3>
+                <h3 style="margin-bottom: 20px; display: flex; align-items: center; "><i class="fa-solid fa-list-ul text-secondary"></i> Bidding History</h3>
                 <div style="overflow-x: auto;">
                     <table style="width: 100%; border-collapse: collapse; text-align: left;">
                         <thead style="border-bottom: 1px solid var(--border-glass);">
@@ -184,7 +210,7 @@
                         <li><a href="marketplace.html">Explore</a></li>
                         <li><a href="artists.html">Artists</a></li>
                         <li><a href="collections.html">Collections</a></li>
-                        <li><a href="#">Activity</a></li>
+                        <li><a href="404.html">Activity</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -192,8 +218,8 @@
                     <ul class="footer-links">
                         <li><a href="user-dashboard.html">User Dashboard</a></li>
                         <li><a href="artist-dashboard.html">Artist Dashboard</a></li>
-                        <li><a href="#">Watchlist</a></li>
-                        <li><a href="#">Settings</a></li>
+                        <li><a href="404.html">Watchlist</a></li>
+                        <li><a href="404.html">Settings</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -203,7 +229,7 @@
                         <li><a href="contact.html">Contact Us</a></li>
                         <li><a href="blog.html">Blog</a>
                 <a href="contact.html">Contact</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="404.html">FAQ</a></li>
                     </ul>
                 </div>
             </div>
@@ -229,6 +255,12 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
 
 
 

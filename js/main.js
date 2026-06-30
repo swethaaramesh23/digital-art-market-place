@@ -1,5 +1,34 @@
 // main.js
 document.addEventListener('DOMContentLoaded', () => {
+    // 0. Preloader Logic (Only show once per session)
+    const preloader = document.getElementById('premium-preloader');
+    if (preloader) {
+        if (sessionStorage.getItem('preloaderShown')) {
+            preloader.style.display = 'none';
+        } else {
+            // Simulate loading
+            let progress = 0;
+            const bar = document.getElementById('preloader-bar');
+            const perc = document.getElementById('preloader-percentage');
+            const interval = setInterval(() => {
+                progress += Math.floor(Math.random() * 15) + 5;
+                if(progress > 100) progress = 100;
+                if(bar) bar.style.width = progress + '%';
+                if(perc) perc.innerText = progress + '%';
+                if(progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        preloader.style.opacity = '0';
+                        setTimeout(() => {
+                            preloader.style.display = 'none';
+                            sessionStorage.setItem('preloaderShown', 'true');
+                        }, 500);
+                    }, 500);
+                }
+            }, 200);
+        }
+    }
+
     // 1. Custom Cursor
     const cursor = document.createElement('div');
     cursor.classList.add('cursor-glow');
@@ -29,53 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const rect = elem.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;
-            
-            elem.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            elem.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
         });
-
         elem.addEventListener('mouseleave', () => {
-            elem.style.transform = `translate(0px, 0px)`;
+            elem.style.transform = 'translate(0, 0)';
         });
     });
 
-    // 4. Reveal on scroll (Fallback if GSAP isn't used for simple elements)
-    const reveals = document.querySelectorAll('.reveal');
-    const revealOnScroll = () => {
-        const windowHeight = window.innerHeight;
-        const elementVisible = 100;
-
-        reveals.forEach(reveal => {
-            const elementTop = reveal.getBoundingClientRect().top;
-            if (elementTop < windowHeight - elementVisible) {
-                reveal.classList.add('active');
-            }
-        });
-    };
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll(); // Initial check
-    
-    // 5. Theme Switcher (Dark / Light)
-    const themeBtn = document.getElementById('theme-toggle');
-    if(themeBtn) {
-        themeBtn.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if(currentTheme === 'light') {
-                document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
-            }
-        });
-        
-        // Restore theme
-        const savedTheme = localStorage.getItem('theme');
-        if(savedTheme === 'light') {
-            document.documentElement.setAttribute('data-theme', 'light');
-        }
-    }
-
-    // 6. Mobile Menu Toggle
+    // 4. Mobile Menu Toggle
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     if(menuToggle && navLinks) {
@@ -83,242 +73,252 @@ document.addEventListener('DOMContentLoaded', () => {
             navLinks.classList.toggle('active');
         });
     }
+
+    // 5. Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    if(themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', target);
+            const icon = themeToggle.querySelector('i');
+            if(target === 'light') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+    }
+
+    // 6. Scroll Animations (Intersection Observer)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Optional: unobserve if we only want it to animate once
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+    document.querySelectorAll('.gsap-reveal, .reveal').forEach(el => {
+        observer.observe(el);
+    });
+
+    // 7. Ripple Effect on Buttons
+    document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            let ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            this.appendChild(ripple);
+            let x = e.clientX - e.target.offsetLeft;
+            let y = e.clientY - e.target.offsetTop;
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
 });
 
-// --- Auth & Session Management Mock ---
-window.checkAuth = function() {
-    const isLoggedIn = localStorage.getItem('stackly_auth');
-    if (!isLoggedIn) {
-        window.location.href = 'login.html';
+    // 8. Hero Slider Logic
+    const heroSlider = document.getElementById('heroSlider');
+    if (heroSlider) {
+        let currentSlide = 0;
+        const totalSlides = 3;
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            heroSlider.style.transform = "translateX(-" + (currentSlide * 100) + "%)";
+        }, 4000);
     }
-};
 
-window.loginUser = function(email, role) {
-    localStorage.setItem('stackly_auth', 'true');
-    localStorage.setItem('stackly_role', role || 'user');
-    localStorage.setItem('stackly_email', email);
-};
+    // 9. Dashboard Sidebar Toggle
+    const collapseBtn = document.getElementById('collapseSidebarBtn');
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
 
-window.logoutUser = function(e) {
-    if(e) e.preventDefault();
-    if (confirm("Are you sure you want to log out?")) {
-        localStorage.removeItem('stackly_auth');
-        localStorage.removeItem('stackly_role');
-        localStorage.removeItem('stackly_email');
-        window.location.href = 'index.html';
-    }
-};
-
-// --- Toast Notification System ---
-window.showToast = function(message, type = 'success') {
-    let container = document.getElementById('toast-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'toast-container';
-        document.body.appendChild(container);
-    }
-    
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.innerHTML = message;
-    
-    container.appendChild(toast);
-    
-    // Animate in
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
-    
-    // Remove after 3s
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            toast.remove();
-        }, 300);
-    }, 3000);
-};
-
-// --- Global Interactivity (Make every button work) ---
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Handle all empty links (href="#")
-    const emptyLinks = document.querySelectorAll('a[href="#"]');
-    emptyLinks.forEach(link => {
-        // Skip links that already have onclick handlers (like logout)
-        if (!link.hasAttribute('onclick')) {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const text = link.innerText.trim();
-                if (text) {
-                    showToast(`${text} - Coming Soon!`, 'success');
-                } else {
-                    showToast('Action processed!', 'success');
-                }
-            });
-        }
-    });
-
-    // 2. Handle generic buttons without specific actions
-    const allButtons = document.querySelectorAll('button');
-    allButtons.forEach(btn => {
-        // Skip buttons that submit forms, toggle menus, or have explicit onclicks
-        if (btn.type !== 'submit' && !btn.hasAttribute('onclick') && !btn.id && !btn.classList.contains('menu-toggle') && !btn.classList.contains('page-btn') && !btn.classList.contains('close-modal')) {
-            btn.addEventListener('click', (e) => {
-                const text = btn.innerText.trim();
+    // Desktop Collapse
+    if (collapseBtn && sidebar) {
+        collapseBtn.addEventListener('click', () => {
+            if (window.innerWidth > 1024) {
+                sidebar.classList.toggle('collapsed');
+                if (mainContent) mainContent.classList.toggle('expanded');
                 
-                // Specific Button Logics
-                if (text.toLowerCase() === 'follow') {
-                    btn.innerText = 'Following';
-                    btn.classList.remove('btn-glass');
-                    btn.classList.add('btn-primary');
-                    showToast('Successfully followed!', 'success');
-                } else if (text.toLowerCase() === 'following') {
-                    btn.innerText = 'Follow';
-                    btn.classList.remove('btn-primary');
-                    btn.classList.add('btn-glass');
-                    showToast('Unfollowed.', 'success');
-                } else if (text.toLowerCase().includes('load more')) {
-                    btn.innerHTML = '<i class="fa-solid fa-check"></i> All items loaded';
-                    btn.classList.remove('btn-glass');
-                    btn.classList.add('btn-primary');
-                    showToast('All items have been loaded.', 'success');
-                } else if (text.toLowerCase().includes('bid') || text.toLowerCase().includes('offer')) {
-                    showToast('Transaction initiated. Awaiting wallet confirmation.', 'success');
-                } else if (text) {
-                    // Fallback
-                    showToast('Action processed!', 'success');
+                const icon = collapseBtn.querySelector('i');
+                if (sidebar.classList.contains('collapsed')) {
+                    icon.classList.remove('fa-angles-left');
+                    icon.classList.add('fa-angles-right');
                 } else {
-                    // Icon only buttons (like hearts, shares)
-                    const icon = btn.querySelector('i');
-                    if (icon) {
-                        if (icon.classList.contains('fa-heart')) {
-                            icon.classList.toggle('fa-solid');
-                            icon.classList.toggle('fa-regular');
-                            icon.style.color = icon.classList.contains('fa-solid') ? 'var(--accent-pink)' : '';
-                            showToast(icon.classList.contains('fa-solid') ? 'Added to favorites!' : 'Removed from favorites.', 'success');
-                        } else if (icon.classList.contains('fa-share-nodes')) {
-                            showToast('Link copied to clipboard!', 'success');
-                        } else {
-                            showToast('Action processed!', 'success');
-                        }
-                    }
+                    icon.classList.remove('fa-angles-right');
+                    icon.classList.add('fa-angles-left');
                 }
-            });
-        }
-    });
-
-    // 3. Handle Pagination Buttons
-    const pageBtns = document.querySelectorAll('.page-btn');
-    pageBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
-            if (!btn.innerHTML.includes('chevron')) {
-                btn.classList.add('active');
-            }
-            showToast('Loading page...', 'success');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    });
-
-    // 4. Handle Global Forms (Newsletter Subscriptions)
-    document.addEventListener('submit', (e) => {
-        // If it's not the explicit auth forms (loginForm/signupForm)
-        if (e.target.id !== 'loginForm' && e.target.id !== 'signupForm') {
-            e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
-            if (btn && btn.innerText.toLowerCase().includes('subscribe')) {
-                showToast('Successfully subscribed to the newsletter!', 'success');
-                e.target.reset();
             } else {
-                showToast('Form submitted successfully!', 'success');
-                e.target.reset();
+                // Mobile close
+                sidebar.classList.remove('active');
+                if(sidebarOverlay) sidebarOverlay.classList.remove('active');
             }
-        }
-    });
-
-    // 5. Handle Dashboard Sidebar
-    const dashboardSidebar = document.querySelector('.sidebar');
-    const dashboardOverlay = document.querySelector('.sidebar-overlay');
-    const dashboardMenuBtn = document.querySelector('.mobile-menu-btn');
-    const collapseSidebarBtn = document.getElementById('collapseSidebarBtn');
-
-    if (dashboardSidebar) {
-        const toggleSidebar = () => {
-            const isActive = dashboardSidebar.classList.contains('active');
-            
-            if (isActive) {
-                // Close it
-                dashboardSidebar.classList.remove('active');
-                if (dashboardOverlay) dashboardOverlay.classList.remove('active');
-                if (dashboardMenuBtn) dashboardMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-                document.body.style.overflow = '';
-            } else {
-                // Open it
-                dashboardSidebar.classList.add('active');
-                if (dashboardOverlay) dashboardOverlay.classList.add('active');
-                if (dashboardMenuBtn) dashboardMenuBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
-                if (window.innerWidth <= 1024) document.body.style.overflow = 'hidden';
-            }
-        };
-
-        if (dashboardMenuBtn) {
-            dashboardMenuBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleSidebar();
-            });
-        }
-
-        if (dashboardOverlay) {
-            dashboardOverlay.addEventListener('click', toggleSidebar);
-        }
-
-        // Close sidebar when clicking any navigation link on mobile
-        const sidebarLinks = dashboardSidebar.querySelectorAll('.sidebar-nav a, .btn');
-        sidebarLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 1024 && dashboardSidebar.classList.contains('active')) {
-                    toggleSidebar();
-                }
-            });
         });
-
-        // Desktop Collapse Feature
-        if (collapseSidebarBtn) {
-            collapseSidebarBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                dashboardSidebar.classList.toggle('collapsed');
-            });
-        }
     }
-    // 6. Handle Dashboard Tab Switching
-    const dashboardNavLinks = document.querySelectorAll('.sidebar-nav a[data-target]');
+
+    // Mobile Open
+    if (mobileMenuBtn && sidebar) {
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.add('active');
+            if(sidebarOverlay) sidebarOverlay.classList.add('active');
+        });
+    }
+
+    // Overlay click close
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+        });
+    }
+
+    // 10. Dashboard Tab Switching
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a[data-target]');
     const dashboardViews = document.querySelectorAll('.dashboard-view');
 
-    if (dashboardNavLinks.length > 0) {
-        dashboardNavLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                // 1. Remove active from all links
-                dashboardNavLinks.forEach(nav => nav.classList.remove('active'));
-                
-                // 2. Add active to clicked link
-                link.classList.add('active');
-                
-                // 3. Hide all views
-                dashboardViews.forEach(view => {
-                    view.classList.remove('active');
-                });
-                
-                // 4. Show target view
-                const targetId = link.getAttribute('data-target');
-                const targetView = document.getElementById(targetId);
-                if (targetView) {
-                    targetView.classList.add('active');
-                }
-            });
-        });
-    }
-});
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // Remove active from all links
+            sidebarLinks.forEach(l => l.classList.remove('active'));
+            // Add active to clicked link
+            e.currentTarget.classList.add('active');
 
+            // Hide all views
+            dashboardViews.forEach(view => {
+                view.classList.remove('active');
+                view.style.display = 'none';
+            });
+
+            // Show target view
+            const targetId = e.currentTarget.getAttribute('data-target');
+            const targetView = document.getElementById(targetId);
+            if (targetView) {
+                targetView.style.display = 'block';
+                // Small timeout to allow display:block to apply before adding class for opacity transition
+                setTimeout(() => {
+                    targetView.classList.add('active');
+                }, 10);
+            }
+
+            // Close mobile sidebar on click
+            if (window.innerWidth <= 1024 && sidebar) {
+                sidebar.classList.remove('active');
+                if(sidebarOverlay) sidebarOverlay.classList.remove('active');
+            }
+        });
+    });
+
+    // 11. Animated Statistics (Number Counter)
+    const animateNumbers = () => {
+        const numbers = document.querySelectorAll('.stat-card h3');
+        numbers.forEach(num => {
+            const targetText = num.innerText;
+            const targetVal = parseFloat(targetText.replace(/[^\d.]/g, ''));
+            const suffix = targetText.replace(/[\d.]/g, '').trim();
+            if(!isNaN(targetVal)) {
+                let start = 0;
+                const duration = 2000;
+                const increment = targetVal / (duration / 16);
+                
+                const updateNumber = () => {
+                    start += increment;
+                    if(start < targetVal) {
+                        num.innerText = start.toFixed(targetText.includes('.') ? 1 : 0) + (suffix ? ' ' + suffix : '');
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        num.innerText = targetText;
+                    }
+                };
+                updateNumber();
+            }
+        });
+    };
+    
+    // Run once on load
+    setTimeout(animateNumbers, 500);
+
+
+    // 12. Global Scroll Progress Indicator
+    const progressBar = document.createElement('div');
+    progressBar.style.position = 'fixed';
+    progressBar.style.top = '0';
+    progressBar.style.left = '0';
+    progressBar.style.height = '3px';
+    progressBar.style.background = 'linear-gradient(90deg, var(--accent-neon-blue), var(--accent-purple))';
+    progressBar.style.zIndex = '999999';
+    progressBar.style.transition = 'width 0.1s ease';
+    document.body.appendChild(progressBar);
+
+    // 13. Back to Top Button
+    const backToTopBtn = document.createElement('button');
+    backToTopBtn.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+    backToTopBtn.className = 'btn btn-primary magnetic';
+    backToTopBtn.style.position = 'fixed';
+    backToTopBtn.style.bottom = '30px';
+    backToTopBtn.style.right = '30px';
+    backToTopBtn.style.width = '50px';
+    backToTopBtn.style.height = '50px';
+    backToTopBtn.style.borderRadius = '50%';
+    backToTopBtn.style.padding = '0';
+    backToTopBtn.style.zIndex = '999';
+    backToTopBtn.style.opacity = '0';
+    backToTopBtn.style.transform = 'translateY(20px)';
+    backToTopBtn.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    backToTopBtn.style.pointerEvents = 'none';
+    document.body.appendChild(backToTopBtn);
+
+    window.addEventListener('scroll', () => {
+        // Progress Bar
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        progressBar.style.width = scrolled + '%';
+
+        // Back to Top Visibility
+        if (winScroll > 500) {
+            backToTopBtn.style.opacity = '1';
+            backToTopBtn.style.transform = 'translateY(0)';
+            backToTopBtn.style.pointerEvents = 'auto';
+        } else {
+            backToTopBtn.style.opacity = '0';
+            backToTopBtn.style.transform = 'translateY(20px)';
+            backToTopBtn.style.pointerEvents = 'none';
+        }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+// 14. Global Logout Function
+window.logoutUser = function(e) {
+    if(e) e.preventDefault();
+    localStorage.removeItem('stackly_auth');
+    window.location.href = 'login.html';
+};
+
+    // 15. Smooth Page Exit Transition
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const target = this.getAttribute('href');
+            // Only animate for internal links
+            if (target && !target.startsWith('#') && !target.startsWith('http') && target !== '404.html') {
+                e.preventDefault();
+                document.body.style.transition = 'opacity 0.4s ease-out';
+                document.body.style.opacity = '0';
+                setTimeout(() => {
+                    window.location.href = target;
+                }, 400);
+            }
+        });
+    });

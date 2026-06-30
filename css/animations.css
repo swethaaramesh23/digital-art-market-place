@@ -90,8 +90,16 @@
     will-change: transform, opacity, filter;
 }
 
-.gsap-reveal {
+.gsap-reveal, .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     will-change: transform, opacity;
+}
+
+.gsap-reveal.visible, .reveal.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
 }
 
 .hardware-accelerated {
@@ -172,3 +180,111 @@ details > summary::-webkit-details-marker {
 .loading-bar-track { width: 100%; height: 4px; background: rgba(255, 255, 255, 0.1); border-radius: 4px; position: relative; overflow: hidden; margin-bottom: 15px; }
 .loading-bar-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-neon-blue), var(--accent-purple)); box-shadow: 0 0 10px var(--accent-neon-blue); transition: width 0.1s linear; }
 .loading-percentage { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: bold; color: var(--accent-neon-blue); text-shadow: 0 0 10px rgba(0,240,255,0.5); }
+
+/* Button Ripple Effect */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+    background-color: rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+    width: 100px;
+    height: 100px;
+    margin-top: -50px;
+    margin-left: -50px;
+}
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Visibility classes for IntersectionObserver */
+.visible {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+/* Card Hover Lift */
+.hover-lift {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 240, 255, 0.15);
+}
+
+/* Subtle pulse for icons */
+.icon-pulse:hover i {
+    animation: glowPulse 1.5s infinite;
+}
+
+
+
+/* 3D Floating Hero Animation */
+.hero-3d-anim {
+    animation: float3D 6s ease-in-out infinite;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+@keyframes float3D {
+    0% { transform: translateY(0) rotateX(2deg) rotateY(-2deg); }
+    50% { transform: translateY(-15px) rotateX(-2deg) rotateY(2deg); box-shadow: 0 30px 60px rgba(0, 240, 255, 0.2); }
+    100% { transform: translateY(0) rotateX(2deg) rotateY(-2deg); }
+}
+
+/* ==========================================================================
+   Modern Custom Cursor
+   ========================================================================== */
+body {
+    cursor: none; /* Hide default cursor */
+}
+
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background: var(--accent-neon-blue);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 999999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background 0.2s;
+}
+
+.custom-cursor-follower {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 240, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 999998;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, border-color 0.2s, background-color 0.2s, transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Hover state for links and buttons */
+.custom-cursor.hover {
+    width: 0;
+    height: 0;
+    background: transparent;
+}
+
+.custom-cursor-follower.hover {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(0, 240, 255, 0.1);
+    border-color: var(--accent-neon-blue);
+    backdrop-filter: blur(2px);
+}

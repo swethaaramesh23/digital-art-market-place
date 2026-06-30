@@ -16,9 +16,9 @@
         .filter-group { margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid var(--border-glass); }
         .filter-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         .filter-title { font-weight: 600; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; }
-        .checkbox-label { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; color: var(--text-secondary); }
+        .checkbox-label { display: flex; align-items: center;  margin-bottom: 10px; cursor: pointer; color: var(--text-secondary); }
         .checkbox-label input[type="checkbox"] { accent-color: var(--accent-neon-blue); width: 16px; height: 16px; }
-        .price-inputs { display: flex; gap: 10px; align-items: center; }
+        .price-inputs { display: flex;  align-items: center; }
         .price-inputs input { width: 100%; padding: 8px; border-radius: var(--radius-md); background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); color: #fff; }
         
         .market-layout { display: flex; gap: 40px; }
@@ -27,7 +27,7 @@
         
         /* Interactive Cards */
         .nft-card { position: relative; overflow: hidden; }
-        .nft-card-actions { position: absolute; top: 15px; right: 15px; display: flex; flex-direction: column; gap: 10px; opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateX(20px); }
+        .nft-card-actions { position: absolute; top: 15px; right: 15px; display: flex; flex-direction: column;  opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateX(20px); }
         .nft-card:hover .nft-card-actions { opacity: 1; transform: translateX(0); }
         .action-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); border: 1px solid var(--border-glass); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
         .action-btn:hover { background: var(--accent-pink); border-color: var(--accent-pink); }
@@ -45,7 +45,7 @@
         .preview-details { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
 
         /* Pagination & Infinite Scroll */
-        .pagination { display: flex; justify-content: center; gap: 10px; margin-top: 50px; align-items: center; }
+        .pagination { display: flex; justify-content: center;  margin-top: 50px; align-items: center; }
         .page-btn { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--bg-glass); border: 1px solid var(--border-glass); color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .page-btn.active, .page-btn:hover { background: var(--accent-neon-blue); color: #fff; border-color: var(--accent-neon-blue); }
             </style>
@@ -195,7 +195,7 @@
             <div class="preview-details">
                 <div class="badge" style="background: rgba(138,43,226,0.1); color: var(--accent-purple); border-color: var(--accent-purple); margin-bottom: 15px; display: inline-block; align-self: flex-start;">Verified Stackly Original</div>
                 <h2 id="pTitle" style="font-size: 2.5rem; margin-bottom: 10px;">NFT Title</h2>
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 30px;">
+                <div style="display: flex; align-items: center;  margin-bottom: 30px;">
                     <img src="image-digi/real_art_7.webp" style="width: 40px; height: 40px; border-radius: 50%;">
                     <div>
                         <p class="text-secondary" style="font-size: 0.8rem;">Creator</p>
@@ -239,7 +239,7 @@
                         <li><a href="marketplace.html">Explore</a></li>
                         <li><a href="artists.html">Artists</a></li>
                         <li><a href="collections.html">Collections</a></li>
-                        <li><a href="#">Activity</a></li>
+                        <li><a href="404.html">Activity</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -247,8 +247,8 @@
                     <ul class="footer-links">
                         <li><a href="user-dashboard.html">User Dashboard</a></li>
                         <li><a href="artist-dashboard.html">Artist Dashboard</a></li>
-                        <li><a href="#">Watchlist</a></li>
-                        <li><a href="#">Settings</a></li>
+                        <li><a href="404.html">Watchlist</a></li>
+                        <li><a href="404.html">Settings</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -258,7 +258,7 @@
                         <li><a href="contact.html">Contact Us</a></li>
                         <li><a href="blog.html">Blog</a>
                 <a href="contact.html">Contact</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="404.html">FAQ</a></li>
                     </ul>
                 </div>
             </div>
@@ -313,11 +313,9 @@
                 let currentData = [...mockData.nfts];
 
                 const renderPage = (pageNum) => {
-                    // pageNum 1 -> items 0 to 11
-                    // pageNum 2 -> items 12 to 23
-                    // pageNum 3 -> items 24 to 35
-                    const start = (pageNum - 1) * 12;
-                    const items = currentData.slice(start, start + 12);
+                    const itemsPerPage = 4;
+                    const start = (pageNum - 1) * itemsPerPage;
+                    const items = currentData.slice(start, start + itemsPerPage);
                     
                     let html = '';
                     if (items.length === 0) {
@@ -360,7 +358,7 @@
                         btn.classList.add('active');
                         const pageNum = parseInt(btn.innerText) || 1;
                         
-                        document.querySelector('.marketplace-header').scrollIntoView({ behavior: 'smooth' });
+                        document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
                         setTimeout(() => renderPage(pageNum), 300);
                     });
                 });
@@ -386,8 +384,41 @@
             }
         });
     </script>
+    <!-- Quick View Modal -->
+    <div id="quickViewModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 9999; justify-content: center; align-items: center; padding: 20px; opacity: 0; transition: opacity 0.3s;">
+        <div class="glass-card" style="width: 100%; max-width: 900px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; position: relative; max-height: 90vh; overflow-y: auto;">
+            <button id="closeModal" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+            <div style="border-radius: var(--radius-lg); overflow: hidden;">
+                <img id="modalImg" src="" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="padding: 20px 0;">
+                <div class="badge" style="margin-bottom: 15px;">Original Artwork</div>
+                <h2 id="modalTitle" style="font-size: 2rem; margin-bottom: 10px;">Artwork Title</h2>
+                <p class="text-secondary" style="margin-bottom: 20px;">Created by <span id="modalArtist" style="color: var(--text-primary); font-weight: bold;">Artist</span></p>
+                
+                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: var(--radius-md); margin-bottom: 25px;">
+                    <p class="text-secondary" style="font-size: 0.9rem;">Current Price</p>
+                    <p id="modalPrice" style="font-size: 1.8rem; font-weight: bold; color: var(--accent-neon-blue);">0 ETH</p>
+                </div>
+                
+                <p class="text-secondary" style="margin-bottom: 30px;">A breathtaking digital creation from our verified creators collection. Explore the intricate details and vibrant colors that make this piece truly unique.</p>
+                
+                <div style="display: flex; gap: 15px;">
+                    <a href="artwork-details.html" class="btn btn-primary magnetic" style="flex: 1; text-align: center;">View Full Details</a>
+                    <button class="btn btn-glass" style="width: 50px;"><i class="fa-regular fa-heart"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+
+
+
+
+
+
+
 
 
 
