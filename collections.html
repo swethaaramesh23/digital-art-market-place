@@ -32,13 +32,14 @@
                 <button class="btn btn-icon btn-glass" id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
                 <a href="login.html" class="btn btn-glass magnetic">Login</a>
                 <a href="signup.html" class="btn btn-primary magnetic">Sign Up</a>
+                <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
             </div>
         </div>
     </header>
 
     <main style="min-height: 100vh;">
         <!-- Collection Banner -->
-        <section style="height: 400px; position: relative; background: url("image-digi/real_art_6.webp") center/cover;"></section>
+        <section style="height: 400px; position: relative; background: url('image-digi/real_art_6.webp') center/cover;"></section>
         
         <div class="container" style="position: relative; margin-top: -100px;">
             <div class="glass-card gsap-reveal" style="text-align: center; padding: 40px; margin-bottom: 50px;">
@@ -81,7 +82,7 @@
             <!-- Collection Items Grid -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;" class="gsap-reveal">
                 <div style="display: flex; ">
-                    <div class="input-group" style="margin-bottom: 0; width: 300px;">
+                    <div class="input-group" style="margin-bottom: 0; width: 100%; max-width: 300px;">
                         <input type="text" placeholder="Search items in collection..." style="padding: 10px 10px 10px 40px; border-radius: var(--radius-md);">
                         <i class="fa-solid fa-search" style="position: absolute; left: 15px; top: 12px; color: var(--text-secondary);"></i>
                     </div>
@@ -94,7 +95,7 @@
                 </select>
             </div>
             
-            <div id="collection-items" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; margin-bottom: 50px;">
+            <div id="collection-items" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, ), 1fr)); gap: 30px; margin-bottom: 50px;">
                 <!-- JS Populated -->
             </div>
             
@@ -103,7 +104,7 @@
             <!-- Trending Collections -->
             <div class="gsap-reveal" style="margin-bottom: 100px; border-top: 1px solid var(--border-glass); padding-top: 80px;">
                 <h2 style="font-size: 2.5rem; margin-bottom: 40px; text-align: center;">Other Trending Collections</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, ), 1fr)); gap: 30px;">
                     <div class="glass-card" style="padding: 20px; display: flex; align-items: center; gap: 20px; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                         <img src="image-digi/real_art_1.webp" style="width: 80px; height: 80px; border-radius: var(--radius-md);">
                         <div>

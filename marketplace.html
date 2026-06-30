@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .filters-sidebar { width: 300px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 25px; height: fit-content; position: sticky; top: 100px; }
+        .filters-sidebar { width: 100%; max-width: 300px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 25px; height: fit-content; position: sticky; top: 100px; }
         .filter-group { margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid var(--border-glass); }
         .filter-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         .filter-title { font-weight: 600; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; }
@@ -74,6 +74,7 @@
                 <button class="btn btn-icon btn-glass" id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
                 <a href="login.html" class="btn btn-glass magnetic">Login</a>
                 <a href="signup.html" class="btn btn-primary magnetic">Sign Up</a>
+                <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
             </div>
         </div>
     </header>
@@ -85,8 +86,8 @@
                 <p class="text-secondary" style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Discover the most outstanding NFTs across all categories, curated just for you.</p>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;" class="gsap-reveal">
-                <div class="input-group" style="width: 400px; margin-bottom: 0;">
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center; margin-bottom: 40px;" class="gsap-reveal">
+                <div class="input-group" style="width: 100%; max-width: 400px; margin-bottom: 0;">
                     <input type="text" placeholder="Search items, collections, and accounts..." style="border-radius: var(--radius-pill); padding-left: 45px;">
                     <i class="fa-solid fa-search" style="position: absolute; left: 20px; top: 16px; color: var(--text-secondary);"></i>
                 </div>
@@ -168,7 +169,7 @@
                         <button class="btn btn-glass" style="padding: 6px 15px; border-radius: var(--radius-pill); font-size: 0.9rem;"><i class="fa-solid fa-gamepad text-secondary"></i> Gaming</button>
                     </div>
 
-                    <div id="marketplace-nfts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px;" class="gsap-reveal">
+                    <div id="marketplace-nfts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, ), 1fr)); gap: 30px;" class="gsap-reveal">
                         <!-- JS Populated, but I will write custom JS below to inject actions -->
                     </div>
 

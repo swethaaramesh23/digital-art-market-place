@@ -55,6 +55,7 @@
                 <button class="btn btn-icon btn-glass" id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
                 <a href="login.html" class="btn btn-glass magnetic">Login</a>
                 <a href="signup.html" class="btn btn-primary magnetic">Sign Up</a>
+                <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
             </div>
         </div>
     </header>
@@ -73,7 +74,7 @@
             <!-- Trending Artists Carousel/Grid (New) -->
             <div class="gsap-reveal" style="margin-bottom: 60px;">
                 <h2 style="font-size: 2rem; margin-bottom: 20px;"><i class="fa-solid fa-fire text-secondary" style="color: var(--accent-pink);"></i> Trending This Week</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, ), 1fr)); gap: 20px;">
                     <div class="glass-card" style="text-align: center; padding: 20px;">
                         <img src="image-digi/real_avatar_9.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-neon-blue);">
                         <h4 style="font-size: 1.1rem;">Alex Wright <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
@@ -108,7 +109,7 @@
                 <button class="btn btn-glass" style="border-radius: var(--radius-pill); padding: 8px 20px;">New Additions</button>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px;" id="artists-grid">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, ), 1fr)); gap: 30px;" id="artists-grid">
                 <!-- JS populated -->
             </div>
             

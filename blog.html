@@ -58,6 +58,7 @@
                 <button class="btn btn-icon btn-glass" id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
                 <a href="login.html" class="btn btn-glass magnetic">Login</a>
                 <a href="signup.html" class="btn btn-primary magnetic">Sign Up</a>
+                <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
             </div>
         </div>
     </header>
@@ -66,7 +67,7 @@
         <div class="container">
             <!-- Featured Post Banner -->
             <div class="glass-card gsap-reveal" style="padding: 0; overflow: hidden; display: flex; flex-wrap: wrap; margin-bottom: 60px;">
-                <div style="flex: 1; min-width: 300px;">
+                <div style="flex: 1; min-width: 100%; max-width: 300px;">
                     <img src="image-digi/real_avatar_10.webp" style="width: 100%; height: 100%; object-fit: cover; min-height: 300px;">
                 </div>
                 <div style="flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center;">
@@ -77,11 +78,11 @@
                 </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;" class="gsap-reveal">
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;" class="gsap-reveal">
                 <div>
                     <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Stackly Journal</h1>
                 </div>
-                <div class="input-group" style="margin-bottom: 0; width: 300px;">
+                <div class="input-group" style="margin-bottom: 0; width: 100%; max-width: 300px;">
                     <input type="text" placeholder="Search articles..." style="border-radius: var(--radius-pill); padding-left: 40px;">
                     <i class="fa-solid fa-search" style="position: absolute; left: 15px; top: 12px; color: var(--text-secondary);"></i>
                 </div>
@@ -98,7 +99,7 @@
 
             <div class="blog-layout">
                 <!-- Blog Grid -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px;" class="gsap-reveal">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, ), 1fr)); gap: 30px;" class="gsap-reveal">
                     
                     <article class="glass-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
                         <img src="image-digi/real_art_3.webp" alt="Blog Post" style="width: 100%; height: 200px; object-fit: cover;">

@@ -141,7 +141,7 @@
 
         <!-- 7. Marketplace Statistics -->
         <section class="container" style="margin-bottom: 120px;">
-            <div class="glass-card gsap-reveal" style="display: flex; justify-content: space-around; padding: 60px 40px; text-align: center; border: 1px solid var(--accent-purple); background: linear-gradient(135deg, rgba(18,18,37,0.8), rgba(138,43,226,0.05));">
+            <div class="glass-card gsap-reveal" style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-around; padding: 60px 40px; text-align: center; border: 1px solid var(--accent-purple); background: linear-gradient(135deg, rgba(18,18,37,0.8), rgba(138,43,226,0.05));">
                 <div>
                     <h3 style="font-size: 3rem; color: var(--accent-neon-blue); margin-bottom: 10px;">$240M+</h3>
                     <p class="text-secondary" style="font-size: 1.2rem;">Trading Volume</p>
@@ -159,14 +159,14 @@
 
         <!-- 8. Live Auctions -->
         <section class="container" style="margin-bottom: 120px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;" class="gsap-reveal">
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;" class="gsap-reveal">
                 <div>
                     <div class="badge" style="background: rgba(255,0,127,0.1); color: var(--accent-pink); border-color: var(--accent-pink); margin-bottom: 10px;"><i class="fa-solid fa-circle-dot" style="animation: glowPulse 2s infinite;"></i> Live Now</div>
                     <h2 style="font-size: 2.5rem;">Live Auctions</h2>
                 </div>
                 <a href="marketplace.html" class="btn btn-glass">View All Auctions</a>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px;" class="gsap-reveal">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, ), 1fr)); gap: 30px;" class="gsap-reveal">
                 <!-- Auction Card 1 -->
                 <div class="glass-card nft-card">
                     <div class="nft-card-image">
@@ -206,7 +206,7 @@
 
         <!-- 5. Trending NFTs -->
         <section class="container" style="margin-bottom: 120px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;" class="gsap-reveal">
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;" class="gsap-reveal">
                 <div>
                     <h2 style="font-size: 2.5rem;">Trending Artworks</h2>
                     <p class="text-secondary">Most loved and viewed NFTs right now</p>
@@ -217,7 +217,7 @@
             .marquee-track { display: flex; gap: 30px; width: max-content; animation: marquee-scroll 30s linear infinite; }
             .marquee-track:hover { animation-play-state: paused; }
             @keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 15px)); } }
-            .marquee-track .nft-card { width: 300px; flex-shrink: 0; }
+            .marquee-track .nft-card { width: 100%; max-width: 300px; flex-shrink: 0; }
             </style>
             <div class="marquee-wrapper">
                 <div id="trending-nfts" class="marquee-track">
@@ -266,13 +266,13 @@
 
         <!-- 6. Popular Artists -->
         <section class="container" style="margin-bottom: 120px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;" class="gsap-reveal">
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;" class="gsap-reveal">
                 <div>
                     <h2 style="font-size: 2.5rem;">Popular Creators</h2>
                 </div>
                 <a href="artists.html" class="btn btn-glass">View All Artists</a>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;" class="gsap-reveal">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, ), 1fr)); gap: 30px;" class="gsap-reveal">
                 <div class="glass-card" style="text-align: center; padding: 30px 20px;">
                     <img src="image-digi/real_art_12.webp" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent-neon-blue); margin: 0 auto 15px;">
                     <h3 style="margin-bottom: 5px;">CyberArtist</h3>
