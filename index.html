@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly | Premium NFT Marketplace</title>
+    
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .faq-item {
+            background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius-md); margin-bottom: 15px; padding: 20px;
+        }
+        .faq-item details summary {
+            font-size: 1.2rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none;
+        }
+        .faq-item details summary::-webkit-details-marker { display: none; }
+        .faq-item details[open] summary { margin-bottom: 15px; color: var(--accent-neon-blue); }
+        .testimonial-card { text-align: center; padding: 40px 30px; }
+        .testimonial-card img { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 20px; border: 3px solid var(--bg-glass); }
+    </style>
+</head>
+<body>
+    <!-- Premium Web3 Preloader -->
+    <div id="premium-preloader">
+        <div class="preloader-content">
+            <div class="cube-container">
+                <div class="cube">
+                    <div class="face front"></div>
+                    <div class="face back"></div>
+                    <div class="face right"></div>
+                    <div class="face left"></div>
+                    <div class="face top"></div>
+                    <div class="face bottom"></div>
+                </div>
+                <div class="cube-rings"></div>
+                <div class="cube-rings ring-2"></div>
+            </div>
+            <div class="loading-status">
+                <p class="loading-text">Discovering Digital Art...</p>
+                <div class="loading-bar-track">
+                    <div class="loading-bar-fill" id="preloader-bar"></div>
+                </div>
+                <div class="loading-percentage" id="preloader-percentage">0%</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    <div class="page-transition"></div>
+
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="logo">
+                <img src="lo1.webp" alt="Stackly Logo">
+            </a>
+            <nav class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="marketplace.html">Explore</a>
+                <a href="artists.html">Artists</a>
+                <a href="collections.html">Collections</a>
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="btn btn-icon btn-glass" id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                                <a href="login.html" class="btn btn-glass magnetic">Login</a>
+                <a href="signup.html" class="btn btn-primary magnetic">Sign Up</a>
+                <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Premium Hero Section & 3. Floating Digital Art Cards -->
+        <section class="hero" style="padding: 180px 0 100px; min-height: 100vh; display: flex; align-items: center;">
+            <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;">
+                <div class="hero-content">
+                    <div class="badge hero-animate" style="display: inline-block; margin-bottom: 20px;">🚀 Stackly Originals Series 1</div>
+                    <h1 class="hero-animate" style="font-size: 4.5rem; margin-bottom: 20px; line-height: 1.1;">
+                        Discover & Collect <br>
+                        <span style="background: linear-gradient(90deg, var(--accent-neon-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Premium</span> Digital Art
+                    </h1>
+                    <p class="hero-animate text-secondary" style="font-size: 1.2rem; margin-bottom: 40px; max-width: 500px;">
+                        Welcome to Stackly. The world's fastest, most secure, and visually stunning NFT marketplace built for creators and collectors.
+                    </p>
+                    <div class="hero-animate" style="display: flex; gap: 20px;">
+                        <a href="login.html" class="btn btn-primary magnetic">Login to Account</a>
+                        <a href="signup.html" class="btn btn-glass magnetic">Create Account</a>
+                    </div>
+                </div>
+                <div class="hero-image floating-animate hero-animate" style="position: relative;">
+                    <!-- Floating Art Card 1 -->
+                    <div class="glass-card" style="padding: 15px; position: relative; z-index: 2;">
+                        <img src="image-digi/real_art_3.webp" alt="Hero NFT" style="border-radius: var(--radius-lg);">
+                        <div style="display: flex; justify-content: space-between; margin-top: 20px; padding: 0 10px;">
+                            <div>
+                                <h4 style="font-size: 1.2rem;">Cosmic Perspective</h4>
+                                <p class="text-secondary">@Nova_Art</p>
+                            </div>
+                            <div style="text-align: right;">
+                                <p class="text-secondary" style="font-size: 0.8rem;">Current Bid</p>
+                                <h4 style="color: var(--accent-neon-blue); font-size: 1.2rem;">4.89 ETH</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Floating Art Card 2 (Background) -->
+                    <div class="glass-card" style="padding: 10px; position: absolute; top: -30px; right: -30px; width: 70%; z-index: 1; opacity: 0.5; filter: blur(2px); transform: rotate(5deg);">
+                        <img src="image-digi/real_art_4.webp" style="border-radius: var(--radius-md);">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marquee / Ticker -->
+        <section class="marquee-container bg-glass" style="margin-bottom: 120px;">
+            <div class="marquee-content">
+                <span>TRENDING NFTs ✦ LIVE AUCTIONS ✦ NEW CREATORS ✦ EXCLUSIVE DROPS ✦ DIGITAL ART ✦ STACKLY ORIGINALS ✦</span>
+                <span>TRENDING NFTs ✦ LIVE AUCTIONS ✦ NEW CREATORS ✦ EXCLUSIVE DROPS ✦ DIGITAL ART ✦ STACKLY ORIGINALS ✦</span>
+            </div>
+        </section>
+
+        <!-- 7. Marketplace Statistics -->
+        <section class="container" style="margin-bottom: 120px;">
+            <div class="glass-card gsap-reveal" style="display: flex; justify-content: space-around; padding: 60px 40px; text-align: center; border: 1px solid var(--accent-purple); background: linear-gradient(135deg, rgba(18,18,37,0.8), rgba(138,43,226,0.05));">
+                <div>
+                    <h3 style="font-size: 3rem; color: var(--accent-neon-blue); margin-bottom: 10px;">$240M+</h3>
+                    <p class="text-secondary" style="font-size: 1.2rem;">Trading Volume</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 3rem; color: var(--accent-neon-blue); margin-bottom: 10px;">890K+</h3>
+                    <p class="text-secondary" style="font-size: 1.2rem;">NFTs Minted</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 3rem; color: var(--accent-neon-blue); margin-bottom: 10px;">120K+</h3>
+                    <p class="text-secondary" style="font-size: 1.2rem;">Verified Artists</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Live Auctions -->
+        <section class="container" style="margin-bottom: 120px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;" class="gsap-reveal">
+                <div>
+                    <div class="badge" style="background: rgba(255,0,127,0.1); color: var(--accent-pink); border-color: var(--accent-pink); margin-bottom: 10px;"><i class="fa-solid fa-circle-dot" style="animation: glowPulse 2s infinite;"></i> Live Now</div>
+                    <h2 style="font-size: 2.5rem;">Live Auctions</h2>
+                </div>
+                <a href="marketplace.html" class="btn btn-glass">View All Auctions</a>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px;" class="gsap-reveal">
+                <!-- Auction Card 1 -->
+                <div class="glass-card nft-card">
+                    <div class="nft-card-image">
+                        <img src="image-digi/real_art_8.webp" alt="Auction 1">
+                        <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); padding: 8px 15px; border-radius: var(--radius-pill); font-weight: bold; border: 1px solid var(--accent-pink); color: var(--accent-pink); backdrop-filter: blur(10px);">
+                            02h : 15m : 44s
+                        </div>
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Ethereal Sphere</h3>
+                        <div class="nft-author"><img src="image-digi/real_art_11.webp"><span>@Nova</span></div>
+                        <div class="nft-price-row">
+                            <div><div class="price-label">Highest Bid</div><div class="price-value">1.2 ETH</div></div>
+                            <a href="artwork-details.html" class="btn btn-primary" style="padding: 8px 16px;">Place Bid</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Auction Card 2 -->
+                <div class="glass-card nft-card">
+                    <div class="nft-card-image">
+                        <img src="image-digi/real_art_13.webp" alt="Auction 2">
+                        <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); padding: 8px 15px; border-radius: var(--radius-pill); font-weight: bold; border: 1px solid var(--accent-pink); color: var(--accent-pink); backdrop-filter: blur(10px);">
+                            14h : 30m : 12s
+                        </div>
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Digital Mirage</h3>
+                        <div class="nft-author"><img src="image-digi/real_art_3.webp"><span>@PixelGod</span></div>
+                        <div class="nft-price-row">
+                            <div><div class="price-label">Highest Bid</div><div class="price-value">5.0 ETH</div></div>
+                            <a href="artwork-details.html" class="btn btn-primary" style="padding: 8px 16px;">Place Bid</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Trending NFTs -->
+        <section class="container" style="margin-bottom: 120px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;" class="gsap-reveal">
+                <div>
+                    <h2 style="font-size: 2.5rem;">Trending Artworks</h2>
+                    <p class="text-secondary">Most loved and viewed NFTs right now</p>
+                </div>
+            </div>
+            <div id="trending-nfts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px;">
+                <!-- JS Populated -->
+            </div>
+        </section>
+
+        <!-- 4. Featured Collections -->
+        <section class="container" style="margin-bottom: 120px;">
+            <div style="text-align: center; margin-bottom: 50px;" class="gsap-reveal">
+                <h2 style="font-size: 2.5rem; margin-bottom: 15px;">Top Collections</h2>
+                <p class="text-secondary">The highest volume collections on Stackly over the last 7 days.</p>
+            </div>
+            <div class="glass-card gsap-reveal" style="padding: 0; overflow: hidden;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead style="background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--border-glass);">
+                        <tr>
+                            <th style="padding: 20px; color: var(--text-secondary);">Collection</th>
+                            <th style="padding: 20px; color: var(--text-secondary);">Volume</th>
+                            <th style="padding: 20px; color: var(--text-secondary);">Floor Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--border-glass);">
+                            <td style="padding: 20px; display: flex; align-items: center; gap: 15px;">
+                                <span style="font-weight: bold; width: 20px;">1</span>
+                                <img src="image-digi/real_art_15.webp" style="width: 50px; height: 50px; border-radius: 50%;">
+                                <a href="collections.html" style="font-weight: bold; font-size: 1.1rem;">CyberPunk Universe <i class="fa-solid fa-circle-check" style="color: var(--accent-neon-blue); font-size: 0.9rem;"></i></a>
+                            </td>
+                            <td style="padding: 20px; font-weight: bold;">4,230 ETH <span style="color: #00ff00; font-size: 0.8rem; margin-left: 10px;">+24%</span></td>
+                            <td style="padding: 20px;">0.85 ETH</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 20px; display: flex; align-items: center; gap: 15px;">
+                                <span style="font-weight: bold; width: 20px;">2</span>
+                                <img src="image-digi/real_art_5.webp" style="width: 50px; height: 50px; border-radius: 50%;">
+                                <a href="collections.html" style="font-weight: bold; font-size: 1.1rem;">Neon Dreams <i class="fa-solid fa-circle-check" style="color: var(--accent-neon-blue); font-size: 0.9rem;"></i></a>
+                            </td>
+                            <td style="padding: 20px; font-weight: bold;">3,120 ETH <span style="color: #ff007f; font-size: 0.8rem; margin-left: 10px;">-5%</span></td>
+                            <td style="padding: 20px;">1.2 ETH</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 6. Popular Artists -->
+        <section class="container" style="margin-bottom: 120px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;" class="gsap-reveal">
+                <div>
+                    <h2 style="font-size: 2.5rem;">Popular Creators</h2>
+                </div>
+                <a href="artists.html" class="btn btn-glass">View All Artists</a>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;" class="gsap-reveal">
+                <div class="glass-card" style="text-align: center; padding: 30px 20px;">
+                    <img src="image-digi/real_art_12.webp" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent-neon-blue); margin: 0 auto 15px;">
+                    <h3 style="margin-bottom: 5px;">CyberArtist</h3>
+                    <p class="text-secondary" style="margin-bottom: 15px;">12.4K Followers</p>
+                    <button class="btn btn-glass" style="width: 100%;">Follow</button>
+                </div>
+                <div class="glass-card" style="text-align: center; padding: 30px 20px;">
+                    <img src="image-digi/real_avatar_15.webp" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent-purple); margin: 0 auto 15px;">
+                    <h3 style="margin-bottom: 5px;">PixelGod</h3>
+                    <p class="text-secondary" style="margin-bottom: 15px;">45.1K Followers</p>
+                    <button class="btn btn-glass" style="width: 100%;">Follow</button>
+                </div>
+                <div class="glass-card" style="text-align: center; padding: 30px 20px;">
+                    <img src="image-digi/real_art_14.webp" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent-pink); margin: 0 auto 15px;">
+                    <h3 style="margin-bottom: 5px;">HoloDream</h3>
+                    <p class="text-secondary" style="margin-bottom: 15px;">8.2K Followers</p>
+                    <button class="btn btn-glass" style="width: 100%;">Follow</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Testimonials -->
+        <section class="container" style="margin-bottom: 120px;">
+            <div style="text-align: center; margin-bottom: 50px;" class="gsap-reveal">
+                <h2 style="font-size: 2.5rem; margin-bottom: 15px;">What Creators Say</h2>
+                <p class="text-secondary">Join thousands of happy artists and collectors on Stackly.</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;" class="gsap-reveal">
+                <div class="glass-card testimonial-card">
+                    <img src="image-digi/real_art_9.webp" alt="User">
+                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"Stackly completely changed how I sell my digital art. The UI is gorgeous and the fees are incredibly low."</p>
+                    <h4 style="color: var(--accent-neon-blue);">Jane Doe</h4>
+                    <p class="text-secondary" style="font-size: 0.9rem;">3D Artist</p>
+                </div>
+                <div class="glass-card testimonial-card">
+                    <img src="image-digi/real_art_1.webp" alt="User">
+                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"As a collector, the sheer speed and fluidity of the marketplace is unmatched. My favorite platform by far."</p>
+                    <h4 style="color: var(--accent-purple);">Michael Smith</h4>
+                    <p class="text-secondary" style="font-size: 0.9rem;">NFT Collector</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. FAQ -->
+        <section class="container" style="margin-bottom: 120px;">
+            <div style="text-align: center; margin-bottom: 50px;" class="gsap-reveal">
+                <h2 style="font-size: 2.5rem;">Frequently Asked Questions</h2>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto;" class="gsap-reveal">
+                <div class="faq-item">
+                    <details>
+                        <summary>What is an NFT? <i class="fa-solid fa-chevron-down"></i></summary>
+                        <p class="text-secondary" style="margin-top: 15px; line-height: 1.6;">NFT stands for Non-Fungible Token. It is a unique digital asset verified using blockchain technology, giving buyers proof of ownership and authenticity.</p>
+                    </details>
+                </div>
+                <div class="faq-item">
+                    <details>
+                        <summary>How do I buy an NFT on Stackly? <i class="fa-solid fa-chevron-down"></i></summary>
+                        <p class="text-secondary" style="margin-top: 15px; line-height: 1.6;">Simply connect your crypto wallet, browse the marketplace, and click 'Place a bid' or 'Buy Now' on any artwork you like.</p>
+                    </details>
+                </div>
+                <div class="faq-item">
+                    <details>
+                        <summary>What are the gas fees? <i class="fa-solid fa-chevron-down"></i></summary>
+                        <p class="text-secondary" style="margin-top: 15px; line-height: 1.6;">Gas fees vary depending on the blockchain you choose. Stackly supports Ethereum, Polygon, and Solana to give you high speed and low cost options.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- 11. Newsletter & 12. CTA Sections -->
+        <section class="container" style="margin-bottom: 100px;">
+            <div class="glass-card gsap-reveal" style="text-align: center; padding: 80px 40px; background: linear-gradient(135deg, rgba(18,18,37,0.8), rgba(138,43,226,0.1)); border: 1px solid var(--accent-purple); border-radius: var(--radius-xl);">
+                <h2 style="font-size: 3.5rem; margin-bottom: 20px;">Join the Stackly Revolution</h2>
+                <p class="text-secondary" style="max-width: 600px; margin: 0 auto 40px; font-size: 1.2rem;">Get exclusive updates, feature releases, and drops directly in your inbox. Be part of the future of digital art.</p>
+                <form class="input-group" style="max-width: 500px; margin: 0 auto 40px; display: flex; gap: 10px;">
+                    <input type="email" placeholder="Your Email Address" required style="flex: 1;">
+                    <button type="submit" class="btn btn-primary magnetic">Subscribe</button>
+                </form>
+                <div style="display: flex; gap: 20px; justify-content: center;">
+                    <a href="signup.html" class="btn btn-primary magnetic" style="padding: 15px 40px; font-size: 1.1rem;">Create an Account</a>
+                    <a href="artist-dashboard.html" class="btn btn-glass magnetic" style="padding: 15px 40px; font-size: 1.1rem;">Start Selling</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 13. Beautiful Footer -->
+        <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo" style="margin-bottom: 20px; display: inline-flex;">
+                        <img src="lo1.webp" alt="Stackly Logo">
+                    </a>
+                    <p>The world's premium digital marketplace for crypto collectibles and non-fungible tokens.</p>
+                    <div class="social-links">
+                        <a href="404.html"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="404.html"><i class="fa-brands fa-discord"></i></a>
+                        <a href="404.html"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Marketplace</h4>
+                    <ul class="footer-links">
+                        <li><a href="marketplace.html">Explore</a></li>
+                        <li><a href="artists.html">Artists</a></li>
+                        <li><a href="collections.html">Collections</a></li>
+                        <li><a href="#">Activity</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>My Account</h4>
+                    <ul class="footer-links">
+                        <li><a href="user-dashboard.html">User Dashboard</a></li>
+                        <li><a href="artist-dashboard.html">Artist Dashboard</a></li>
+                        <li><a href="#">Watchlist</a></li>
+                        <li><a href="#">Settings</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Stackly NFT Marketplace. All rights reserved.</p>
+                <div style="display: flex; gap: 20px;">
+                    <a href="404.html">Privacy Policy</a>
+                    <a href="404.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/mock-data.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if(typeof renderNFTCards === 'function') {
+                renderNFTCards('trending-nfts', 8);
+            }
+            
+            // Basic FAQ Accordion Toggle functionality if needed for icon swapping
+            const details = document.querySelectorAll('details');
+            details.forEach(detail => {
+                detail.addEventListener('toggle', (e) => {
+                    const icon = detail.querySelector('i');
+                    if(detail.open) {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

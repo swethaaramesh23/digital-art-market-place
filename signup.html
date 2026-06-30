@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Stackly</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 40px;
+            position: relative;
+            z-index: 10;
+        }
+        .auth-box {
+            width: 100%;
+            max-width: 450px;
+            padding: 25px;
+            text-align: center;
+        }
+        .auth-box h1 { font-size: 2rem; margin-bottom: 10px; }
+        .auth-box p { color: var(--text-secondary); margin-bottom: 30px; }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            text-align: left;
+        }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+        
+        .form-group.full-width { grid-column: 1 / -1; }
+        .password-toggle { position: absolute; right: 15px; top: 40px; cursor: pointer; color: var(--text-secondary); }
+        
+        .auth-link { color: var(--accent-neon-blue); text-decoration: none; transition: color 0.3s; }
+        .auth-link:hover { color: var(--accent-purple); }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        .checkbox-container input { margin-top: 4px; }
+        
+        .btn-loading { pointer-events: none; opacity: 0.8; }
+        .btn-loading i { animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Password Strength */
+        .strength-meter {
+            height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-top: 10px; overflow: hidden;
+        }
+        .strength-meter div { height: 100%; width: 0%; transition: all 0.3s; }
+        .strength-text { font-size: 0.8rem; text-align: right; margin-top: 5px; color: var(--text-secondary); }
+    </style>
+</head>
+<body>
+    <div class="bg-blobs">
+        <div class="blob blob-2"></div>
+    </div>
+    
+    <header>
+        <div class="container navbar">
+            
+                        <a href="index.html" class="logo">
+                <img src="lo1.webp" alt="Stackly Logo">
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="marketplace.html">Explore</a>
+                <a href="artists.html">Artists</a>
+                <a href="collections.html">Collections</a>
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="btn btn-icon btn-glass" id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <a href="login.html" class="btn btn-glass magnetic">Login</a>
+                <a href="signup.html" class="btn btn-primary magnetic active">Sign Up</a>
+                <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="auth-container">
+        <div class="glass-card auth-box gsap-reveal">
+            
+            <h1>Create Account</h1>
+            <p>Join the world's premium digital marketplace</p>
+
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-grid">
+                    <div class="form-group input-group">
+                        <input type="text" id="fullname" required>
+                        <label for="fullname">Full Name</label>
+                    </div>
+                    <div class="form-group input-group">
+                        <input type="text" id="username">
+                        <label for="username">Username (Optional)</label>
+                    </div>
+                    
+                    <div class="form-group input-group full-width">
+                        <input type="email" id="email" required>
+                        <label for="email">Email Address</label>
+                    </div>
+                    
+                    <div class="form-group input-group full-width">
+                        <input type="tel" id="phone">
+                        <label for="phone">Phone Number (Optional)</label>
+                    </div>
+
+                                        <div class="form-group full-width" style="margin-bottom: 25px; text-align: left;">
+                        <label style="display: block; color: var(--text-secondary); margin-bottom: 10px; font-size: 0.9rem;">Select Your Role</label>
+                        <div style="display: flex; gap: 20px;">
+                            <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: #fff;"><input type="radio" name="role" value="collector" checked> Collector</label>
+                            <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: #fff;"><input type="radio" name="role" value="artist"> Artist / Creator</label>
+                        </div>
+                    </div>
+                    <div class="form-group input-group">
+                        <input type="password" id="password" required onkeyup="checkStrength(this.value)">
+                        <label for="password">Password</label>
+                        <i class="fa-solid fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
+                        <div class="strength-meter"><div id="strengthBar"></div></div>
+                        <div class="strength-text" id="strengthText"></div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <input type="password" id="confirmPassword" required>
+                        <label for="confirmPassword">Confirm Password</label>
+                        <i class="fa-solid fa-eye password-toggle" onclick="togglePassword('confirmPassword', this)"></i>
+                    </div>
+                </div>
+
+                <label class="checkbox-container">
+                    <input type="checkbox" id="terms" required> 
+                    <span>I agree to the <a href="404.html" class="auth-link">Terms & Conditions</a> and <a href="404.html" class="auth-link">Privacy Policy</a>.</span>
+                </label>
+
+                <button type="submit" class="btn btn-primary magnetic" style="width: 100%; margin-bottom: 20px;" id="signupBtn">
+                    <span>Create Account</span>
+                </button>
+
+                <p style="margin-bottom: 0;">Already have an account? <a href="login.html" class="auth-link">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function checkStrength(val) {
+            let strength = 0;
+            if(val.length > 5) strength += 1;
+            if(val.length > 7) strength += 1;
+            if(/[A-Z]/.test(val)) strength += 1;
+            if(/[0-9]/.test(val)) strength += 1;
+            if(/[^A-Za-z0-9]/.test(val)) strength += 1;
+
+            const bar = document.getElementById('strengthBar');
+            const txt = document.getElementById('strengthText');
+            
+            if (val.length === 0) {
+                bar.style.width = '0%';
+                txt.innerText = '';
+                return;
+            }
+
+            switch(strength) {
+                case 1: case 2: 
+                    bar.style.width = '33%'; bar.style.background = 'var(--accent-pink)'; txt.innerText = 'Weak'; txt.style.color = 'var(--accent-pink)'; break;
+                case 3: case 4:
+                    bar.style.width = '66%'; bar.style.background = '#ffd700'; txt.innerText = 'Good'; txt.style.color = '#ffd700'; break;
+                case 5:
+                    bar.style.width = '100%'; bar.style.background = '#00ff00'; txt.innerText = 'Strong'; txt.style.color = '#00ff00'; break;
+            }
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const btn = document.getElementById('signupBtn');
+            const pass = document.getElementById('password').value;
+            const confirm = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('terms').checked;
+            
+            if (pass !== confirm) {
+                showToast('Passwords do not match!', 'error');
+                return;
+            }
+            if (!terms) {
+                showToast('Please accept the Terms & Conditions', 'error');
+                return;
+            }
+
+            // Loading state
+            btn.classList.add('btn-loading');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch"></i> Creating Account...';
+
+            setTimeout(() => {
+                btn.classList.remove('btn-loading');
+                btn.innerHTML = '<span>Create Account</span>';
+                
+                showToast('Account created successfully! Please login.', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+

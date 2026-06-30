@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Stackly</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .auth-box {
+            width: 100%;
+            max-width: 350px;
+            padding: 25px;
+            text-align: center;
+        }
+        .auth-box h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .auth-box p {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        .auth-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        .auth-link {
+            color: var(--accent-neon-blue);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .auth-link:hover {
+            color: var(--accent-purple);
+        }
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        .btn-loading i {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    
+    <header>
+        <div class="container navbar">
+            
+                        <a href="index.html" class="logo">
+                <img src="lo1.webp" alt="Stackly Logo">
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="marketplace.html">Explore</a>
+                <a href="artists.html">Artists</a>
+                <a href="collections.html">Collections</a>
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="btn btn-icon btn-glass" id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <a href="login.html" class="btn btn-glass magnetic active">Login</a>
+                <a href="signup.html" class="btn btn-primary magnetic">Sign Up</a>
+                <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="auth-container">
+        <div class="glass-card auth-box gsap-reveal">
+            
+            <h1>Welcome Back</h1>
+            <p>Enter your credentials to access your account</p>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group input-group">
+                    <input type="email" id="email" required>
+                    <label for="email">Email Address</label>
+                </div>
+                
+                                <div class="form-group" style="margin-bottom: 25px; text-align: left;">
+                    <label style="display: block; color: var(--text-secondary); margin-bottom: 10px; font-size: 0.9rem;">Login As</label>
+                    <div style="display: flex; gap: 20px;">
+                        <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: #fff;"><input type="radio" name="role" value="collector" checked> Collector</label>
+                        <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: #fff;"><input type="radio" name="role" value="artist"> Artist / Creator</label>
+                    </div>
+                </div>
+                <div class="form-group input-group">
+                    <input type="password" id="password" required>
+                    <label for="password">Password</label>
+                    <i class="fa-solid fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
+                </div>
+
+                <div class="auth-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="remember"> Remember Me
+                    </label>
+                    <a href="forgot-password.html" class="auth-link">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary magnetic" style="width: 100%; margin-bottom: 20px;" id="loginBtn">
+                    <span>Login to Dashboard</span>
+                </button>
+
+                <p style="margin-bottom: 0;">Don't have an account? <a href="signup.html" class="auth-link">Sign Up</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            
+            // Basic Validation
+            if (!email || !pass) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+
+            // Loading state
+            btn.classList.add('btn-loading');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch"></i> Authenticating...';
+
+            setTimeout(() => {
+                btn.classList.remove('btn-loading');
+                btn.innerHTML = '<span>Login to Dashboard</span>';
+                
+                showToast('Login successful! Redirecting...', 'success');
+                loginUser(email, 'user');
+                
+                setTimeout(() => {
+                    window.location.href = 'user-dashboard.html';
+                }, 1000);
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+

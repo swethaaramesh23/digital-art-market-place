@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collector Dashboard | Stackly</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        if (!localStorage.getItem('stackly_auth')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <style>
+        .dropdown { position: relative; }
+        .dropdown-content { display: none; position: absolute; right: 0; top: 100%; background: var(--bg-glass); backdrop-filter: blur(16px); border: 1px solid var(--border-glass); border-radius: var(--radius-md); min-width: 150px; z-index: 100; box-shadow: var(--shadow-glass); overflow: hidden; margin-top: 10px; }
+        .dropdown:hover .dropdown-content { display: flex; flex-direction: column; }
+        .dropdown-content a { padding: 12px 15px; color: var(--text-primary); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: background 0.2s; }
+        .dropdown-content a:hover { background: rgba(0,240,255,0.1); color: var(--accent-neon-blue); }
+        body { background: var(--bg-primary); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        .sidebar { width: 280px; background: var(--bg-glass); border-right: 1px solid var(--border-glass); display: flex; flex-direction: column; padding: 20px; backdrop-filter: blur(16px); z-index: 1000; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .sidebar-overlay.active { opacity: 1; pointer-events: auto; }
+        .sidebar .logo { font-size: 1.5rem; font-weight: bold; margin-bottom: 40px; display: flex; align-items: center; gap: 10px; background: linear-gradient(90deg, var(--accent-neon-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sidebar .logo img { width: 30px; }
+        .sidebar-nav { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+        .sidebar-nav a { display: flex; align-items: center; gap: 15px; padding: 12px 15px; border-radius: var(--radius-md); color: var(--text-secondary); transition: all var(--transition-fast); }
+        .sidebar-nav a:hover, .sidebar-nav a.active { background: rgba(0, 240, 255, 0.1); color: var(--accent-neon-blue); text-shadow: 0 0 8px rgba(0,240,255,0.4); box-shadow: inset 2px 0 0 var(--accent-neon-blue); }
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        .topbar { padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-glass); background: rgba(18, 18, 37, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10; }
+        .topbar-search { position: relative; width: 300px; }
+        .topbar-search input { width: 100%; padding: 10px 15px 10px 40px; border-radius: var(--radius-pill); border: 1px solid var(--border-glass); background: rgba(0,0,0,0.2); color: #fff; }
+        .topbar-search i { position: absolute; left: 15px; top: 12px; color: var(--text-secondary); }
+        .topbar-actions { display: flex; align-items: center; gap: 20px; }
+        .user-profile { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .user-profile img { width: 40px; height: 40px; border-radius: 50%; }
+        .dashboard-container { padding: 40px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .stat-card { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 20px; display: flex; align-items: center; gap: 20px; }
+        .stat-icon { width: 50px; height: 50px; border-radius: 50%; background: rgba(0, 240, 255, 0.1); color: var(--accent-neon-blue); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .dashboard-panel { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 20px; }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-glass); }
+        th { color: var(--text-secondary); font-weight: 500; font-size: 0.9rem; }
+        
+        
+        @media (max-width: 768px) {
+            .dashboard-container { padding: 20px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .panel-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            table, thead, tbody, th, td, tr { display: block; }
+            thead tr { display: none; }
+            td { text-align: right; position: relative; padding-left: 50%; }
+            td::before { content: attr(data-label); position: absolute; left: 15px; font-weight: 500; color: var(--text-secondary); }
+            td:first-child { text-align: left; padding-left: 15px; }
+            td:first-child::before { display: none; }
+            .topbar { padding: 15px 20px; }
+            .topbar-search { display: none; }
+            .user-profile p { display: none; }
+        }
+    </style>
+</head>
+<body class="dashboard-layout">
+    <div class="sidebar-overlay"></div>
+    <aside class="sidebar">
+                <div class="sidebar-header">
+            
+            <button class="collapse-btn" id="collapseSidebarBtn"><i class="fa-solid fa-angles-left"></i></button>
+        </div>
+        <div class="sidebar-title" style="padding: 0 15px; margin-bottom: 20px; font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; font-weight: bold;">Collector Menu</div>
+        <nav class="sidebar-nav">
+            <a data-target="view-overview" class="active" style="cursor: pointer;"><i class="fa-solid fa-chart-pie"></i> <span>Overview</span></a>
+            <a data-target="view-wallet" style="cursor: pointer;"><i class="fa-solid fa-wallet"></i> <span>Wallet</span></a>
+            <a data-target="view-collection" style="cursor: pointer;"><i class="fa-solid fa-layer-group"></i> <span>My Collection</span></a>
+            <a data-target="view-favorites" style="cursor: pointer;"><i class="fa-solid fa-heart"></i> <span>Favorites</span></a>
+            <a data-target="view-history" style="cursor: pointer;"><i class="fa-solid fa-clock-rotate-left"></i> <span>Purchase History</span></a>
+            <a data-target="view-settings" style="cursor: pointer;"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+        </nav>
+        <div style="margin-top: auto;">
+            <a href="#" onclick="logoutUser(event)" class="btn btn-glass" style="width: 100%;"><i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Logout</span></a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                <button class="mobile-menu-btn btn btn-icon btn-glass" style="display: none; margin-right: 15px;">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <a href="index.html" class="logo" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
+                    <img src="lo1.webp" alt="Stackly Logo" style="width:40px; height:40px;">
+                    <span style="font-size: 1.5rem; font-weight: 700; background: var(--text-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">STACKLY</span>
+                </a>
+                <div class="topbar-search">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" placeholder="Search my NFTs...">
+                </div>
+            </div>
+            <div class="topbar-actions">
+                <button class="btn btn-icon btn-glass"><i class="fa-solid fa-bell"></i></button>
+                <div class="user-profile dropdown">
+                    <div style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                        <img src="image-digi/real_art_2.webp" alt="User">
+                        <div>
+                            <p style="font-size: 0.9rem; font-weight: bold;">NFT_Whale <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i></p>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary);">Collector</p>
+                        </div>
+                    </div>
+                    <div class="dropdown-content">
+                        <a href="#"><i class="fa-solid fa-user"></i> <span>My Profile</span></a>
+                        <a data-target="view-settings" style="cursor: pointer;"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+                        <a href="#" onclick="logoutUser(event)"><i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Logout</span></a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            <div id="view-overview" class="dashboard-view active">
+            <h2 style="margin-bottom: 20px;">Collector Overview</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-brands fa-ethereum"></i></div>
+                    <div>
+                        <p class="text-secondary" style="font-size: 0.9rem;">Wallet Balance</p>
+                        <h3 style="font-size: 1.5rem;">12.4 ETH</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(138,43,226,0.1); color: var(--accent-purple);"><i class="fa-solid fa-images"></i></div>
+                    <div>
+                        <p class="text-secondary" style="font-size: 0.9rem;">NFTs Owned</p>
+                        <h3 style="font-size: 1.5rem;">48</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(255,0,127,0.1); color: var(--accent-pink);"><i class="fa-solid fa-arrow-up-right-dots"></i></div>
+                    <div>
+                        <p class="text-secondary" style="font-size: 0.9rem;">Portfolio Value</p>
+                        <h3 style="font-size: 1.5rem;">89.2 ETH</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Purchases -->
+            <div class="dashboard-panel">
+                <div class="panel-header">
+                    <h3>Recent Purchases</h3>
+                    <a href="#" style="color: var(--accent-neon-blue); font-size: 0.9rem;">View All</a>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Purchase Price</th>
+                            <th>From Artist</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="display: flex; align-items: center; gap: 10px;">
+                                <img src="image-digi/real_art_6.webp" style="width: 40px; border-radius: 8px;">
+                                Neon Genesis #01
+                            </td>
+                            <td style="font-weight: bold;">2.4 ETH</td>
+                            <td style="color: var(--accent-neon-blue);">@CyberArtist</td>
+                            <td style="color: var(--text-secondary);">2 days ago</td>
+                            <td><span style="color: #00ff00; background: rgba(0,255,0,0.1); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Confirmed</span></td>
+                        </tr>
+                        <tr>
+                            <td style="display: flex; align-items: center; gap: 10px;">
+                                <img src="image-digi/real_art_10.webp" style="width: 40px; border-radius: 8px;">
+                                Crystal Void
+                            </td>
+                            <td style="font-weight: bold;">1.8 ETH</td>
+                            <td style="color: var(--accent-neon-blue);">@HoloDream</td>
+                            <td style="color: var(--text-secondary);">1 week ago</td>
+                            <td><span style="color: #00ff00; background: rgba(0,255,0,0.1); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Confirmed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Favorite Collections (New Content) -->
+            <div class="dashboard-panel">
+                <div class="panel-header">
+                    <h3>Watched Collections</h3>
+                </div>
+                <div style="display: flex; gap: 20px;">
+                    <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: var(--radius-md); border: 1px solid var(--border-glass); flex: 1; display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img src="image-digi/real_avatar_8.webp" style="width: 40px; height: 40px; border-radius: 50%;">
+                            <div>
+                                <h4>CyberPunk Universe</h4>
+                                <p class="text-secondary" style="font-size: 0.8rem;">Floor: 0.85 ETH</p>
+                            </div>
+                        </div>
+                        <div style="color: #00ff00;">+5% (24h)</div>
+                    </div>
+                </div>
+            </div>
+                    </div> <!-- End view-overview -->
+
+            <!-- View: Wallet -->
+            <div id="view-wallet" class="dashboard-view">
+                <h2>My Wallet</h2>
+                <div class="stats-grid" style="margin-top: 20px;">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(0, 255, 0, 0.1); color: #00ff00;"><i class="fa-brands fa-ethereum"></i></div>
+                        <div>
+                            <p class="text-secondary" style="font-size: 0.9rem;">Ethereum Balance</p>
+                            <h3 style="font-size: 1.5rem;">4.5 ETH</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-panel" style="margin-top: 20px;">
+                    <h3>Recent Transactions</h3>
+                                        <table>
+                        <thead>
+                            <tr>
+                                <th>Transaction</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Bought "Digital Odyssey"</td>
+                                <td style="color: var(--accent-pink);">-1.5 ETH</td>
+                                <td>Oct 10, 2024</td>
+                            </tr>
+                            <tr>
+                                <td>Funded Wallet</td>
+                                <td style="color: #00ff00;">+2.0 ETH</td>
+                                <td>Oct 01, 2024</td>
+                            </tr>
+                            <tr>
+                                <td>Bought "Neon Grid"</td>
+                                <td style="color: var(--accent-pink);">-0.8 ETH</td>
+                                <td>Sep 25, 2024</td>
+                            </tr>
+                            <tr>
+                                <td>Sold "Cosmic Entity"</td>
+                                <td style="color: #00ff00;">+0.5 ETH</td>
+                                <td>Sep 12, 2024</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- View: My Collection -->
+            <div id="view-collection" class="dashboard-view">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>My Collection</h2>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                                        <div class="glass-card" style="padding: 10px; text-align: center;">
+                        <img src="image-digi/real_art_15.webp" style="width: 100%; border-radius: var(--radius-sm); margin-bottom: 15px;">
+                        <h4>Digital Odyssey</h4>
+                        <p class="text-secondary">Owned by You</p>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">Sell</button>
+                    </div>
+                    <div class="glass-card" style="padding: 10px; text-align: center;">
+                        <img src="image-digi/real_art_10.webp" style="width: 100%; border-radius: var(--radius-sm); margin-bottom: 15px;">
+                        <h4>Neon Grid #2</h4>
+                        <p class="text-secondary">Owned by You</p>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">Sell</button>
+                    </div>
+                    <div class="glass-card" style="padding: 10px; text-align: center;">
+                        <img src="image-digi/real_art_3.webp" style="width: 100%; border-radius: var(--radius-sm); margin-bottom: 15px;">
+                        <h4>Cyber Ape</h4>
+                        <p class="text-secondary">Owned by You</p>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">Sell</button>
+                    </div>
+                    <div class="glass-card" style="padding: 10px; text-align: center;">
+                        <img src="image-digi/real_art_8.webp" style="width: 100%; border-radius: var(--radius-sm); margin-bottom: 15px;">
+                        <h4>Ethereal Dream</h4>
+                        <p class="text-secondary">Owned by You</p>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">Sell</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View: Favorites -->
+            <div id="view-favorites" class="dashboard-view">
+                <h2>Favorites</h2>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div class="glass-card" style="padding: 10px; text-align: center;">
+                        <img src="image-digi/real_art_1.webp" style="width: 100%; border-radius: var(--radius-sm); margin-bottom: 15px;">
+                        <h4>Crypto Punk #99</h4>
+                        <p class="text-secondary">12.5 ETH</p>
+                        <button class="btn btn-glass" style="width: 100%; margin-top: 15px;"><i class="fa-solid fa-heart" style="color: var(--accent-pink);"></i> Unfavorite</button>
+                    </div>
+                    <div class="glass-card" style="padding: 10px; text-align: center;">
+                        <img src="image-digi/real_art_2.webp" style="width: 100%; border-radius: var(--radius-sm); margin-bottom: 15px;">
+                        <h4>Bored Ape #12</h4>
+                        <p class="text-secondary">45.0 ETH</p>
+                        <button class="btn btn-glass" style="width: 100%; margin-top: 15px;"><i class="fa-solid fa-heart" style="color: var(--accent-pink);"></i> Unfavorite</button>
+                    </div>
+                    <div class="glass-card" style="padding: 10px; text-align: center;">
+                        <img src="image-digi/real_art_4.webp" style="width: 100%; border-radius: var(--radius-sm); margin-bottom: 15px;">
+                        <h4>Space Cat</h4>
+                        <p class="text-secondary">0.5 ETH</p>
+                        <button class="btn btn-glass" style="width: 100%; margin-top: 15px;"><i class="fa-solid fa-heart" style="color: var(--accent-pink);"></i> Unfavorite</button>
+                    </div>
+                    <div class="glass-card" style="padding: 10px; text-align: center;">
+                        <img src="image-digi/real_art_6.webp" style="width: 100%; border-radius: var(--radius-sm); margin-bottom: 15px;">
+                        <h4>Neon Skyline</h4>
+                        <p class="text-secondary">2.1 ETH</p>
+                        <button class="btn btn-glass" style="width: 100%; margin-top: 15px;"><i class="fa-solid fa-heart" style="color: var(--accent-pink);"></i> Unfavorite</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View: Purchase History -->
+            <div id="view-history" class="dashboard-view">
+                <h2>Purchase History</h2>
+                <div class="dashboard-panel" style="margin-top: 20px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                                        <tr>
+                                <td style="display: flex; align-items: center; gap: 10px;"><img src="image-digi/real_art_15.webp" style="width: 40px; border-radius: 8px;"> Digital Odyssey</td>
+                                <td style="color: var(--accent-neon-blue); font-weight: bold;">1.5 ETH</td>
+                                <td>Oct 10, 2024</td>
+                            </tr>
+                            <tr>
+                                <td style="display: flex; align-items: center; gap: 10px;"><img src="image-digi/real_art_10.webp" style="width: 40px; border-radius: 8px;"> Neon Grid #2</td>
+                                <td style="color: var(--accent-neon-blue); font-weight: bold;">0.8 ETH</td>
+                                <td>Sep 25, 2024</td>
+                            </tr>
+                            <tr>
+                                <td style="display: flex; align-items: center; gap: 10px;"><img src="image-digi/real_art_3.webp" style="width: 40px; border-radius: 8px;"> Cyber Ape</td>
+                                <td style="color: var(--accent-neon-blue); font-weight: bold;">2.5 ETH</td>
+                                <td>Aug 14, 2024</td>
+                            </tr>
+                            <tr>
+                                <td style="display: flex; align-items: center; gap: 10px;"><img src="image-digi/real_art_8.webp" style="width: 40px; border-radius: 8px;"> Ethereal Dream</td>
+                                <td style="color: var(--accent-neon-blue); font-weight: bold;">0.2 ETH</td>
+                                <td>Jul 01, 2024</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- View: Settings -->
+            <div id="view-settings" class="dashboard-view">
+                <h2>User Settings</h2>
+                <div class="dashboard-panel" style="margin-top: 20px; max-width: 600px;">
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label style="color: var(--text-secondary); margin-bottom: 10px; display: block;">Username</label>
+                        <input type="text" value="CryptoCollector" style="width: 100%; padding: 12px 15px; border-radius: var(--radius-sm); border: 1px solid var(--border-glass); background: rgba(0,0,0,0.2); color: #fff;">
+                    </div>
+                                        <div class="form-group" style="margin-bottom: 20px;">
+                        <label style="color: var(--text-secondary); margin-bottom: 10px; display: block;">Email Address</label>
+                        <input type="email" value="collector@crypto.io" style="width: 100%; padding: 12px 15px; border-radius: var(--radius-sm); border: 1px solid var(--border-glass); background: rgba(0,0,0,0.2); color: #fff;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label style="color: var(--text-secondary); margin-bottom: 10px; display: block;">Wallet Address</label>
+                        <input type="text" value="0x89f...2a4" disabled style="width: 100%; padding: 12px 15px; border-radius: var(--radius-sm); border: 1px solid var(--border-glass); background: rgba(0,0,0,0.5); color: var(--text-secondary); cursor: not-allowed;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label style="color: var(--text-secondary); margin-bottom: 10px; display: block;">Email Notifications</label>
+                        <select style="width: 100%; padding: 12px 15px; border-radius: var(--radius-sm); border: 1px solid var(--border-glass); background: rgba(0,0,0,0.2); color: #fff;">
+                            <option>All Notifications</option>
+                            <option>Important Only</option>
+                            <option>None</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary">Update Profile</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

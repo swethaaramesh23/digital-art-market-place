@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Genesis #01 | Stackly</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="bg-blobs"><div class="blob blob-2"></div></div>
+    
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="logo"><img src="lo1.webp" alt="Stackly Logo"></a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="marketplace.html">Explore</a>
+                <a href="artists.html">Artists</a>
+                <a href="collections.html">Collections</a>
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="btn btn-icon btn-glass" id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
+                                <a href="login.html" class="btn btn-glass magnetic">Login</a>
+                <a href="signup.html" class="btn btn-primary magnetic">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <main style="padding-top: 120px; padding-bottom: 100px; min-height: 100vh;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-bottom: 60px;" class="gsap-reveal">
+                <!-- Image Side -->
+                <div class="glass-card" style="padding: 10px;">
+                    <img src="image-digi/real_art_8.webp" alt="Artwork" style="border-radius: var(--radius-lg); width: 100%; object-fit: cover;">
+                </div>
+                
+                <!-- Details Side -->
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                        <div>
+                            <div class="badge" style="margin-bottom: 15px; display: inline-block;">#124 Trending on Stackly</div>
+                            <h1 style="font-size: 3rem; line-height: 1.1; margin-bottom: 15px;">Neon Genesis #01</h1>
+                            <p class="text-secondary">Owned by <a href="#" style="color: var(--accent-neon-blue);">@0xPlasma</a></p>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn btn-icon btn-glass"><i class="fa-solid fa-heart"></i></button>
+                            <button class="btn btn-icon btn-glass"><i class="fa-solid fa-share-nodes"></i></button>
+                            <button class="btn btn-icon btn-glass"><i class="fa-solid fa-ellipsis"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 40px; margin-bottom: 40px; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img src="image-digi/real_art_11.webp" alt="Creator" style="width: 50px; height: 50px; border-radius: 50%;">
+                            <div>
+                                <p class="text-secondary" style="font-size: 0.9rem;">Creator</p>
+                                <h4>CyberArtist <i class="fa-solid fa-circle-check" style="color: var(--accent-neon-blue); font-size: 0.9rem;"></i></h4>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img src="image-digi/real_art_13.webp" alt="Collection" style="width: 50px; height: 50px; border-radius: 50%;">
+                            <div>
+                                <p class="text-secondary" style="font-size: 0.9rem;">Collection</p>
+                                <h4>CyberPunk Universe</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card" style="margin-bottom: 30px;">
+                        <p class="text-secondary" style="margin-bottom: 10px;">Sale ends in 12 hours, 45 minutes</p>
+                        <p class="text-secondary" style="margin-bottom: 10px;">Current Bid</p>
+                        <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: var(--accent-neon-blue);">2.4 ETH <span style="font-size: 1rem; color: var(--text-secondary); font-weight: normal;">($4,230.12)</span></h2>
+                        <div style="display: flex; gap: 15px;">
+                            <button class="btn btn-primary" style="flex: 1; padding: 15px;"><i class="fa-solid fa-wallet"></i> Place a bid</button>
+                            <button class="btn btn-glass" style="flex: 1; padding: 15px;">Make Offer</button>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <h3 style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-align-left text-secondary"></i> Description</h3>
+                        <p class="text-secondary" style="margin-bottom: 20px;">A unique 1/1 piece representing the digital renaissance of the 21st century. The neon highlights represent the ever-flowing data through the internet's veins. Exclusively minted on Stackly.</p>
+                        
+                        <h3 style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-list-check text-secondary"></i> Properties</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                            <div style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); padding: 10px; border-radius: var(--radius-sm); text-align: center;">
+                                <p style="color: var(--accent-neon-blue); font-size: 0.8rem; text-transform: uppercase;">Background</p>
+                                <p style="font-weight: bold;">Neon Grid</p>
+                                <p class="text-secondary" style="font-size: 0.7rem;">12% have this trait</p>
+                            </div>
+                            <div style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); padding: 10px; border-radius: var(--radius-sm); text-align: center;">
+                                <p style="color: var(--accent-neon-blue); font-size: 0.8rem; text-transform: uppercase;">Aura</p>
+                                <p style="font-weight: bold;">Plasma Blue</p>
+                                <p class="text-secondary" style="font-size: 0.7rem;">5% have this trait</p>
+                            </div>
+                            <div style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); padding: 10px; border-radius: var(--radius-sm); text-align: center;">
+                                <p style="color: var(--accent-neon-blue); font-size: 0.8rem; text-transform: uppercase;">Rarity</p>
+                                <p style="font-weight: bold;">Legendary</p>
+                                <p class="text-secondary" style="font-size: 0.7rem;">1% have this trait</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- History / Bids Table -->
+            <div class="glass-card gsap-reveal" style="margin-top: 50px; margin-bottom: 60px;">
+                <h3 style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-list-ul text-secondary"></i> Bidding History</h3>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                        <thead style="border-bottom: 1px solid var(--border-glass);">
+                            <tr>
+                                <th style="padding: 15px 10px; color: var(--text-secondary);">Event</th>
+                                <th style="padding: 15px 10px; color: var(--text-secondary);">Price</th>
+                                <th style="padding: 15px 10px; color: var(--text-secondary);">From</th>
+                                <th style="padding: 15px 10px; color: var(--text-secondary);">To</th>
+                                <th style="padding: 15px 10px; color: var(--text-secondary);">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 15px 10px;"><i class="fa-solid fa-hand-holding-dollar" style="margin-right: 8px;"></i> Bid</td>
+                                <td style="padding: 15px 10px; font-weight: bold;">2.4 ETH</td>
+                                <td style="padding: 15px 10px; color: var(--accent-neon-blue);">@0xPlasma</td>
+                                <td style="padding: 15px 10px;">---</td>
+                                <td style="padding: 15px 10px; color: var(--text-secondary);">2 hours ago</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 15px 10px;"><i class="fa-solid fa-hand-holding-dollar" style="margin-right: 8px;"></i> Bid</td>
+                                <td style="padding: 15px 10px; font-weight: bold;">2.1 ETH</td>
+                                <td style="padding: 15px 10px; color: var(--accent-neon-blue);">@CryptoWhale</td>
+                                <td style="padding: 15px 10px;">---</td>
+                                <td style="padding: 15px 10px; color: var(--text-secondary);">5 hours ago</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 15px 10px;"><i class="fa-solid fa-plus-circle" style="margin-right: 8px;"></i> Minted</td>
+                                <td style="padding: 15px 10px; font-weight: bold;">---</td>
+                                <td style="padding: 15px 10px;">---</td>
+                                <td style="padding: 15px 10px; color: var(--accent-neon-blue);">CyberArtist</td>
+                                <td style="padding: 15px 10px; color: var(--text-secondary);">1 day ago</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- More from this collection (New Content) -->
+            <div class="gsap-reveal">
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px;">
+                    <h2 style="font-size: 2rem;">More from this collection</h2>
+                    <a href="collections.html" class="btn btn-glass">View Collection</a>
+                </div>
+                <div id="more-nfts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px;">
+                    <!-- JS populated -->
+                </div>
+            </div>
+        </div>
+    </main>
+    
+        <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo" style="margin-bottom: 20px; display: inline-flex;">
+                        <img src="lo1.webp" alt="Stackly Logo">
+                    </a>
+                    <p>The world's premium digital marketplace for crypto collectibles and non-fungible tokens.</p>
+                    <div class="social-links">
+                        <a href="404.html"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="404.html"><i class="fa-brands fa-discord"></i></a>
+                        <a href="404.html"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Marketplace</h4>
+                    <ul class="footer-links">
+                        <li><a href="marketplace.html">Explore</a></li>
+                        <li><a href="artists.html">Artists</a></li>
+                        <li><a href="collections.html">Collections</a></li>
+                        <li><a href="#">Activity</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>My Account</h4>
+                    <ul class="footer-links">
+                        <li><a href="user-dashboard.html">User Dashboard</a></li>
+                        <li><a href="artist-dashboard.html">Artist Dashboard</a></li>
+                        <li><a href="#">Watchlist</a></li>
+                        <li><a href="#">Settings</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Stackly NFT Marketplace. All rights reserved.</p>
+                <div style="display: flex; gap: 20px;">
+                    <a href="404.html">Privacy Policy</a>
+                    <a href="404.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/mock-data.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNFTCards('more-nfts', 4);
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

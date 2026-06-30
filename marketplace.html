@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace | Stackly</title>
+    
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .filters-sidebar { width: 300px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 25px; height: fit-content; position: sticky; top: 100px; }
+        .filter-group { margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid var(--border-glass); }
+        .filter-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .filter-title { font-weight: 600; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; }
+        .checkbox-label { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; color: var(--text-secondary); }
+        .checkbox-label input[type="checkbox"] { accent-color: var(--accent-neon-blue); width: 16px; height: 16px; }
+        .price-inputs { display: flex; gap: 10px; align-items: center; }
+        .price-inputs input { width: 100%; padding: 8px; border-radius: var(--radius-md); background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); color: #fff; }
+        
+        .market-layout { display: flex; gap: 40px; }
+        .market-grid { flex: 1; }
+        @media (max-width: 900px) { .market-layout { flex-direction: column; } .filters-sidebar { width: 100%; position: static; } }
+        
+        /* Interactive Cards */
+        .nft-card { position: relative; overflow: hidden; }
+        .nft-card-actions { position: absolute; top: 15px; right: 15px; display: flex; flex-direction: column; gap: 10px; opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateX(20px); }
+        .nft-card:hover .nft-card-actions { opacity: 1; transform: translateX(0); }
+        .action-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); border: 1px solid var(--border-glass); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+        .action-btn:hover { background: var(--accent-pink); border-color: var(--accent-pink); }
+        
+        .quick-view-btn { position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%); width: 80%; padding: 10px; background: var(--accent-neon-blue); color: #fff; border: none; border-radius: var(--radius-md); cursor: pointer; font-weight: bold; transition: bottom 0.3s; opacity: 0; }
+        .nft-card:hover .quick-view-btn { bottom: 20px; opacity: 1; }
+
+        /* Preview Modal */
+        .preview-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 10000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+        .preview-modal-overlay.active { display: flex; opacity: 1; }
+        .preview-modal-content { background: var(--bg-primary); border: 1px solid var(--border-glass); border-radius: var(--radius-xl); width: 90%; max-width: 800px; padding: 0; position: relative; display: flex; overflow: hidden; }
+        .close-modal { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); border: none; color: #fff; width: 35px; height: 35px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 10; }
+        .preview-img { flex: 1; background: #000; }
+        .preview-img img { width: 100%; height: 100%; object-fit: cover; }
+        .preview-details { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+
+        /* Pagination & Infinite Scroll */
+        .pagination { display: flex; justify-content: center; gap: 10px; margin-top: 50px; align-items: center; }
+        .page-btn { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--bg-glass); border: 1px solid var(--border-glass); color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .page-btn.active, .page-btn:hover { background: var(--accent-neon-blue); color: #fff; border-color: var(--accent-neon-blue); }
+            </style>
+</head>
+<body>
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="logo"><img src="lo1.webp" alt="Stackly Logo"></a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="marketplace.html" class="active">Explore</a>
+                <a href="artists.html">Artists</a>
+                <a href="collections.html">Collections</a>
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="btn btn-icon btn-glass" id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
+                <a href="login.html" class="btn btn-glass magnetic">Login</a>
+                <a href="signup.html" class="btn btn-primary magnetic">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <main style="padding-top: 120px; min-height: 100vh;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 50px;" class="gsap-reveal">
+                <h1 style="font-size: 3.5rem; margin-bottom: 20px;">Explore the Marketplace</h1>
+                <p class="text-secondary" style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Discover the most outstanding NFTs across all categories, curated just for you.</p>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;" class="gsap-reveal">
+                <div class="input-group" style="width: 400px; margin-bottom: 0;">
+                    <input type="text" placeholder="Search items, collections, and accounts..." style="border-radius: var(--radius-pill); padding-left: 45px;">
+                    <i class="fa-solid fa-search" style="position: absolute; left: 20px; top: 16px; color: var(--text-secondary);"></i>
+                </div>
+                
+                <div style="display: flex; gap: 15px;">
+                    <select style="padding: 10px 20px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius-pill); color: var(--text-primary);">
+                        <option>Sort by: Recently Listed</option>
+                        <option>Sort by: Price (Low to High)</option>
+                        <option>Sort by: Price (High to Low)</option>
+                        <option>Sort by: Most Favorited</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="market-layout">
+                <!-- Advanced Filters Sidebar -->
+                <aside class="filters-sidebar gsap-reveal">
+                    <div class="filter-group">
+                        <div class="filter-title">Status <i class="fa-solid fa-chevron-up"></i></div>
+                        <label class="checkbox-label"><input type="checkbox" checked> Buy Now</label>
+                        <label class="checkbox-label"><input type="checkbox" checked> On Auction</label>
+                        <label class="checkbox-label"><input type="checkbox"> New</label>
+                        <label class="checkbox-label"><input type="checkbox"> Has Offers</label>
+                    </div>
+
+                                        <div class="filter-group">
+                        <div class="filter-title">Category <i class="fa-solid fa-chevron-up"></i></div>
+                        <ul class="filter-list">
+                            <li><label><input type="checkbox" checked> Art</label><span>45</span></li>
+                            <li><label><input type="checkbox"> Music</label><span>12</span></li>
+                            <li><label><input type="checkbox"> Virtual Worlds</label><span>8</span></li>
+                            <li><label><input type="checkbox"> Trading Cards</label><span>24</span></li>
+                        </ul>
+                    </div>
+                    <div class="filter-group">
+                        <div class="filter-title">Price Range <i class="fa-solid fa-chevron-up"></i></div>
+                        <select style="width: 100%; padding: 8px; margin-bottom: 10px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: var(--radius-md); color: #fff;">
+                            <option>ETH</option>
+                            <option>SOL</option>
+                            <option>MATIC</option>
+                        </select>
+                        <div class="price-inputs">
+                            <input type="number" id="priceMin" placeholder="Min">
+                            <span>to</span>
+                            <input type="number" id="priceMax" placeholder="Max">
+                        </div>
+                        <button id="applyPriceBtn" class="btn btn-glass" style="width: 100%; margin-top: 15px; padding: 8px;">Apply</button>
+                    </div>
+
+                    <div class="filter-group">
+                        <div class="filter-title">Blockchain <i class="fa-solid fa-chevron-up"></i></div>
+                        <label class="checkbox-label"><input type="checkbox" checked> <i class="fa-brands fa-ethereum" style="width: 20px; text-align: center;"></i> Ethereum</label>
+                        <label class="checkbox-label"><input type="checkbox"> <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" style="width: 14px; margin-left: 3px; margin-right: 3px;"> Solana</label>
+                        <label class="checkbox-label"><input type="checkbox"> <img src="https://cryptologos.cc/logos/polygon-matic-logo.svg?v=025" style="width: 14px; margin-left: 3px; margin-right: 3px;"> Polygon</label>
+                    </div>
+
+                    <div class="filter-group">
+                        <div class="filter-title">Creator Filter <i class="fa-solid fa-chevron-up"></i></div>
+                        <label class="checkbox-label"><input type="checkbox" checked> Verified Creators Only <i class="fa-solid fa-circle-check" style="color: var(--accent-neon-blue);"></i></label>
+                    </div>
+
+                    <div class="filter-group">
+                        <div class="filter-title">Categories <i class="fa-solid fa-chevron-up"></i></div>
+                        <label class="checkbox-label"><input type="checkbox" checked> Art</label>
+                        <label class="checkbox-label"><input type="checkbox"> Photography</label>
+                        <label class="checkbox-label"><input type="checkbox"> Gaming</label>
+                        <label class="checkbox-label"><input type="checkbox"> Memberships</label>
+                        <label class="checkbox-label"><input type="checkbox"> PFPs</label>
+                    </div>
+                </aside>
+
+                <!-- Market Grid -->
+                <div class="market-grid">
+                    <!-- Categories Pills -->
+                    <div style="display: flex; gap: 15px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px;" class="gsap-reveal">
+                        <button class="btn btn-primary" style="padding: 6px 15px; border-radius: var(--radius-pill); font-size: 0.9rem;">All Items</button>
+                        <button class="btn btn-glass" style="padding: 6px 15px; border-radius: var(--radius-pill); font-size: 0.9rem;"><i class="fa-solid fa-palette text-secondary"></i> Art</button>
+                        <button class="btn btn-glass" style="padding: 6px 15px; border-radius: var(--radius-pill); font-size: 0.9rem;"><i class="fa-solid fa-camera text-secondary"></i> Photography</button>
+                        <button class="btn btn-glass" style="padding: 6px 15px; border-radius: var(--radius-pill); font-size: 0.9rem;"><i class="fa-solid fa-gamepad text-secondary"></i> Gaming</button>
+                    </div>
+
+                    <div id="marketplace-nfts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px;" class="gsap-reveal">
+                        <!-- JS Populated, but I will write custom JS below to inject actions -->
+                    </div>
+
+                    <!-- Pagination / Infinite Scroll UI -->
+                                        <div class="pagination gsap-reveal" id="paginationUI">
+                        <button class="page-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Preview Modal -->
+    <div class="preview-modal-overlay" id="previewModal">
+        <div class="preview-modal-content">
+            <button class="close-modal" onclick="closePreview()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="preview-img">
+                <img id="pImg" src="" alt="NFT">
+            </div>
+            <div class="preview-details">
+                <div class="badge" style="background: rgba(138,43,226,0.1); color: var(--accent-purple); border-color: var(--accent-purple); margin-bottom: 15px; display: inline-block; align-self: flex-start;">Verified Stackly Original</div>
+                <h2 id="pTitle" style="font-size: 2.5rem; margin-bottom: 10px;">NFT Title</h2>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 30px;">
+                    <img src="image-digi/real_art_7.webp" style="width: 40px; height: 40px; border-radius: 50%;">
+                    <div>
+                        <p class="text-secondary" style="font-size: 0.8rem;">Creator</p>
+                        <p style="font-weight: bold; color: var(--accent-neon-blue);" id="pAuthor">@Creator</p>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-glass); margin-bottom: 30px;">
+                    <p class="text-secondary" style="margin-bottom: 5px;">Current Price</p>
+                    <h3 style="font-size: 2rem; color: #fff;" id="pPrice">1.5 ETH <span style="font-size: 1rem; color: var(--text-secondary); font-weight: normal;">($3,240.50)</span></h3>
+                </div>
+
+                <div style="display: flex; gap: 15px;">
+                    <button class="btn btn-primary magnetic" style="flex: 2; padding: 15px; font-size: 1.1rem;">Buy Now</button>
+                    <button class="btn btn-glass magnetic" style="flex: 1; padding: 15px; font-size: 1.1rem;"><i class="fa-solid fa-tag"></i> Make Offer</button>
+                </div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <a href="artwork-details.html" style="color: var(--text-secondary); text-decoration: underline;">View Full Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo" style="margin-bottom: 20px; display: inline-flex;">
+                        <img src="lo1.webp" alt="Stackly Logo">
+                    </a>
+                    <p>The world's premium digital marketplace for crypto collectibles and non-fungible tokens.</p>
+                    <div class="social-links">
+                        <a href="404.html"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="404.html"><i class="fa-brands fa-discord"></i></a>
+                        <a href="404.html"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Marketplace</h4>
+                    <ul class="footer-links">
+                        <li><a href="marketplace.html">Explore</a></li>
+                        <li><a href="artists.html">Artists</a></li>
+                        <li><a href="collections.html">Collections</a></li>
+                        <li><a href="#">Activity</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>My Account</h4>
+                    <ul class="footer-links">
+                        <li><a href="user-dashboard.html">User Dashboard</a></li>
+                        <li><a href="artist-dashboard.html">Artist Dashboard</a></li>
+                        <li><a href="#">Watchlist</a></li>
+                        <li><a href="#">Settings</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Stackly NFT Marketplace. All rights reserved.</p>
+                <div style="display: flex; gap: 20px;">
+                    <a href="404.html">Privacy Policy</a>
+                    <a href="404.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/mock-data.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        function openPreview(img, title, author, price) {
+            document.getElementById('pImg').src = img;
+            document.getElementById('pTitle').innerText = title;
+            document.getElementById('pAuthor').innerText = author;
+            document.getElementById('pPrice').innerHTML = price + ' <span style="font-size: 1rem; color: var(--text-secondary); font-weight: normal;">($3,240.50)</span>';
+            document.getElementById('previewModal').classList.add('active');
+        }
+        function closePreview() {
+            document.getElementById('previewModal').classList.remove('active');
+        }
+        function toggleLike(btn) {
+            btn.style.color = btn.style.color === 'var(--accent-pink)' ? '#fff' : 'var(--accent-pink)';
+            const icon = btn.querySelector('i');
+            if(icon.classList.contains('fa-regular')) {
+                icon.classList.remove('fa-regular');
+                icon.classList.add('fa-solid');
+            } else {
+                icon.classList.remove('fa-solid');
+                icon.classList.add('fa-regular');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('marketplace-nfts');
+            const pageBtns = document.querySelectorAll('.page-btn:not(:first-child):not(:last-child)'); 
+            
+            // Filter Elements
+            const applyPriceBtn = document.getElementById('applyPriceBtn');
+            const priceMin = document.getElementById('priceMin');
+            const priceMax = document.getElementById('priceMax');
+
+            if(container && typeof mockData !== 'undefined') {
+                let currentData = [...mockData.nfts];
+
+                const renderPage = (pageNum) => {
+                    // pageNum 1 -> items 0 to 11
+                    // pageNum 2 -> items 12 to 23
+                    // pageNum 3 -> items 24 to 35
+                    const start = (pageNum - 1) * 12;
+                    const items = currentData.slice(start, start + 12);
+                    
+                    let html = '';
+                    if (items.length === 0) {
+                        html = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);">No items found.</p>';
+                    }
+                    
+                    items.forEach(nft => {
+                        html += `
+                            <div class="glass-card nft-card gsap-reveal" style="opacity: 0; animation: fadeIn 0.5s forwards;">
+                                <div class="nft-card-image">
+                                    <img src="${nft.image}" alt="${nft.title}">
+                                    <div class="nft-card-actions">
+                                        <div class="action-btn" title="Add to Wishlist" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i></div>
+                                        <div class="action-btn" title="Share"><i class="fa-solid fa-share-nodes"></i></div>
+                                    </div>
+                                    <button class="quick-view-btn" onclick="openPreview('${nft.image}', '${nft.title}', '${nft.author}', '${nft.price}')">Quick View</button>
+                                </div>
+                                <div class="nft-info">
+                                    <h3 class="nft-title">${nft.title}</h3>
+                                    <div class="nft-author"><img src="${nft.authorAvatar}"><span>${nft.author}</span></div>
+                                    <div class="nft-price-row">
+                                        <div><div class="price-label">Price</div><div class="price-value">${nft.price}</div></div>
+                                        <a href="artwork-details.html" class="btn btn-primary" style="padding: 8px 16px;">Buy</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                };
+
+                // Initialize page 1
+                renderPage(1);
+
+                // Pagination click handler
+                pageBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        pageBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const pageNum = parseInt(btn.innerText) || 1;
+                        
+                        document.querySelector('.marketplace-header').scrollIntoView({ behavior: 'smooth' });
+                        setTimeout(() => renderPage(pageNum), 300);
+                    });
+                });
+
+                // Apply Price Filter click handler
+                if (applyPriceBtn) {
+                    applyPriceBtn.addEventListener('click', () => {
+                        const min = parseFloat(priceMin.value) || 0;
+                        const max = parseFloat(priceMax.value) || 99999;
+                        
+                        currentData = mockData.nfts.filter(nft => {
+                            const val = parseFloat(nft.price);
+                            return val >= min && val <= max;
+                        });
+                        
+                        // Reset to page 1 visually
+                        pageBtns.forEach(b => b.classList.remove('active'));
+                        if (pageBtns.length > 0) pageBtns[0].classList.add('active');
+                        
+                        renderPage(1);
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
