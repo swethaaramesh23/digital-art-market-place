@@ -71,7 +71,9 @@
                 <a href="about.html">About</a>
                 <a href="blog.html">Blog</a>
                 <a href="contact.html">Contact</a>
-            </nav>
+                  <a href="login.html" class="mobile-auth">Login to Account</a>
+                  <a href="signup.html" class="mobile-auth" style="color: var(--accent-neon-blue);">Create Account</a>
+              </nav>
             <div class="nav-actions">
                 <button class="btn btn-icon btn-glass" id="theme-toggle" aria-label="Toggle Theme">
                     <i class="fa-solid fa-moon"></i>
@@ -298,7 +300,21 @@
                 <h2 style="font-size: 2.5rem; margin-bottom: 15px;">What Creators Say</h2>
                 <p class="text-secondary">Join thousands of happy artists and collectors on Stackly.</p>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;" class="gsap-reveal">
+            <div class="mobile-marquee-wrapper gsap-reveal">
+    <div class="testimonials-grid mobile-marquee-track">
+                <div class="glass-card testimonial-card">
+                    <img src="image-digi/real_art_9.webp" alt="User">
+                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"Stackly completely changed how I sell my digital art. The UI is gorgeous and the fees are incredibly low."</p>
+                    <h4 style="color: var(--accent-neon-blue);">Jane Doe</h4>
+                    <p class="text-secondary" style="font-size: 0.9rem;">3D Artist</p>
+                </div>
+                <div class="glass-card testimonial-card">
+                    <img src="image-digi/real_art_1.webp" alt="User">
+                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"As a collector, the sheer speed and fluidity of the marketplace is unmatched. My favorite platform by far."</p>
+                    <h4 style="color: var(--accent-purple);">Michael Smith</h4>
+                    <p class="text-secondary" style="font-size: 0.9rem;">NFT Collector</p>
+                </div>
+            
                 <div class="glass-card testimonial-card">
                     <img src="image-digi/real_art_9.webp" alt="User">
                     <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"Stackly completely changed how I sell my digital art. The UI is gorgeous and the fees are incredibly low."</p>
@@ -312,7 +328,8 @@
                     <p class="text-secondary" style="font-size: 0.9rem;">NFT Collector</p>
                 </div>
             </div>
-        </section>
+</div>
+</section>
 
         <!-- 10. FAQ -->
         <section class="container" style="margin-bottom: 120px;">
@@ -448,6 +465,10 @@
     </script>
 </body>
 </html>
+
+
+
+
 
 
 

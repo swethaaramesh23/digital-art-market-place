@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(menuToggle && navLinks) {
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
         });
     }
 
@@ -322,3 +323,56 @@ window.logoutUser = function(e) {
             }
         });
     });
+
+// ==========================================================================
+// 16. Form Handling & Button Functionality (Global Sweep)
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    // Make forms functional (Newsletter, Contact, etc.)
+    document.querySelectorAll('form').forEach(form => {
+        if(form.id !== 'loginForm' && form.id !== 'signupForm') {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button[type="submit"]') || form.querySelector('button');
+                if(btn) {
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Success!';
+                    btn.style.backgroundColor = '#00f0ff';
+                    btn.style.color = '#000';
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style = '';
+                        form.reset();
+                    }, 3000);
+                }
+            });
+        }
+    });
+
+    // Prevent default on empty links
+    document.querySelectorAll('a[href="404.html"], a[href="#"]').forEach(link => {
+        if(!link.hasAttribute('onclick')) {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+            });
+        }
+    });
+});
+
+// Global Action Functions for Buttons (Like, Share)
+window.toggleLike = function(btn) {
+    const icon = btn.querySelector('i');
+    if(icon && icon.classList.contains('fa-regular')) {
+        icon.classList.remove('fa-regular');
+        icon.classList.add('fa-solid');
+        icon.style.color = '#ff0055';
+    } else if (icon) {
+        icon.classList.remove('fa-solid');
+        icon.classList.add('fa-regular');
+        icon.style.color = '';
+    }
+};
+
+window.shareNFT = function() {
+    alert("Link copied to clipboard!");
+};

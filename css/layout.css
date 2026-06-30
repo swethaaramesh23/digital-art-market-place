@@ -80,6 +80,8 @@ header.scrolled {
 }
 
 @media (max-width: 1024px) {
+    .nav-actions a.btn { display: none !important; }
+    .mobile-auth { display: block !important; border-top: 1px solid var(--border-glass); padding-top: 15px; margin-top: 10px; font-weight: bold; }
     .nav-links {
         display: flex;
         flex-direction: column;
@@ -200,6 +202,8 @@ html {
 }
 
 @media (max-width: 1024px) {
+    .nav-actions a.btn { display: none !important; }
+    .mobile-auth { display: block !important; border-top: 1px solid var(--border-glass); padding-top: 15px; margin-top: 10px; font-weight: bold; }
     .container { padding: 0 20px; }
     .hero-content h1 { font-size: 3rem !important; }
     .hero > .container { grid-template-columns: 1fr !important; text-align: center; }
@@ -426,6 +430,8 @@ html {
 
 /* Tablet & Mobile State */
 @media (max-width: 1024px) {
+    .nav-actions a.btn { display: none !important; }
+    .mobile-auth { display: block !important; border-top: 1px solid var(--border-glass); padding-top: 15px; margin-top: 10px; font-weight: bold; }
     .dashboard-layout {
         display: block;
     }
@@ -507,3 +513,44 @@ html {
 
 
 
+
+/* Hide mobile-auth links on desktop */
+.mobile-auth { display: none; }
+
+
+/* ==========================================================================
+   Testimonials Grid & Mobile Auto-Scroll
+   ========================================================================== */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+@media (max-width: 768px) {
+    .mobile-marquee-wrapper {
+        overflow: hidden;
+        width: 100%;
+        position: relative;
+    }
+    .mobile-marquee-track {
+        display: flex !important;
+        flex-wrap: nowrap;
+        gap: 20px;
+        width: max-content;
+        animation: marquee-scroll 15s linear infinite;
+    }
+    .mobile-marquee-track:hover {
+        animation-play-state: paused;
+    }
+    .mobile-marquee-track .testimonial-card {
+        width: 300px;
+        flex-shrink: 0;
+    }
+}
+
+/* Disable background scrolling when mobile menu is open */
+.no-scroll {
+    overflow: hidden;
+    height: 100vh;
+}
