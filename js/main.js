@@ -438,3 +438,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Global Form Submission Intercept
+document.addEventListener("submit", (e) => {
+    const form = e.target;
+    if (form.tagName.toLowerCase() === 'form') {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]') || form.querySelector('.btn-primary') || form.querySelector('button');
+        if (btn) btn.classList.add('btn-loading');
+        
+        // Simulate network request
+        setTimeout(() => {
+            if (btn) btn.classList.remove('btn-loading');
+            if (typeof showToast === 'function') {
+                showToast('Success! Form submitted.');
+            }
+            form.reset();
+        }, 1500);
+    }
+});

@@ -141,3 +141,7 @@ h1, h2, h3, h4, h5, h6 {
 .text-left {
     text-align: left;
 }
+
+/* GPU Optimization Hints */
+.custom-cursor, .custom-cursor-follower { top: 0 !important; left: 0 !important; position: fixed; pointer-events: none; will-change: transform; }
+.tilt-card, .gsap-reveal { will-change: transform, opacity; }

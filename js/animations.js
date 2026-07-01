@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tiltCards = document.querySelectorAll('.glass-card, .nft-card');
     tiltCards.forEach(card => {
         card.classList.add('tilt-card');
-        card.addEventListener('mousemove', (e) => {
+        if (window.matchMedia("(min-width: 768px)").matches) { card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         card.addEventListener('mouseenter', () => {
             card.style.transition = 'none';
-        });
+        }); }
     });
 
     // --- 3. GSAP Animations ---
@@ -66,12 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof ScrollTrigger !== 'undefined') {
             const reveals = document.querySelectorAll('.gsap-reveal');
             reveals.forEach(el => {
-                gsap.from(el, {
+                if(window.matchMedia("(min-width: 768px)").matches) { gsap.from(el, {
                     scrollTrigger: {
                         trigger: el, start: "top 85%", toggleActions: "play none none reverse"
                     },
                     y: 60, opacity: 0, filter: 'blur(15px)', duration: 1, ease: 'power3.out'
-                });
+                }); } else { el.style.opacity = 1; el.style.filter = "none"; el.style.transform = "none"; }
             });
 
             // Animated Counters
@@ -159,23 +159,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Track Mouse Movement
     document.addEventListener('mousemove', (e) => {
+        if (!window.matchMedia("(pointer: fine)").matches) return;
         mouseX = e.clientX;
         mouseY = e.clientY;
         
-        // Instant movement for small dot
-        cursor.style.left = mouseX + 'px';
-        cursor.style.top = mouseY + 'px';
+        // Instant movement for small dot via GPU
+        cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
     });
 
     // Smooth movement for follower ring
     function animateFollower() {
-        // Linear interpolation for smooth trailing
-        followerX += (mouseX - followerX) * 0.15;
-        followerY += (mouseY - followerY) * 0.15;
-        
-        follower.style.left = followerX + 'px';
-        follower.style.top = followerY + 'px';
-        
+        if (window.matchMedia("(pointer: fine)").matches) {
+            // Linear interpolation for smooth trailing
+            followerX += (mouseX - followerX) * 0.15;
+            followerY += (mouseY - followerY) * 0.15;
+            follower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0)`;
+        } else {
+            cursor.style.display = 'none';
+            follower.style.display = 'none';
+        }
         requestAnimationFrame(animateFollower);
     }
     animateFollower();

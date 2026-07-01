@@ -668,17 +668,59 @@ html {
 }
 
 
+
 /* Custom Responsive Fixes */
-@media (max-width: 768px) {
-    .container { padding: 0 15px; overflow-x: hidden; }
-    body { overflow-x: hidden; }
-    table { display: block; overflow-x: auto; white-space: nowrap; }
-    .hero-stats-stack { flex-direction: column !important; gap: 15px !important; }
-    .stats-grid { grid-template-columns: 1fr !important; }
-    .market-layout { flex-direction: column !important; }
-    .filters-sidebar { width: 100% !important; margin-bottom: 20px; }
-    .navbar { flex-wrap: wrap; justify-content: space-between; }
-    .nav-links { width: 100%; display: none; flex-direction: column; }
-    .nav-links.active { display: flex; }
-    img { max-width: 100%; height: auto; }
+/* Global Resets */
+body, html { overflow-x: hidden; width: 100%; }
+.container { overflow-x: hidden; max-width: 100%; padding: 0 15px; box-sizing: border-box; }
+* { box-sizing: border-box; }
+
+/* Image scaling */
+img { max-width: 100%; height: auto; }
+
+/* Cards equal height */
+.glass-card { display: flex; flex-direction: column; height: 100%; }
+.glass-card > * { max-width: 100%; }
+
+/* Mobile Navigation */
+@media (max-width: 900px) {
+    .navbar { position: relative; flex-wrap: wrap; justify-content: space-between; }
+    .nav-links { 
+        display: none; 
+        width: 100%; 
+        flex-direction: column; 
+        background: var(--bg-glass); 
+        backdrop-filter: blur(20px);
+        position: absolute; 
+        top: 100%; 
+        left: 0; 
+        padding: 20px; 
+        z-index: 1000; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .nav-links.active { display: flex !important; }
+    .mobile-menu-btn { display: block !important; }
 }
+
+/* Grids */
+.team-grid, .collection-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+@media (max-width: 1024px) {
+    .team-grid, .collection-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+    .team-grid, .collection-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr !important; }
+    .hero-stats-stack { flex-direction: column !important; }
+}
+
+/* Forms & Inputs */
+input, textarea, select { max-width: 100%; box-sizing: border-box; }
+.input-group { width: 100%; }
+.input-group input { width: 100%; padding-left: 45px; }
+.input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); }
+
+/* Collection Buy Button Overlap */
+.nft-price-row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 15px; }
+
+/* Blog Categories */
+.blog-categories { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }

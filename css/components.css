@@ -220,3 +220,48 @@
 .toast.error { border-color: var(--accent-pink); }
 
 
+
+/* Interactive States & Forms */
+html { scroll-behavior: smooth; }
+
+.btn:active {
+    transform: scale(0.95) !important;
+}
+
+.btn-loading {
+    position: relative !important;
+    color: transparent !important;
+    pointer-events: none !important;
+}
+.btn-loading::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation: btn-spin 1s linear infinite;
+}
+@keyframes btn-spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--accent-neon-blue) !important;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.2) !important;
+    outline: none !important;
+}
+
+/* Success/Error States */
+.form-success-input {
+    border-color: #00ff00 !important;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2) !important;
+}
+.form-error-input {
+    border-color: #ff0055 !important;
+    box-shadow: 0 0 10px rgba(255, 0, 85, 0.2) !important;
+}

@@ -39,7 +39,7 @@
     
     <header>
         <div class="container navbar">
-            <a href="index.html" class="logo"><img src="lo1.webp" alt="Stackly Logo"></a>
+            <a href="index.html" class="logo"><img loading="lazy" src="lo1.webp" alt="Stackly Logo"></a>
             <nav class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="marketplace.html">Explore</a>
@@ -76,25 +76,25 @@
                 <h2 style="font-size: 2rem; margin-bottom: 20px;"><i class="fa-solid fa-fire text-secondary" style="color: var(--accent-pink);"></i> Trending This Week</h2>
                 <div class="artists-grid" style="grid-template-columns: repeat(2, 1fr);">
                     <div class="glass-card" style="text-align: center; padding: 20px;">
-                        <img src="image-digi/person_alex.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-neon-blue);">
+                        <img loading="lazy" src="image-digi/person_alex.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-neon-blue);">
                         <h4 style="font-size: 1.1rem;">Alex Wright <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
                         <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 10px;">+1.2k followers (7d)</p>
                         <button class="btn btn-glass" style="padding: 5px 15px; font-size: 0.9rem;">Follow</button>
                     </div>
                     <div class="glass-card" style="text-align: center; padding: 20px;">
-                        <img src="image-digi/person_sarah.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-purple);">
+                        <img loading="lazy" src="image-digi/person_sarah.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-purple);">
                         <h4 style="font-size: 1.1rem;">Sarah Chen <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
                         <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 10px;">+850 followers (7d)</p>
                         <button class="btn btn-glass" style="padding: 5px 15px; font-size: 0.9rem;">Follow</button>
                     </div>
                     <div class="glass-card" style="text-align: center; padding: 20px;">
-                        <img src="image-digi/person_marcus.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-pink);">
+                        <img loading="lazy" src="image-digi/person_marcus.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-pink);">
                         <h4 style="font-size: 1.1rem;">Marcus Doe <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
                         <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 10px;">+620 followers (7d)</p>
                         <button class="btn btn-glass" style="padding: 5px 15px; font-size: 0.9rem;">Follow</button>
                     </div>
                     <div class="glass-card" style="text-align: center; padding: 20px;">
-                        <img src="image-digi/person_elena.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid #00ff00;">
+                        <img loading="lazy" src="image-digi/person_elena.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid #00ff00;">
                         <h4 style="font-size: 1.1rem;">Elena Rust <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
                         <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 10px;">+400 followers (7d)</p>
                         <button class="btn btn-glass" style="padding: 5px 15px; font-size: 0.9rem;">Follow</button>
@@ -124,7 +124,7 @@
         <div class="preview-modal-content glass-card">
             <button class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
             <div style="margin-top: 20px;">
-                <img id="modalImg" src="" style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--accent-neon-blue); margin-bottom: 15px;">
+                <img loading="lazy" id="modalImg" src="" style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--accent-neon-blue); margin-bottom: 15px;">
                 <h2 id="modalName" style="margin-bottom: 5px;">Artist Name <i class="fa-solid fa-circle-check" style="color: var(--accent-neon-blue); font-size: 1rem;"></i></h2>
                 <p class="text-secondary" style="margin-bottom: 20px;">Digital Creator & Illustrator</p>
                 
@@ -156,7 +156,7 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <a href="index.html" class="logo" style="margin-bottom: 20px; display: inline-flex;">
-                        <img src="lo1.webp" alt="Stackly Logo">
+                        <img loading="lazy" src="lo1.webp" alt="Stackly Logo">
                     </a>
                     <p>The world's premium digital marketplace for crypto collectibles and non-fungible tokens.</p>
                     <div class="social-links">
@@ -233,9 +233,9 @@
                         html += `
                             <div class="glass-card artist-card gsap-reveal" style="padding: 0; padding-bottom: 20px; animation: fadeIn 0.5s forwards; opacity: 0;">
                                 <div class="artist-cover" onclick="openModal('${artist.name}', '${artist.followers}', '${artist.image}')">
-                                    <img src="${artist.cover}" alt="Cover">
+                                    <img loading="lazy" src="${artist.cover}" alt="Cover">
                                 </div>
-                                <img src="${artist.image}" alt="${artist.name}" class="artist-avatar" onclick="openModal('${artist.name}', '${artist.followers}', '${artist.image}')">
+                                <img loading="lazy" src="${artist.image}" alt="${artist.name}" class="artist-avatar" onclick="openModal('${artist.name}', '${artist.followers}', '${artist.image}')">
                                 <h3 style="font-size: 1.2rem; margin-bottom: 5px;">${artist.name} <i class="fa-solid fa-circle-check" title="Verified" style="color: var(--accent-neon-blue); font-size: 0.9rem;"></i></h3>
                                 
                                 <div class="artist-stats">
@@ -274,9 +274,9 @@
                                 html += `
                                 <div class="glass-card artist-card gsap-reveal" style="padding: 0; padding-bottom: 20px; animation: fadeIn 0.5s forwards; opacity: 0;">
                                     <div class="artist-cover" onclick="openModal('${artist.name}', '${artist.followers}', '${artist.image}')">
-                                        <img src="${artist.cover}" alt="Cover">
+                                        <img loading="lazy" src="${artist.cover}" alt="Cover">
                                     </div>
-                                    <img src="${artist.image}" alt="${artist.name}" class="artist-avatar" onclick="openModal('${artist.name}', '${artist.followers}', '${artist.image}')">
+                                    <img loading="lazy" src="${artist.image}" alt="${artist.name}" class="artist-avatar" onclick="openModal('${artist.name}', '${artist.followers}', '${artist.image}')">
                                     <h3 style="font-size: 1.2rem; margin-bottom: 5px;">${artist.name} (New) <i class="fa-solid fa-circle-check" title="Verified" style="color: var(--accent-neon-blue); font-size: 0.9rem;"></i></h3>
                                     
                                     <div class="artist-stats">

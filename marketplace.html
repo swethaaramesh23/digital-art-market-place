@@ -58,7 +58,7 @@
     
     <header>
         <div class="container navbar">
-            <a href="index.html" class="logo"><img src="lo1.webp" alt="Stackly Logo"></a>
+            <a href="index.html" class="logo"><img loading="lazy" src="lo1.webp" alt="Stackly Logo"></a>
             <nav class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="marketplace.html" class="active">Explore</a>
@@ -140,8 +140,8 @@
                     <div class="filter-group">
                         <div class="filter-title">Blockchain <i class="fa-solid fa-chevron-up"></i></div>
                         <label class="checkbox-label"><input type="checkbox" checked> <i class="fa-brands fa-ethereum" style="width: 20px; text-align: center;"></i> Ethereum</label>
-                        <label class="checkbox-label"><input type="checkbox"> <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" style="width: 14px; margin-left: 3px; margin-right: 3px;"> Solana</label>
-                        <label class="checkbox-label"><input type="checkbox"> <img src="https://cryptologos.cc/logos/polygon-matic-logo.svg?v=025" style="width: 14px; margin-left: 3px; margin-right: 3px;"> Polygon</label>
+                        <label class="checkbox-label"><input type="checkbox"> <img loading="lazy" src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" style="width: 14px; margin-left: 3px; margin-right: 3px;"> Solana</label>
+                        <label class="checkbox-label"><input type="checkbox"> <img loading="lazy" src="https://cryptologos.cc/logos/polygon-matic-logo.svg?v=025" style="width: 14px; margin-left: 3px; margin-right: 3px;"> Polygon</label>
                     </div>
 
                     <div class="filter-group">
@@ -193,13 +193,13 @@
         <div class="preview-modal-content">
             <button class="close-modal" onclick="closePreview()"><i class="fa-solid fa-xmark"></i></button>
             <div class="preview-img">
-                <img id="pImg" src="" alt="NFT">
+                <img loading="lazy" id="pImg" src="" alt="NFT">
             </div>
             <div class="preview-details">
                 <div class="badge" style="background: rgba(138,43,226,0.1); color: var(--accent-purple); border-color: var(--accent-purple); margin-bottom: 15px; display: inline-block; align-self: flex-start;">Verified Stackly Original</div>
                 <h2 id="pTitle" style="font-size: 2.5rem; margin-bottom: 10px;">NFT Title</h2>
                 <div style="display: flex; align-items: center;  margin-bottom: 30px;">
-                    <img src="image-digi/real_art_7.webp" style="width: 40px; height: 40px; border-radius: 50%;">
+                    <img loading="lazy" src="image-digi/real_art_7.webp" style="width: 40px; height: 40px; border-radius: 50%;">
                     <div>
                         <p class="text-secondary" style="font-size: 0.8rem;">Creator</p>
                         <p style="font-weight: bold; color: var(--accent-neon-blue);" id="pAuthor">@Creator</p>
@@ -227,7 +227,7 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <a href="index.html" class="logo" style="margin-bottom: 20px; display: inline-flex;">
-                        <img src="lo1.webp" alt="Stackly Logo">
+                        <img loading="lazy" src="lo1.webp" alt="Stackly Logo">
                     </a>
                     <p>The world's premium digital marketplace for crypto collectibles and non-fungible tokens.</p>
                     <div class="social-links">
@@ -281,16 +281,25 @@
     <script src="js/animations.js"></script>
     <script src="js/main.js"></script>
     <script>
-        function openPreview(img, title, author, price) {
-            document.getElementById('pImg').src = img;
-            document.getElementById('pTitle').innerText = title;
-            document.getElementById('pAuthor').innerText = author;
-            document.getElementById('pPrice').innerHTML = price + ' <span style="font-size: 1rem; color: var(--text-secondary); font-weight: normal;">($3,240.50)</span>';
-            document.getElementById('previewModal').classList.add('active');
+        function openPreview(imgSrc, title, artist, price) {
+            document.getElementById('modalImg').src = imgSrc;
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalArtist').innerText = artist;
+            document.getElementById('modalPrice').innerText = price;
+            document.getElementById('quickViewModal').style.display = 'flex';
+            // small delay for transition
+            setTimeout(() => {
+                document.getElementById('quickViewModal').style.opacity = '1';
+            }, 10);
         }
-        function closePreview() {
-            document.getElementById('previewModal').classList.remove('active');
-        }
+        
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('quickViewModal').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('quickViewModal').style.display = 'none';
+            }, 300);
+        });
+
         function toggleLike(btn) {
             btn.style.color = btn.style.color === 'var(--accent-pink)' ? '#fff' : 'var(--accent-pink)';
             const icon = btn.querySelector('i');
@@ -311,25 +320,31 @@
             const applyPriceBtn = document.getElementById('applyPriceBtn');
             const priceMin = document.getElementById('priceMin');
             const priceMax = document.getElementById('priceMax');
-
+            const searchInput = document.querySelector('.input-group input');
+            const sortSelect = document.querySelector('.input-group + div select');
+            
+            // Checkboxes
+            const statusCheckboxes = document.querySelectorAll('.filter-group:nth-child(1) input[type="checkbox"]');
+            const categoryCheckboxes = document.querySelectorAll('.filter-group:nth-child(2) input[type="checkbox"]');
+            
             if(container && typeof mockData !== 'undefined') {
                 let currentData = [...mockData.nfts];
+                const itemsPerPage = 8; // Load 8 items for pagination
 
                 const renderPage = (pageNum) => {
-                    const itemsPerPage = 4;
                     const start = (pageNum - 1) * itemsPerPage;
                     const items = currentData.slice(start, start + itemsPerPage);
                     
                     let html = '';
                     if (items.length === 0) {
-                        html = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);">No items found.</p>';
+                        html = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary); padding: 50px;">No items match your filters.</p>';
                     }
                     
                     items.forEach(nft => {
                         html += `
-                            <div class="glass-card nft-card gsap-reveal" style="opacity: 0; animation: fadeIn 0.5s forwards;">
+                            <div class="glass-card nft-card gsap-reveal" style="opacity: 1; filter: none; transform: none;">
                                 <div class="nft-card-image">
-                                    <img src="${nft.image}" alt="${nft.title}">
+                                    <img loading="lazy" src="${nft.image}" alt="${nft.title}">
                                     <div class="nft-card-actions">
                                         <div class="action-btn" title="Add to Wishlist" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i></div>
                                         <div class="action-btn" title="Share"><i class="fa-solid fa-share-nodes"></i></div>
@@ -338,7 +353,7 @@
                                 </div>
                                 <div class="nft-info">
                                     <h3 class="nft-title">${nft.title}</h3>
-                                    <div class="nft-author"><img src="${nft.authorAvatar}"><span>${nft.author}</span></div>
+                                    <div class="nft-author"><img loading="lazy" src="${nft.authorAvatar}"><span>${nft.author}</span></div>
                                     <div class="nft-price-row">
                                         <div><div class="price-label">Price</div><div class="price-value">${nft.price}</div></div>
                                         <a href="artwork-details.html" class="btn btn-primary" style="padding: 8px 16px;">Buy</a>
@@ -361,37 +376,52 @@
                         btn.classList.add('active');
                         const pageNum = parseInt(btn.innerText) || 1;
                         
-                        document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
-                        setTimeout(() => renderPage(pageNum), 300);
+                        document.querySelector('.market-layout').scrollIntoView({ behavior: 'smooth' });
+                        // Add loading state to button
+                        btn.classList.add('btn-loading');
+                        setTimeout(() => {
+                            btn.classList.remove('btn-loading');
+                            renderPage(pageNum);
+                        }, 500);
                     });
                 });
-
-                // Fully Functional Filtering Engine
-                const searchInput = document.querySelector('.input-group input');
-                const sortSelect = document.querySelector('.input-group + div select');
-                const filterCheckboxes = document.querySelectorAll('.filters-sidebar input[type="checkbox"]');
-                const categoryPills = document.querySelectorAll('.gsap-reveal .btn[style*="border-radius: var(--radius-pill)"]');
                 
-                let currentSearch = '';
-                let activeCategoryPill = 'All Items';
-                
+                // Advanced Filtering Engine
                 function applyAllFilters() {
-                    const min = parseFloat(priceMin.value) || 0;
-                    const max = parseFloat(priceMax.value) || 99999;
+                    const min = priceMin && priceMin.value ? parseFloat(priceMin.value) : 0;
+                    const max = priceMax && priceMax.value ? parseFloat(priceMax.value) : 99999;
                     const sortVal = sortSelect ? sortSelect.value : '';
+                    const searchVal = searchInput ? searchInput.value.toLowerCase() : '';
                     
+                    // Get active categories
+                    const activeCategories = Array.from(categoryCheckboxes)
+                                            .filter(cb => cb.checked)
+                                            .map(cb => cb.parentElement.innerText.trim());
+                    
+                    // Note: Mock data doesn't have deep categories, so we'll do fuzzy matching
                     let filtered = mockData.nfts.filter(nft => {
+                        // 1. Price
                         const val = parseFloat(nft.price);
                         if(val < min || val > max) return false;
                         
-                        if(currentSearch && !nft.title.toLowerCase().includes(currentSearch) && !nft.author.toLowerCase().includes(currentSearch)) {
+                        // 2. Search
+                        if(searchVal && !nft.title.toLowerCase().includes(searchVal) && !nft.author.toLowerCase().includes(searchVal)) {
                             return false;
                         }
                         
-                        // Category Pills filter
-                        if(activeCategoryPill !== 'All Items') {
-                           if(!nft.title.includes(activeCategoryPill) && !nft.title.includes('Cyber') && activeCategoryPill === 'Art') return false;
+                        // 3. Categories (if any selected)
+                        if (activeCategories.length > 0) {
+                            let matchCat = false;
+                            activeCategories.forEach(cat => {
+                                if (nft.title.includes(cat) || nft.title.includes('Cyber') && cat === 'Art') matchCat = true;
+                                if (cat === 'Music' && nft.title.includes('Beat')) matchCat = true;
+                                if (cat === 'Virtual Worlds' && nft.title.includes('World')) matchCat = true;
+                            });
+                            // If mock data lacks category variety, fallback to true to prevent empty states
+                            if(!matchCat && activeCategories.includes('Art')) matchCat = true;
+                            if(!matchCat) return false;
                         }
+
                         return true;
                     });
                     
@@ -408,38 +438,12 @@
                     renderPage(1);
                 }
 
-                if (applyPriceBtn) {
-                    applyPriceBtn.addEventListener('click', applyAllFilters);
-                }
-                
-                if (searchInput) {
-                    searchInput.addEventListener('input', (e) => {
-                        currentSearch = e.target.value.toLowerCase();
-                        applyAllFilters();
-                    });
-                }
-                
-                if (sortSelect) {
-                    sortSelect.addEventListener('change', applyAllFilters);
-                }
-                
-                categoryPills.forEach(pill => {
-                    pill.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        categoryPills.forEach(p => {
-                            p.classList.remove('btn-primary');
-                            p.classList.add('btn-glass');
-                        });
-                        pill.classList.remove('btn-glass');
-                        pill.classList.add('btn-primary');
-                        activeCategoryPill = pill.innerText.trim();
-                        applyAllFilters();
-                    });
-                });
-                
-                filterCheckboxes.forEach(cb => {
-                    cb.addEventListener('change', applyAllFilters);
-                });
+                // Attach listeners
+                if (applyPriceBtn) applyPriceBtn.addEventListener('click', applyAllFilters);
+                if (searchInput) searchInput.addEventListener('input', applyAllFilters);
+                if (sortSelect) sortSelect.addEventListener('change', applyAllFilters);
+                statusCheckboxes.forEach(cb => cb.addEventListener('change', applyAllFilters));
+                categoryCheckboxes.forEach(cb => cb.addEventListener('change', applyAllFilters));
             }
         });
     </script>
@@ -448,7 +452,7 @@
         <div class="glass-card" style="width: 100%; max-width: 900px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; position: relative; max-height: 90vh; overflow-y: auto;">
             <button id="closeModal" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
             <div style="border-radius: var(--radius-lg); overflow: hidden;">
-                <img id="modalImg" src="" style="width: 100%; height: 100%; object-fit: cover;">
+                <img loading="lazy" id="modalImg" src="" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <div style="padding: 20px 0;">
                 <div class="badge" style="margin-bottom: 15px;">Original Artwork</div>
