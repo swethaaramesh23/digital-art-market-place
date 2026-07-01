@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Prevent default on empty links
-    document.querySelectorAll('a[href="404.html"], a[href="#"]').forEach(link => {
+    document.querySelectorAll('a[href="#"]').forEach(link => {
         if(!link.hasAttribute('onclick')) {
             link.addEventListener('click', (e) => {
                 e.preventDefault();

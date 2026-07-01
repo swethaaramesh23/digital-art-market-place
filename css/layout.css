@@ -519,12 +519,71 @@ html {
 
 
 /* ==========================================================================
+   Live Auctions Grid
+   ========================================================================== */
+.live-auctions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+
+@media (max-width: 768px) {
+    .live-auctions-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+   Artwork Details Grid
+   ========================================================================== */
+.artwork-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    margin-bottom: 60px;
+}
+
+@media (max-width: 1024px) {
+    .artwork-details-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+/* ==========================================================================
+   Properties Grid
+   ========================================================================== */
+.properties-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+@media (max-width: 768px) {
+    .properties-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
    Testimonials Grid & Mobile Auto-Scroll
    ========================================================================== */
 .testimonials-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, ), 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
+}
+
+.testimonial-card {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+    cursor: pointer;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0, 240, 255, 0.2);
+    border-color: var(--accent-neon-blue);
 }
 
 @media (max-width: 768px) {
@@ -548,9 +607,39 @@ html {
         flex-shrink: 0;
     }
 }
+}
 
 /* Disable background scrolling when mobile menu is open */
 .no-scroll {
     overflow: hidden;
     height: 100vh;
+}
+
+/* ==========================================================================
+   Hero 3-Column Layout
+   ========================================================================== */
+.hero-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    align-items: center;
+    width: 100%;
+}
+
+.hero-stats-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media (max-width: 1024px) {
+    .hero-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-grid-3 {
+        grid-template-columns: 1fr;
+    }
 }

@@ -88,23 +88,27 @@
     <main>
         <!-- 1. Premium Hero Section & 3. Floating Digital Art Cards -->
         <section class="hero" style="padding: 180px 0 100px; min-height: 100vh; display: flex; align-items: center;">
-            <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;">
+            <div class="container hero-grid-3">
+                
+                <!-- Left Column (33%): Content & CTAs -->
                 <div class="hero-content">
                     <div class="badge hero-animate" style="display: inline-block; margin-bottom: 20px;">🚀 Stackly Originals Series 1</div>
-                    <h1 class="hero-animate" style="font-size: 4.5rem; margin-bottom: 20px; line-height: 1.1;">
+                    <h1 class="hero-animate" style="font-size: 3.5rem; margin-bottom: 20px; line-height: 1.1;">
                         Discover & Collect <br>
                         <span style="background: linear-gradient(90deg, var(--accent-neon-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Premium</span> Digital Art
                     </h1>
-                    <p class="hero-animate text-secondary" style="font-size: 1.2rem; margin-bottom: 40px; max-width: 500px;">
+                    <p class="hero-animate text-secondary" style="font-size: 1.1rem; margin-bottom: 40px; max-width: 500px;">
                         Welcome to Stackly. The world's fastest, most secure, and visually stunning NFT marketplace built for creators and collectors.
                     </p>
-                    <div class="hero-animate" style="display: flex; gap: 20px;">
-                        <a href="login.html" class="btn btn-primary magnetic">Login to Account</a>
-                        <a href="signup.html" class="btn btn-glass magnetic">Create Account</a>
+                    <div class="hero-animate" style="display: flex; flex-wrap: wrap; gap: 20px;">
+                        <a href="marketplace.html" class="btn btn-primary magnetic">Explore Art</a>
+                        <a href="signup.html" class="btn btn-glass magnetic">Get Started</a>
                     </div>
                 </div>
-                <div class="hero-slider hero-animate hero-3d-anim" style="position: relative; overflow: hidden; border-radius: var(--radius-lg); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
-                    <div class="slider-track" id="heroSlider" style="display: flex; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); height: 500px;">
+                
+                <!-- Center Column (33%): Featured Artwork with Glow -->
+                <div class="hero-slider hero-animate hero-3d-anim" style="position: relative; overflow: hidden; border-radius: var(--radius-lg); box-shadow: 0 0 40px rgba(0,240,255,0.4); border: 1px solid var(--accent-neon-blue);">
+                    <div class="slider-track" id="heroSlider" style="display: flex; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); height: 450px;">
                         <div class="slide" style="min-width: 100%; position: relative;">
                             <img src="image-digi/real_art_1.webp" style="width: 100%; height: 100%; object-fit: cover;">
                             <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(transparent, rgba(0,0,0,0.9));">
@@ -128,6 +132,23 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Right Column (33%): Statistics Cards Stack -->
+                <div class="hero-stats-stack hero-animate">
+                    <div class="glass-card stat-card" style="padding: 20px; text-align: center; border: 1px solid var(--accent-purple); background: linear-gradient(135deg, rgba(18,18,37,0.8), rgba(138,43,226,0.05)); transition: transform var(--transition-medium); cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 class="stat-value" style="font-size: 2.5rem; color: var(--accent-neon-blue); margin-bottom: 5px;">$240M+</h3>
+                        <p class="text-secondary" style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Trading Volume</p>
+                    </div>
+                    <div class="glass-card stat-card" style="padding: 20px; text-align: center; border: 1px solid var(--accent-purple); background: linear-gradient(135deg, rgba(18,18,37,0.8), rgba(138,43,226,0.05)); transition: transform var(--transition-medium); cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 class="stat-value" style="font-size: 2.5rem; color: var(--accent-pink); margin-bottom: 5px;">890K+</h3>
+                        <p class="text-secondary" style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">NFTs Minted</p>
+                    </div>
+                    <div class="glass-card stat-card" style="padding: 20px; text-align: center; border: 1px solid var(--accent-purple); background: linear-gradient(135deg, rgba(18,18,37,0.8), rgba(138,43,226,0.05)); transition: transform var(--transition-medium); cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 class="stat-value" style="font-size: 2.5rem; color: var(--accent-purple); margin-bottom: 5px;">120K+</h3>
+                        <p class="text-secondary" style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Verified Artists</p>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -139,23 +160,7 @@
             </div>
         </section>
 
-        <!-- 7. Marketplace Statistics -->
-        <section class="container" style="margin-bottom: 120px;">
-            <div class="glass-card gsap-reveal" style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-around; padding: 60px 40px; text-align: center; border: 1px solid var(--accent-purple); background: linear-gradient(135deg, rgba(18,18,37,0.8), rgba(138,43,226,0.05));">
-                <div>
-                    <h3 style="font-size: 3rem; color: var(--accent-neon-blue); margin-bottom: 10px;">$240M+</h3>
-                    <p class="text-secondary" style="font-size: 1.2rem;">Trading Volume</p>
-                </div>
-                <div>
-                    <h3 style="font-size: 3rem; color: var(--accent-neon-blue); margin-bottom: 10px;">890K+</h3>
-                    <p class="text-secondary" style="font-size: 1.2rem;">NFTs Minted</p>
-                </div>
-                <div>
-                    <h3 style="font-size: 3rem; color: var(--accent-neon-blue); margin-bottom: 10px;">120K+</h3>
-                    <p class="text-secondary" style="font-size: 1.2rem;">Verified Artists</p>
-                </div>
-            </div>
-        </section>
+
 
         <!-- 8. Live Auctions -->
         <section class="container" style="margin-bottom: 120px;">
@@ -166,7 +171,7 @@
                 </div>
                 <a href="marketplace.html" class="btn btn-glass">View All Auctions</a>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, ), 1fr)); gap: 30px;" class="gsap-reveal">
+            <div class="live-auctions-grid gsap-reveal">
                 <!-- Auction Card 1 -->
                 <div class="glass-card nft-card">
                     <div class="nft-card-image">
@@ -180,7 +185,7 @@
                         <div class="nft-author"><img src="image-digi/real_art_11.webp"><span>@Nova</span></div>
                         <div class="nft-price-row">
                             <div><div class="price-label">Highest Bid</div><div class="price-value">1.2 ETH</div></div>
-                            <a href="artwork-details.html" class="btn btn-primary" style="padding: 8px 16px;">Place Bid</a>
+                            <a href="404.html" class="btn btn-primary" style="padding: 8px 16px;">Place Bid</a>
                         </div>
                     </div>
                 </div>
@@ -197,7 +202,24 @@
                         <div class="nft-author"><img src="image-digi/real_art_3.webp"><span>@PixelGod</span></div>
                         <div class="nft-price-row">
                             <div><div class="price-label">Highest Bid</div><div class="price-value">5.0 ETH</div></div>
-                            <a href="artwork-details.html" class="btn btn-primary" style="padding: 8px 16px;">Place Bid</a>
+                            <a href="404.html" class="btn btn-primary" style="padding: 8px 16px;">Place Bid</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Auction Card 3 -->
+                <div class="glass-card nft-card">
+                    <div class="nft-card-image">
+                        <img src="image-digi/real_art_10.webp" alt="Auction 3">
+                        <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); padding: 8px 15px; border-radius: var(--radius-pill); font-weight: bold; border: 1px solid var(--accent-pink); color: var(--accent-pink); backdrop-filter: blur(10px);">
+                            05h : 22m : 10s
+                        </div>
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Neon Pulse</h3>
+                        <div class="nft-author"><img src="image-digi/real_art_5.webp"><span>@CyberArt</span></div>
+                        <div class="nft-price-row">
+                            <div><div class="price-label">Highest Bid</div><div class="price-value">3.5 ETH</div></div>
+                            <a href="404.html" class="btn btn-primary" style="padding: 8px 16px;">Place Bid</a>
                         </div>
                     </div>
                 </div>
@@ -272,7 +294,7 @@
                 </div>
                 <a href="artists.html" class="btn btn-glass">View All Artists</a>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, ), 1fr)); gap: 30px;" class="gsap-reveal">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;" class="gsap-reveal">
                 <div class="glass-card" style="text-align: center; padding: 30px 20px;">
                     <img src="image-digi/real_art_12.webp" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent-neon-blue); margin: 0 auto 15px;">
                     <h3 style="margin-bottom: 5px;">CyberArtist</h3>
@@ -300,32 +322,32 @@
                 <h2 style="font-size: 2.5rem; margin-bottom: 15px;">What Creators Say</h2>
                 <p class="text-secondary">Join thousands of happy artists and collectors on Stackly.</p>
             </div>
-            <div class="mobile-marquee-wrapper gsap-reveal">
-    <div class="testimonials-grid mobile-marquee-track">
+            <div class="gsap-reveal">
+                <div class="testimonials-grid">
                 <div class="glass-card testimonial-card">
-                    <img src="image-digi/real_art_9.webp" alt="User">
-                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"Stackly completely changed how I sell my digital art. The UI is gorgeous and the fees are incredibly low."</p>
-                    <h4 style="color: var(--accent-neon-blue);">Jane Doe</h4>
-                    <p class="text-secondary" style="font-size: 0.9rem;">3D Artist</p>
+                    <img src="image-digi/person_elena.webp" alt="Elena Rivera" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid var(--accent-neon-blue);">
+                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"The tools and community on Stackly have allowed me to build a full-time career in crypto art. The platform is truly revolutionary."</p>
+                    <h4 style="color: var(--accent-neon-blue);">Elena Rivera</h4>
+                    <p class="text-secondary" style="font-size: 0.9rem;">Digital Creator</p>
                 </div>
                 <div class="glass-card testimonial-card">
-                    <img src="image-digi/real_art_1.webp" alt="User">
-                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"As a collector, the sheer speed and fluidity of the marketplace is unmatched. My favorite platform by far."</p>
-                    <h4 style="color: var(--accent-purple);">Michael Smith</h4>
-                    <p class="text-secondary" style="font-size: 0.9rem;">NFT Collector</p>
+                    <img src="image-digi/person_alex.webp" alt="Alex Chen" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid var(--accent-purple);">
+                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"I've minted on many platforms, but the smooth experience and low fees here are absolutely unbeatable."</p>
+                    <h4 style="color: var(--accent-purple);">Alex Chen</h4>
+                    <p class="text-secondary" style="font-size: 0.9rem;">Generative Artist</p>
                 </div>
             
                 <div class="glass-card testimonial-card">
-                    <img src="image-digi/real_art_9.webp" alt="User">
-                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"Stackly completely changed how I sell my digital art. The UI is gorgeous and the fees are incredibly low."</p>
-                    <h4 style="color: var(--accent-neon-blue);">Jane Doe</h4>
-                    <p class="text-secondary" style="font-size: 0.9rem;">3D Artist</p>
+                    <img src="image-digi/person_sarah.webp" alt="Sarah Jenkins" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid var(--accent-pink);">
+                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"As a curator, I'm always looking for premium drops. Stackly makes it so easy to discover incredible new talent."</p>
+                    <h4 style="color: var(--accent-pink);">Sarah Jenkins</h4>
+                    <p class="text-secondary" style="font-size: 0.9rem;">NFT Curator</p>
                 </div>
                 <div class="glass-card testimonial-card">
-                    <img src="image-digi/real_art_1.webp" alt="User">
-                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"As a collector, the sheer speed and fluidity of the marketplace is unmatched. My favorite platform by far."</p>
-                    <h4 style="color: var(--accent-purple);">Michael Smith</h4>
-                    <p class="text-secondary" style="font-size: 0.9rem;">NFT Collector</p>
+                    <img src="image-digi/person_marcus.webp" alt="Marcus Vance" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid var(--accent-neon-blue);">
+                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 20px;">"The smart contract integration is flawless. They've built an infrastructure that actually scales with the creators."</p>
+                    <h4 style="color: var(--accent-neon-blue);">Marcus Vance</h4>
+                    <p class="text-secondary" style="font-size: 0.9rem;">Web3 Developer</p>
                 </div>
             </div>
 </div>

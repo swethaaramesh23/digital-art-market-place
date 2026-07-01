@@ -39,7 +39,7 @@
 
     <main style="padding-top: 120px; padding-bottom: 100px; min-height: 100vh;">
         <div class="container">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-bottom: 60px;" class="gsap-reveal">
+            <div class="artwork-details-grid gsap-reveal">
                 <!-- Image Side -->
                 <div class="glass-card" style="padding: 10px;">
                     <img src="image-digi/real_art_8.webp" alt="Artwork" style="border-radius: var(--radius-lg); width: 100%; object-fit: cover;">
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     
-                    <div style="display: flex; gap: 40px; margin-bottom: 40px; align-items: center;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 40px; align-items: center;">
                         <div style="display: flex; align-items: center; gap: 15px;">
                             <img src="image-digi/real_art_11.webp" alt="Creator" style="width: 50px; height: 50px; border-radius: 50%;">
                             <div>
@@ -103,7 +103,7 @@
                         <p class="text-secondary" style="margin-bottom: 20px;">A unique 1/1 piece representing the digital renaissance of the 21st century. The neon highlights represent the ever-flowing data through the internet's veins. Exclusively minted on Stackly.</p>
                         
                         <h3 style="margin-bottom: 15px; display: flex; align-items: center; "><i class="fa-solid fa-list-check text-secondary"></i> Properties</h3>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; ">
+                        <div class="properties-grid">
                             <div style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); padding: 10px; border-radius: var(--radius-sm); text-align: center;">
                                 <p style="color: var(--accent-neon-blue); font-size: 0.8rem; text-transform: uppercase;">Background</p>
                                 <p style="font-weight: bold;">Neon Grid</p>
@@ -186,7 +186,7 @@
                     <h2 style="font-size: 2rem;">More from this collection</h2>
                     <a href="collections.html" class="btn btn-glass">View Collection</a>
                 </div>
-                <div id="more-nfts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, ), 1fr)); gap: 30px;">
+                <div id="more-nfts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
                     <!-- JS populated -->
                 </div>
             </div>
