@@ -10,10 +10,11 @@ header {
     border-radius: var(--radius-lg);
 }
 header.scrolled {
-    background: var(--bg-glass);
-    backdrop-filter: blur(16px);
-    border: 1px solid var(--border-glass);
-    padding: 5px 0;
+    background: var(--bg-glass) !important;
+    backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid var(--border-glass) !important;
+    padding: 0 !important;
+    z-index: 10000 !important;
 }
 
 .navbar {
@@ -821,7 +822,7 @@ input, textarea, select { max-width: 100%; box-sizing: border-box; }
         font-weight: 600 !important;
     }
     
-    main, .main-content { padding-top: 100px !important; }
+    main, .main-content { padding-top: 75px !important; }
 }
 
 /* Trending Auto-Scroll Marquee */
@@ -888,3 +889,11 @@ input, textarea, select { max-width: 100%; box-sizing: border-box; }
 .menu-toggle.open .hamburger-line:nth-child(3) {
     transform: translateY(-6px) rotate(-45deg);
 }
+
+/* Ensure equal height cards ONLY for grids */
+.grid .glass-card, .artist-card, .nft-card, .collection-card { 
+    display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; height: 100%; 
+}
+.nft-info, .artist-info { flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.hero-section { padding-top: 60px; }
+

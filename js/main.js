@@ -42,13 +42,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Navbar Scroll Effect
     const header = document.querySelector('header');
     if (header) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
+        let isScrolling = false;
+    window.addEventListener('scroll', () => {
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                const header = document.querySelector('header');
+                if (header) {
+                    if (window.scrollY > 50) header.classList.add('scrolled');
+                    else header.classList.remove('scrolled');
+                }
+                isScrolling = false;
+            });
+            isScrolling = true;
+        }
+    });
     }
 
     // 3. Magnetic Buttons (Hover Lift effect)
@@ -67,12 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Mobile Menu Toggle
     const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    if(menuToggle && navLinks) {
+    const targetNav = document.querySelector('.nav-links') || document.querySelector('.sidebar');
+    if(menuToggle && targetNav) {
         menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
+            targetNav.classList.toggle('active');
             document.body.classList.toggle('no-scroll');
             menuToggle.classList.toggle('open');
+            const overlay = document.querySelector('.sidebar-overlay');
+            if (overlay) overlay.classList.toggle('active');
         });
     }
 
@@ -279,22 +288,32 @@ document.addEventListener('DOMContentLoaded', () => {
     backToTopBtn.style.pointerEvents = 'none';
     document.body.appendChild(backToTopBtn);
 
+    let isScrolling2 = false;
     window.addEventListener('scroll', () => {
-        // Progress Bar
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (winScroll / height) * 100;
-        progressBar.style.width = scrolled + '%';
-
-        // Back to Top Visibility
-        if (winScroll > 500) {
-            backToTopBtn.style.opacity = '1';
-            backToTopBtn.style.transform = 'translateY(0)';
-            backToTopBtn.style.pointerEvents = 'auto';
-        } else {
-            backToTopBtn.style.opacity = '0';
-            backToTopBtn.style.transform = 'translateY(20px)';
-            backToTopBtn.style.pointerEvents = 'none';
+        if (!isScrolling2) {
+            window.requestAnimationFrame(() => {
+                const progressBar = document.getElementById('preloader-bar');
+                const backToTopBtn = document.getElementById('backToTop');
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                if(progressBar && height > 0) {
+                    const scrolled = (winScroll / height) * 100;
+                    progressBar.style.width = scrolled + '%';
+                }
+                if(backToTopBtn) {
+                    if (winScroll > 500) {
+                        backToTopBtn.style.opacity = '1';
+                        backToTopBtn.style.transform = 'translateY(0)';
+                        backToTopBtn.style.pointerEvents = 'auto';
+                    } else {
+                        backToTopBtn.style.opacity = '0';
+                        backToTopBtn.style.transform = 'translateY(20px)';
+                        backToTopBtn.style.pointerEvents = 'none';
+                    }
+                }
+                isScrolling2 = false;
+            });
+            isScrolling2 = true;
         }
     });
 
@@ -427,14 +446,39 @@ function showToast(message) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('button, .btn').forEach(btn => {
+    document.querySelectorAll('button:not(.menu-toggle), .btn').forEach(btn => {
         if (!btn.hasAttribute('onclick') && !btn.id && btn.innerText.trim().length > 0) {
             btn.addEventListener('click', (e) => {
-                const text = btn.innerText.trim().toLowerCase();
-                if (text.includes('follow') || text.includes('buy') || text.includes('offer') || text.includes('mint') || text.includes('apply')) {
-                    e.preventDefault();
-                    showToast('Action: ' + btn.innerText.trim() + ' successful!');
+                // If it's a real link, let it navigate, unless href is #
+                if (btn.tagName === 'A' && btn.getAttribute('href') && btn.getAttribute('href') !== '#') {
+                    return; 
                 }
+                e.preventDefault();
+                
+                // Don't trigger if already loading
+                if(btn.classList.contains('btn-loading')) return;
+                
+                // Add loading state
+                const originalHTML = btn.innerHTML;
+                const originalWidth = btn.offsetWidth;
+                btn.style.width = originalWidth + 'px'; // Lock width to prevent layout shift
+                btn.classList.add('btn-loading');
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                
+                setTimeout(() => {
+                    btn.classList.remove('btn-loading');
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+                    btn.style.backgroundColor = 'var(--accent-neon-blue)';
+                    btn.style.color = '#000';
+                    btn.style.borderColor = 'var(--accent-neon-blue)';
+                    
+                    showToast('Success! Action completed.');
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.style = '';
+                    }, 2000);
+                }, 800);
             });
         }
     });
