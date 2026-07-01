@@ -245,6 +245,9 @@
                 
                 // Set Auth token so the dashboard doesn't kick the user out
                 localStorage.setItem('stackly_auth', 'true');
+                const fullname = document.getElementById('fullname').value;
+                const username = document.getElementById('username').value || fullname.split(' ')[0] || 'NewUser';
+                localStorage.setItem('stackly_user', username);
                 
                 if (role === 'artist') {
                     window.location.href = 'artist-dashboard.html';

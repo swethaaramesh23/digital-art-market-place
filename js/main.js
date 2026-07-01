@@ -357,6 +357,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+    // 11. Dynamic Username
+    const dashboardUsername = document.getElementById('dashboardUsername');
+    if (dashboardUsername) {
+        const savedUser = localStorage.getItem('stackly_user');
+        if (savedUser) {
+            dashboardUsername.innerHTML = savedUser + ' <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i>';
+        }
+    }
 });
 
 // Global Action Functions for Buttons (Like, Share)
@@ -376,3 +384,57 @@ window.toggleLike = function(btn) {
 window.shareNFT = function() {
     alert("Link copied to clipboard!");
 };
+
+    // 11. Dynamic Username
+    const dashboardUsername = document.getElementById('dashboardUsername');
+    if (dashboardUsername) {
+        const savedUser = localStorage.getItem('stackly_user');
+        if (savedUser) {
+            dashboardUsername.innerHTML = savedUser + ' <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i>';
+        }
+    }
+
+
+// 12. Global Interactive Functionality (Toast Notifications)
+function showToast(message) {
+    let toast = document.createElement('div');
+    toast.innerText = message;
+    toast.style.position = 'fixed';
+    toast.style.bottom = '20px';
+    toast.style.right = '20px';
+    toast.style.background = 'var(--accent-neon-blue)';
+    toast.style.color = '#fff';
+    toast.style.padding = '12px 24px';
+    toast.style.borderRadius = 'var(--radius-md)';
+    toast.style.boxShadow = 'var(--shadow-glass)';
+    toast.style.zIndex = '10000';
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(20px)';
+    toast.style.transition = 'all 0.3s';
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateY(0)';
+    }, 10);
+    
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(20px)';
+        setTimeout(() => toast.remove(), 300);
+    }, 300);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('button, .btn').forEach(btn => {
+        if (!btn.hasAttribute('onclick') && !btn.id && btn.innerText.trim().length > 0) {
+            btn.addEventListener('click', (e) => {
+                const text = btn.innerText.trim().toLowerCase();
+                if (text.includes('follow') || text.includes('buy') || text.includes('offer') || text.includes('mint') || text.includes('apply')) {
+                    e.preventDefault();
+                    showToast('Action: ' + btn.innerText.trim() + ' successful!');
+                }
+            });
+        }
+    });
+});

@@ -264,14 +264,14 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 40px;
-    height: 40px;
+    width: 24px;
+    height: 24px;
     border: 1px solid rgba(0, 240, 255, 0.5);
     border-radius: 50%;
     pointer-events: none;
     z-index: 999998;
     transform: translate(-50%, -50%);
-    transition: width 0.2s, height 0.2s, border-color 0.2s, background-color 0.2s, transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: width 0.15s, height 0.15s, border-color 0.15s, background-color 0.15s, transform 0.05s linear;
 }
 
 /* Hover state for links and buttons */
@@ -282,8 +282,8 @@ body {
 }
 
 .custom-cursor-follower.hover {
-    width: 60px;
-    height: 60px;
+    width: 36px;
+    height: 36px;
     background-color: rgba(0, 240, 255, 0.1);
     border-color: var(--accent-neon-blue);
     backdrop-filter: blur(2px);

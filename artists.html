@@ -62,7 +62,7 @@
 
     <main style="padding-top: 120px; min-height: 100vh;">
         <div class="container">
-            <div class="gsap-reveal" style="text-align: center; margin-bottom: 60px;">
+            <div class="gsap-reveal" style="text-align: center; margin-bottom: 40px;">
                 <h1 style="font-size: 3.5rem; margin-bottom: 20px;">Discover Top Creators</h1>
                 <p class="text-secondary" style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Follow the most popular artists creating amazing digital art and stay up to date with their latest drops.</p>
                 <div class="input-group" style="max-width: 500px; margin: 30px auto 0;">
@@ -72,29 +72,29 @@
             </div>
 
             <!-- Trending Artists Carousel/Grid (New) -->
-            <div class="gsap-reveal" style="margin-bottom: 60px;">
+            <div class="gsap-reveal" style="margin-bottom: 40px;">
                 <h2 style="font-size: 2rem; margin-bottom: 20px;"><i class="fa-solid fa-fire text-secondary" style="color: var(--accent-pink);"></i> Trending This Week</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, ), 1fr)); gap: 20px;">
+                <div class="artists-grid" style="grid-template-columns: repeat(2, 1fr);">
                     <div class="glass-card" style="text-align: center; padding: 20px;">
-                        <img src="image-digi/real_avatar_9.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-neon-blue);">
+                        <img src="image-digi/person_alex.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-neon-blue);">
                         <h4 style="font-size: 1.1rem;">Alex Wright <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
                         <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 10px;">+1.2k followers (7d)</p>
                         <button class="btn btn-glass" style="padding: 5px 15px; font-size: 0.9rem;">Follow</button>
                     </div>
                     <div class="glass-card" style="text-align: center; padding: 20px;">
-                        <img src="image-digi/real_avatar_14.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-purple);">
+                        <img src="image-digi/person_sarah.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-purple);">
                         <h4 style="font-size: 1.1rem;">Sarah Chen <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
                         <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 10px;">+850 followers (7d)</p>
                         <button class="btn btn-glass" style="padding: 5px 15px; font-size: 0.9rem;">Follow</button>
                     </div>
                     <div class="glass-card" style="text-align: center; padding: 20px;">
-                        <img src="image-digi/real_avatar_5.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-pink);">
+                        <img src="image-digi/person_marcus.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-pink);">
                         <h4 style="font-size: 1.1rem;">Marcus Doe <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
                         <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 10px;">+620 followers (7d)</p>
                         <button class="btn btn-glass" style="padding: 5px 15px; font-size: 0.9rem;">Follow</button>
                     </div>
                     <div class="glass-card" style="text-align: center; padding: 20px;">
-                        <img src="image-digi/real_avatar_10.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid #00ff00;">
+                        <img src="image-digi/person_elena.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid #00ff00;">
                         <h4 style="font-size: 1.1rem;">Elena Rust <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
                         <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 10px;">+400 followers (7d)</p>
                         <button class="btn btn-glass" style="padding: 5px 15px; font-size: 0.9rem;">Follow</button>
@@ -109,11 +109,11 @@
                 <button class="btn btn-glass" style="border-radius: var(--radius-pill); padding: 8px 20px;">New Additions</button>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, ), 1fr)); gap: 30px;" id="artists-grid">
+            <div class="artists-grid" id="artists-grid">
                 <!-- JS populated -->
             </div>
             
-            <div style="text-align: center; margin-top: 60px; margin-bottom: 100px;" class="gsap-reveal">
+            <div style="text-align: center; margin-top: 60px; margin-bottom: 50px;" class="gsap-reveal">
                 <button id="loadMoreArtistsBtn" class="btn btn-glass" style="padding: 12px 30px;"><i class="fa-solid fa-spinner"></i> Load More Artists</button>
             </div>
         </div>

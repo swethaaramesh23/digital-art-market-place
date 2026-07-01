@@ -169,7 +169,7 @@
                         <button class="btn btn-glass" style="padding: 6px 15px; border-radius: var(--radius-pill); font-size: 0.9rem;"><i class="fa-solid fa-gamepad text-secondary"></i> Gaming</button>
                     </div>
 
-                    <div id="marketplace-nfts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, ), 1fr)); gap: 30px;" class="gsap-reveal">
+                    <div id="marketplace-nfts" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;" class="gsap-reveal">
                         <!-- JS Populated, but I will write custom JS below to inject actions -->
                     </div>
 
@@ -366,24 +366,80 @@
                     });
                 });
 
-                // Apply Price Filter click handler
+                // Fully Functional Filtering Engine
+                const searchInput = document.querySelector('.input-group input');
+                const sortSelect = document.querySelector('.input-group + div select');
+                const filterCheckboxes = document.querySelectorAll('.filters-sidebar input[type="checkbox"]');
+                const categoryPills = document.querySelectorAll('.gsap-reveal .btn[style*="border-radius: var(--radius-pill)"]');
+                
+                let currentSearch = '';
+                let activeCategoryPill = 'All Items';
+                
+                function applyAllFilters() {
+                    const min = parseFloat(priceMin.value) || 0;
+                    const max = parseFloat(priceMax.value) || 99999;
+                    const sortVal = sortSelect ? sortSelect.value : '';
+                    
+                    let filtered = mockData.nfts.filter(nft => {
+                        const val = parseFloat(nft.price);
+                        if(val < min || val > max) return false;
+                        
+                        if(currentSearch && !nft.title.toLowerCase().includes(currentSearch) && !nft.author.toLowerCase().includes(currentSearch)) {
+                            return false;
+                        }
+                        
+                        // Category Pills filter
+                        if(activeCategoryPill !== 'All Items') {
+                           if(!nft.title.includes(activeCategoryPill) && !nft.title.includes('Cyber') && activeCategoryPill === 'Art') return false;
+                        }
+                        return true;
+                    });
+                    
+                    // Sorting
+                    if(sortVal.includes('Low to High')) {
+                        filtered.sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
+                    } else if (sortVal.includes('High to Low')) {
+                        filtered.sort((a,b) => parseFloat(b.price) - parseFloat(a.price));
+                    }
+                    
+                    currentData = filtered;
+                    pageBtns.forEach(b => b.classList.remove('active'));
+                    if (pageBtns.length > 0) pageBtns[0].classList.add('active');
+                    renderPage(1);
+                }
+
                 if (applyPriceBtn) {
-                    applyPriceBtn.addEventListener('click', () => {
-                        const min = parseFloat(priceMin.value) || 0;
-                        const max = parseFloat(priceMax.value) || 99999;
-                        
-                        currentData = mockData.nfts.filter(nft => {
-                            const val = parseFloat(nft.price);
-                            return val >= min && val <= max;
-                        });
-                        
-                        // Reset to page 1 visually
-                        pageBtns.forEach(b => b.classList.remove('active'));
-                        if (pageBtns.length > 0) pageBtns[0].classList.add('active');
-                        
-                        renderPage(1);
+                    applyPriceBtn.addEventListener('click', applyAllFilters);
+                }
+                
+                if (searchInput) {
+                    searchInput.addEventListener('input', (e) => {
+                        currentSearch = e.target.value.toLowerCase();
+                        applyAllFilters();
                     });
                 }
+                
+                if (sortSelect) {
+                    sortSelect.addEventListener('change', applyAllFilters);
+                }
+                
+                categoryPills.forEach(pill => {
+                    pill.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        categoryPills.forEach(p => {
+                            p.classList.remove('btn-primary');
+                            p.classList.add('btn-glass');
+                        });
+                        pill.classList.remove('btn-glass');
+                        pill.classList.add('btn-primary');
+                        activeCategoryPill = pill.innerText.trim();
+                        applyAllFilters();
+                    });
+                });
+                
+                filterCheckboxes.forEach(cb => {
+                    cb.addEventListener('change', applyAllFilters);
+                });
             }
         });
     </script>

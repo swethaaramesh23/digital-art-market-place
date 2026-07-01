@@ -204,6 +204,8 @@
                 
                 // Set Auth token so the dashboard doesn't kick the user out
                 localStorage.setItem('stackly_auth', 'true');
+                const username = email.split('@')[0];
+                localStorage.setItem('stackly_user', username);
                 
                 // Redirect based on role
                 if(role === 'artist') {
