@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
         /* Reading Progress Bar */
         .progress-container {
@@ -26,10 +26,10 @@
         @media (max-width: 900px) { .blog-layout { grid-template-columns: 1fr; } }
         
         .popular-post-item {
-            display: flex; gap: 15px; margin-bottom: 20px; align-items: center; padding-bottom: 15px; border-bottom: 1px solid var(--border-glass);
+            display: flex; gap: 10px; margin-bottom: 12px; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-glass);
         }
         .popular-post-item img {
-            width: 80px; height: 80px; border-radius: var(--radius-md); object-fit: cover;
+            width: 60px; height: 60px; border-radius: var(--radius-md); object-fit: cover;
         }
     </style>
 </head>
@@ -70,15 +70,17 @@
     <main style="padding-top: 120px; min-height: 100vh;">
         <div class="container">
             <!-- Featured Post Banner -->
-            <div class="glass-card gsap-reveal" style="padding: 0; overflow: hidden; display: flex; flex-wrap: wrap; margin-bottom: 40px;">
-                <div style="flex: 1; min-width: 100%; max-width: 300px;">
-                    <img loading="lazy" src="image-digi/real_avatar_10.webp" style="width: 100%; height: 100%; object-fit: cover; min-height: 300px;">
-                </div>
-                <div style="flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center;">
+            <div class="glass-card gsap-reveal" style="padding: 40px; display: flex; flex-wrap: wrap-reverse; gap: 40px; align-items: center; margin-bottom: 40px;">
+                <!-- Text Left -->
+                <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; justify-content: center;">
                     <div class="badge" style="margin-bottom: 20px; display: inline-block; align-self: flex-start; background: rgba(138,43,226,0.1); color: var(--accent-purple); border-color: var(--accent-purple);">Featured Story</div>
                     <h2 style="font-size: 2.5rem; margin-bottom: 20px;">The Future of Digital Ownership on Stackly</h2>
-                    <p class="text-secondary" style="margin-bottom: 30px; font-size: 1.1rem;">We sat down with our founders to discuss where the NFT space is heading in the next 5 years, and how Stackly is preparing for mass adoption.</p>
+                    <p class="text-secondary" style="margin-bottom: 30px; font-size: 1.1rem; line-height: 1.6;">We sat down with our founders to discuss where the NFT space is heading in the next 5 years, and how Stackly is preparing for mass adoption.</p>
                     <a href="404.html" class="btn btn-primary magnetic" style="align-self: flex-start;">Read Full Article</a>
+                </div>
+                <!-- Image Right -->
+                <div style="flex: 1; min-width: 250px; max-width: 400px; display: flex; justify-content: flex-end; margin: 0 auto;">
+                    <img loading="lazy" src="image-digi/real_avatar_10.webp" style="width: 100%; border-radius: var(--radius-lg); border: 1px solid var(--border-glass); box-shadow: var(--shadow-glass); object-fit: cover; aspect-ratio: 4/3;">
                 </div>
             </div>
 
@@ -160,8 +162,8 @@
 
                 <!-- Sidebar: Popular Posts -->
                 <aside class="gsap-reveal">
-                    <div class="glass-card" style="padding: 30px 20px;">
-                        <h3 style="font-size: 1.5rem; margin-bottom: 25px; border-bottom: 1px solid var(--border-glass); padding-bottom: 15px;">Popular Posts</h3>
+                    <div class="glass-card" style="padding: 20px 15px;">
+                        <h3 style="font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">Popular Posts</h3>
                         
                         <div class="popular-post-item">
                             <img loading="lazy" src="image-digi/real_art_14.webp" alt="Thumb">
@@ -186,21 +188,17 @@
                                 <p class="text-secondary" style="font-size: 0.8rem;">9.8k Reads</p>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Newsletter Ad -->
-                    <div class="glass-card" style="margin-top: 30px; text-align: center; background: linear-gradient(135deg, rgba(138,43,226,0.1), rgba(0,240,255,0.1)); border-color: var(--accent-purple);">
-                        <i class="fa-regular fa-envelope" style="font-size: 2.5rem; color: var(--accent-neon-blue); margin-bottom: 15px;"></i>
-                        <h4>Never miss a drop</h4>
-                        <p class="text-secondary" style="font-size: 0.9rem; margin-bottom: 20px;">Subscribe to our weekly newsletter.</p>
-                        <input type="email" placeholder="Email Address" style="width: 100%; padding: 10px; border-radius: var(--radius-md); border: 1px solid var(--border-glass); background: rgba(0,0,0,0.3); color: #fff; margin-bottom: 10px;">
-                        <button class="btn btn-primary magnetic" style="width: 100%;">Subscribe</button>
+
+                        <!-- Newsletter Ad embedded inside the same box -->
+                        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-glass); text-align: center;">
+                            <i class="fa-regular fa-envelope" style="font-size: 1.5rem; color: var(--accent-neon-blue); margin-bottom: 10px;"></i>
+                            <h4 style="font-size: 1.1rem; margin-bottom: 5px;">Never miss a drop</h4>
+                            <p class="text-secondary" style="font-size: 0.85rem; margin-bottom: 15px;">Subscribe to our weekly newsletter.</p>
+                            <input type="email" placeholder="Email Address" style="width: 100%; padding: 10px; border-radius: var(--radius-md); border: 1px solid var(--border-glass); background: rgba(0,0,0,0.3); color: #fff; margin-bottom: 10px;">
+                            <button class="btn btn-primary magnetic" style="width: 100%;">Subscribe</button>
+                        </div>
                     </div>
                 </aside>
-            </div>
-            
-            <div style="text-align: center; margin-bottom: 40px;" class="gsap-reveal">
-                <button id="loadMoreBlogBtn" class="btn btn-glass" style="padding: 12px 30px;"><i class="fa-solid fa-spinner"></i> Load More Articles</button>
             </div>
         </div>
     </main>
