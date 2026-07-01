@@ -134,7 +134,7 @@
             <h1>Welcome Back</h1>
             <p>Enter your credentials to access your account</p>
 
-            <form id="loginForm" onsubmit="return handleLogin(event);">
+            <div id="loginForm" class="form-wrapper" style="width:100%;">
                 <div class="form-group input-group">
                     <input type="email" id="email" required>
                     <label for="email">Email Address</label>
@@ -148,7 +148,7 @@
                     </div>
                 </div>
                 <div class="form-group input-group">
-                    <input type="password" id="password" required>
+                    <input type="text" style="-webkit-text-security: disc; text-security: disc;" id="password" required>
                     <label for="password">Password</label>
                     <i class="fa-solid fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
                 </div>
@@ -160,7 +160,7 @@
                     <a href="forgot-password.html" class="auth-link">Forgot Password?</a>
                 </div>
 
-                <button type="submit" class="btn btn-primary magnetic" style="width: 100%; margin-bottom: 20px;" id="loginBtn">
+                <button type="button" class="btn btn-primary magnetic" style="width: 100%; margin-bottom: 20px;" id="loginBtn">
                     <span>Login to Dashboard</span>
                 </button>
                 
@@ -176,7 +176,7 @@
                 </button>
 
                 <p style="margin-bottom: 0;">Don't have an account? <a href="signup.html" class="auth-link">Sign Up</a></p>
-            </form>
+            </div>
         </div>
     </div>
 
