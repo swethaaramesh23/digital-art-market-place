@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             document.body.classList.toggle('no-scroll');
+            menuToggle.classList.toggle('open');
         });
     }
 
@@ -439,7 +440,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Global Form Submission Intercept
+
+// Global Form Submission Intercept & Auth Logic
 document.addEventListener("submit", (e) => {
     const form = e.target;
     if (form.tagName.toLowerCase() === 'form') {
@@ -450,10 +452,55 @@ document.addEventListener("submit", (e) => {
         // Simulate network request
         setTimeout(() => {
             if (btn) btn.classList.remove('btn-loading');
-            if (typeof showToast === 'function') {
-                showToast('Success! Form submitted.');
+            
+            // Check if it's Login or Signup form
+            const isAuth = form.closest('.glass-card') && (form.innerHTML.includes('Password') || form.innerHTML.includes('password'));
+            
+            if (isAuth) {
+                // Get username/email
+                let username = "NFT_Whale"; // fallback
+                const nameInput = form.querySelector('input[type="text"]');
+                const emailInput = form.querySelector('input[type="email"]');
+                if (nameInput && nameInput.value) username = nameInput.value;
+                else if (emailInput && emailInput.value) username = emailInput.value.split('@')[0];
+                
+                // Save to localStorage
+                localStorage.setItem('stackly_auth', JSON.stringify({ username: username, role: "Collector" }));
+                
+                if (typeof showToast === 'function') showToast('Authentication successful! Redirecting...');
+                
+                setTimeout(() => {
+                    window.location.href = 'user-dashboard.html';
+                }, 1000);
+            } else {
+                if (typeof showToast === 'function') showToast('Success! Form submitted.');
+                form.reset();
             }
-            form.reset();
         }, 1500);
     }
+});
+
+// Mobile Menu Close Logic
+document.addEventListener('click', (e) => {
+    const nav = document.querySelector('.nav-links');
+    const btn = document.querySelector('.menu-toggle');
+    if (nav && nav.classList.contains('active')) {
+        if (e.target === nav || (!nav.contains(e.target) && btn && !btn.contains(e.target))) {
+            nav.classList.remove('active'); 
+            document.body.classList.remove('no-scroll');
+            if (btn) btn.classList.remove('open');
+        }
+    }
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const navLinksAnchors = document.querySelectorAll('.nav-links a');
+    navLinksAnchors.forEach(a => {
+        a.addEventListener('click', () => {
+            const nav = document.querySelector('.nav-links');
+            const btn = document.querySelector('.menu-toggle');
+            if(nav) nav.classList.remove('active'); 
+            document.body.classList.remove('no-scroll');
+            if(btn) btn.classList.remove('open');
+        });
+    });
 });

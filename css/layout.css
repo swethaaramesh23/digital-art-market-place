@@ -221,7 +221,7 @@ html {
 @media (max-width: 768px) {
     html { font-size: 14px; }
     h1 { font-size: 2rem !important; }
-    h2 { font-size: 1.5rem !important; }
+    h2 { font-size: 1.0rem !important; }
     .hero-content h1 { font-size: 2rem !important; }
     .glass-card { padding: 15px !important; }
     
@@ -612,8 +612,13 @@ html {
 
 /* Disable background scrolling when mobile menu is open */
 .no-scroll {
-    overflow: hidden;
-    height: 100vh;
+    overflow: hidden !important;
+    height: 100vh !important;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    touch-action: none;
 }
 
 /* ==========================================================================
@@ -724,3 +729,162 @@ input, textarea, select { max-width: 100%; box-sizing: border-box; }
 
 /* Blog Categories */
 .blog-categories { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
+
+/* Swipeable Testimonials Mobile */
+@media (max-width: 768px) {
+    .testimonials-grid, [style*="grid-template-columns: repeat(3, 1fr)"] {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        -webkit-overflow-scrolling: touch !important;
+        padding-bottom: 20px !important;
+    }
+    .testimonials-grid > div, [style*="grid-template-columns: repeat(3, 1fr)"] > div {
+        flex: 0 0 85% !important;
+        scroll-snap-align: center !important;
+        min-width: 85% !important;
+    }
+    /* Hide scrollbar for cleaner look */
+    .testimonials-grid::-webkit-scrollbar, [style*="grid-template-columns: repeat(3, 1fr)"]::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Mobile Header Override */
+@media (max-width: 900px) {
+    header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        height: 72px;
+        background: rgba(10, 10, 15, 0.95) !important;
+        backdrop-filter: blur(16px) !important;
+        border-bottom: 1px solid var(--border-glass) !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
+        z-index: 10000 !important; /* Header on top */
+        display: flex;
+        align-items: center;
+        margin-bottom: 0 !important;
+    }
+    
+    header .navbar {
+        height: 100%;
+        padding: 0 20px;
+        align-items: center;
+        width: 100%;
+    }
+
+    header .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .mobile-menu-btn, .menu-toggle {
+        margin: 0 !important;
+        padding: 10px !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-links { 
+        position: fixed !important;
+        top: 0 !important; 
+        right: 0 !important; 
+        left: auto !important;
+        width: 100% !important; 
+        height: 100vh !important;
+        background: rgba(10, 10, 15, 0.98) !important; 
+        backdrop-filter: blur(25px) !important;
+        flex-direction: column !important; 
+        justify-content: flex-start !important; /* Let items start from top */
+        align-items: center !important;
+        z-index: 9999 !important;  /* Under header */
+        transform: translateX(100%) !important;
+        transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1) !important;
+        padding: 100px 0 40px 0 !important; /* Push down below header */
+        display: flex !important;
+        overflow-y: auto !important; /* Scroll if too many items */
+    }
+    .nav-links.active { transform: translateX(0) !important; }
+    
+    .nav-links a {
+        font-size: 1.0rem !important;
+        margin: 5px 0 !important;
+        font-weight: 600 !important;
+    }
+    
+    main, .main-content { padding-top: 100px !important; }
+}
+
+/* Trending Auto-Scroll Marquee */
+.trending-marquee-wrapper {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    padding: 10px 0;
+}
+.trending-marquee-track {
+    display: flex;
+    gap: 30px;
+    width: max-content;
+    animation: marquee-scroll-trending 15s linear infinite;
+}
+.trending-marquee-track:hover {
+    animation-play-state: paused;
+}
+.trending-marquee-track > div {
+    width: 280px;
+    flex-shrink: 0;
+}
+@keyframes marquee-scroll-trending {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 15px)); }
+}
+
+/* Professional Animated Hamburger */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40px;
+    height: 40px;
+    padding: 10px !important;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    z-index: 10001;
+}
+
+@media (max-width: 900px) {
+    .menu-toggle {
+        display: flex !important;
+    }
+}
+
+.hamburger-line {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: #fff;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+}
+
+.menu-toggle.open .hamburger-line:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+.menu-toggle.open .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+.menu-toggle.open .hamburger-line:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+}

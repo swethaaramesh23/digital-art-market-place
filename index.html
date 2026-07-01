@@ -80,7 +80,11 @@
                 </button>
                                 <a href="login.html" class="btn btn-glass magnetic">Login</a>
                 <a href="signup.html" class="btn btn-primary magnetic">Sign Up</a>
-                <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+                <button class="menu-toggle" aria-label="Toggle Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
             </div>
         </div>
     </header>
@@ -294,7 +298,7 @@
                 </div>
                 <a href="artists.html" class="btn btn-glass">View All Artists</a>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;" class="gsap-reveal">
+            <div class="testimonials-grid gsap-reveal" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
                 <div class="glass-card" style="text-align: center; padding: 30px 20px;">
                     <img loading="lazy" src="image-digi/real_art_12.webp" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent-neon-blue); margin: 0 auto 15px;">
                     <h3 style="margin-bottom: 5px;">CyberArtist</h3>

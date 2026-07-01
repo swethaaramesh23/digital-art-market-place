@@ -90,8 +90,10 @@
     <main class="main-content">
         <header class="topbar">
                         <div style="display: flex; align-items: center; gap: 20px;">
-                <button class="mobile-menu-btn btn btn-icon btn-glass" style="margin-right: 15px;" class="mobile-menu-btn-hidden">
-                    <i class="fa-solid fa-bars"></i>
+                <button class="menu-toggle" aria-label="Toggle Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
                 </button>
                 <a href="index.html" class="logo" style="text-decoration: none; display: flex; align-items: center; ">
                     <img loading="lazy" src="lo1.webp" alt="Stackly Logo">
@@ -391,6 +393,74 @@
         </div>
     </main>
     <script src="js/main.js"></script>
+
+    <script id="dashboard-routing-logic">
+        document.addEventListener('DOMContentLoaded', () => {
+            // Auth Hydration
+            const authStr = localStorage.getItem('stackly_auth');
+            if (authStr) {
+                try {
+                    const auth = JSON.parse(authStr);
+                    const nameEl = document.getElementById('dashboardUsername');
+                    if (nameEl && auth.username) {
+                        nameEl.innerHTML = auth.username + ' <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i>';
+                    }
+                } catch(e) {}
+            }
+            
+            // Sidebar Routing
+            const links = document.querySelectorAll('.sidebar-nav a');
+            const mainContent = document.querySelector('.dashboard-container');
+            
+            // Create dummy views for those that don't exist
+            const requiredViews = ['view-overview', 'view-wallet', 'view-collection', 'view-favorites', 'view-history', 'view-settings'];
+            requiredViews.forEach(vId => {
+                if (!document.getElementById(vId)) {
+                    const div = document.createElement('div');
+                    div.id = vId;
+                    div.className = 'dashboard-view';
+                    div.style.display = 'none';
+                    div.innerHTML = `<h2 style="margin-bottom: 20px;">${vId.replace('view-', '').toUpperCase()}</h2><div class="dashboard-panel"><p>This section is under construction.</p></div>`;
+                    mainContent.appendChild(div);
+                }
+            });
+
+            const views = document.querySelectorAll('.dashboard-view');
+            // Hide all except active
+            views.forEach(v => {
+                if (!v.classList.contains('active')) v.style.display = 'none';
+            });
+
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-target');
+                    if (targetId) {
+                        links.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                        
+                        views.forEach(v => {
+                            v.classList.remove('active');
+                            v.style.display = 'none';
+                        });
+                        
+                        const targetView = document.getElementById(targetId);
+                        if (targetView) {
+                            targetView.classList.add('active');
+                            targetView.style.display = 'block';
+                            targetView.style.animation = 'fadeIn 0.3s ease forwards';
+                        }
+                    }
+                });
+            });
+        });
+        
+        function logoutUser(e) {
+            e.preventDefault();
+            localStorage.removeItem('stackly_auth');
+            window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html>
 

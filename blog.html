@@ -55,10 +55,14 @@
                   <a href="signup.html" class="mobile-auth" style="color: var(--accent-neon-blue);">Create Account</a>
               </nav>
             <div class="nav-actions">
-                <button class="btn btn-icon btn-glass" id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
+                <button class="btn btn-icon btn-glass" id="theme-toggle" aria-label="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
                 <a href="login.html" class="btn btn-glass magnetic">Login</a>
                 <a href="signup.html" class="btn btn-primary magnetic">Sign Up</a>
-                <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+                <button class="menu-toggle" aria-label="Toggle Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
             </div>
         </div>
     </header>
@@ -254,7 +258,23 @@
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js">
+            // Load More Logic
+            const loadBtns = document.querySelectorAll('.btn');
+            loadBtns.forEach(btn => {
+                if (btn.innerText.trim().toLowerCase().includes('load more')) {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        btn.classList.add('btn-loading');
+                        setTimeout(() => {
+                            btn.classList.remove('btn-loading');
+                            btn.style.display = 'none';
+                            if (typeof showToast === 'function') showToast('All articles loaded.');
+                        }, 1000);
+                    });
+                }
+            });
+        </script>
     <script src="js/animations.js"></script>
     <script src="js/main.js"></script>
     <script>
@@ -311,6 +331,54 @@
                     }, 600);
                 });
             }
+        });
+    </script>
+
+    <script id="blog-filtering-logic">
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.querySelector('input[placeholder="Search articles..."]');
+            const categoryBtns = document.querySelectorAll('.blog-categories button');
+            const articles = document.querySelectorAll('article');
+            
+            function filterArticles() {
+                const q = searchInput ? searchInput.value.toLowerCase() : '';
+                let activeCat = 'All Posts';
+                categoryBtns.forEach(btn => {
+                    if (btn.classList.contains('btn-primary')) {
+                        activeCat = btn.innerText.trim();
+                    }
+                });
+                
+                articles.forEach(article => {
+                    const text = article.innerText.toLowerCase();
+                    const badge = article.querySelector('.badge');
+                    const articleCat = badge ? badge.innerText.trim() : '';
+                    
+                    let matchSearch = q === '' || text.includes(q);
+                    let matchCat = activeCat === 'All Posts' || articleCat === activeCat;
+                    
+                    if (matchSearch && matchCat) {
+                        article.style.display = 'flex';
+                    } else {
+                        article.style.display = 'none';
+                    }
+                });
+            }
+            
+            if (searchInput) searchInput.addEventListener('input', filterArticles);
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    categoryBtns.forEach(b => {
+                        b.classList.remove('btn-primary');
+                        b.classList.add('btn-glass');
+                    });
+                    btn.classList.remove('btn-glass');
+                    btn.classList.add('btn-primary');
+                    filterArticles();
+                });
+            });
         });
     </script>
 </body>

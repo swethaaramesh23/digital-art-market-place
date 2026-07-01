@@ -71,22 +71,26 @@
                   <a href="signup.html" class="mobile-auth" style="color: var(--accent-neon-blue);">Create Account</a>
               </nav>
             <div class="nav-actions">
-                <button class="btn btn-icon btn-glass" id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
+                <button class="btn btn-icon btn-glass" id="theme-toggle" aria-label="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
                 <a href="login.html" class="btn btn-glass magnetic">Login</a>
                 <a href="signup.html" class="btn btn-primary magnetic">Sign Up</a>
-                <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+                <button class="menu-toggle" aria-label="Toggle Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
             </div>
         </div>
     </header>
 
     <main style="padding-top: 120px; min-height: 100vh;">
         <div class="container">
-            <div style="text-align: center; margin-bottom: 50px;" class="gsap-reveal">
+            <div style="text-align: center; margin-bottom: 50px;" >
                 <h1 style="font-size: 3.5rem; margin-bottom: 20px;">Explore the Marketplace</h1>
                 <p class="text-secondary" style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Discover the most outstanding NFTs across all categories, curated just for you.</p>
             </div>
 
-            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center; margin-bottom: 40px;" class="gsap-reveal">
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center; margin-bottom: 40px;" >
                 <div class="input-group" style="width: 100%; max-width: 400px; margin-bottom: 0;">
                     <input type="text" placeholder="Search items, collections, and accounts..." style="border-radius: var(--radius-pill); padding-left: 45px;">
                     <i class="fa-solid fa-search" style="position: absolute; left: 20px; top: 16px; color: var(--text-secondary);"></i>
@@ -162,14 +166,14 @@
                 <!-- Market Grid -->
                 <div class="market-grid">
                     <!-- Categories Pills -->
-                    <div style="display: flex; gap: 15px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px;" class="gsap-reveal">
+                    <div style="display: flex; gap: 15px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px;" >
                         <button class="btn btn-primary" style="padding: 6px 15px; border-radius: var(--radius-pill); font-size: 0.9rem;">All Items</button>
                         <button class="btn btn-glass" style="padding: 6px 15px; border-radius: var(--radius-pill); font-size: 0.9rem;"><i class="fa-solid fa-palette text-secondary"></i> Art</button>
                         <button class="btn btn-glass" style="padding: 6px 15px; border-radius: var(--radius-pill); font-size: 0.9rem;"><i class="fa-solid fa-camera text-secondary"></i> Photography</button>
                         <button class="btn btn-glass" style="padding: 6px 15px; border-radius: var(--radius-pill); font-size: 0.9rem;"><i class="fa-solid fa-gamepad text-secondary"></i> Gaming</button>
                     </div>
 
-                    <div id="marketplace-nfts" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;" class="gsap-reveal">
+                    <div id="marketplace-nfts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px;" >
                         <!-- JS Populated, but I will write custom JS below to inject actions -->
                     </div>
 
@@ -293,12 +297,12 @@
             }, 10);
         }
         
-        document.getElementById('closeModal').addEventListener('click', () => {
+        document.addEventListener('DOMContentLoaded', () => { document.getElementById('closeModal').addEventListener('click', () => {
             document.getElementById('quickViewModal').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('quickViewModal').style.display = 'none';
             }, 300);
-        });
+        }); });
 
         function toggleLike(btn) {
             btn.style.color = btn.style.color === 'var(--accent-pink)' ? '#fff' : 'var(--accent-pink)';

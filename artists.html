@@ -33,6 +33,12 @@
         }
         .close-modal { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
     </style>
+
+    <style id="artist-specific-fixes">
+        .artists-grid { display: grid; grid-template-columns: repeat(3, 1fr) !important; gap: 30px; }
+        @media (max-width: 1024px) { .artists-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 768px) { .artists-grid { grid-template-columns: 1fr !important; } }
+    </style>
 </head>
 <body>
     <div class="bg-blobs"><div class="blob blob-1"></div></div>
@@ -52,10 +58,14 @@
                   <a href="signup.html" class="mobile-auth" style="color: var(--accent-neon-blue);">Create Account</a>
               </nav>
             <div class="nav-actions">
-                <button class="btn btn-icon btn-glass" id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
+                <button class="btn btn-icon btn-glass" id="theme-toggle" aria-label="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
                 <a href="login.html" class="btn btn-glass magnetic">Login</a>
                 <a href="signup.html" class="btn btn-primary magnetic">Sign Up</a>
-                <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+                <button class="menu-toggle" aria-label="Toggle Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
             </div>
         </div>
     </header>
@@ -74,7 +84,9 @@
             <!-- Trending Artists Carousel/Grid (New) -->
             <div class="gsap-reveal" style="margin-bottom: 40px;">
                 <h2 style="font-size: 2rem; margin-bottom: 20px;"><i class="fa-solid fa-fire text-secondary" style="color: var(--accent-pink);"></i> Trending This Week</h2>
-                <div class="artists-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="trending-marquee-wrapper">
+                    <div class="trending-marquee-track">
+                        
                     <div class="glass-card" style="text-align: center; padding: 20px;">
                         <img loading="lazy" src="image-digi/person_alex.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-neon-blue);">
                         <h4 style="font-size: 1.1rem;">Alex Wright <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
@@ -98,6 +110,32 @@
                         <h4 style="font-size: 1.1rem;">Elena Rust <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
                         <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 10px;">+400 followers (7d)</p>
                         <button class="btn btn-glass" style="padding: 5px 15px; font-size: 0.9rem;">Follow</button>
+                    </div>
+                        
+                    <div class="glass-card" style="text-align: center; padding: 20px;">
+                        <img loading="lazy" src="image-digi/person_alex.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-neon-blue);">
+                        <h4 style="font-size: 1.1rem;">Alex Wright <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
+                        <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 10px;">+1.2k followers (7d)</p>
+                        <button class="btn btn-glass" style="padding: 5px 15px; font-size: 0.9rem;">Follow</button>
+                    </div>
+                    <div class="glass-card" style="text-align: center; padding: 20px;">
+                        <img loading="lazy" src="image-digi/person_sarah.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-purple);">
+                        <h4 style="font-size: 1.1rem;">Sarah Chen <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
+                        <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 10px;">+850 followers (7d)</p>
+                        <button class="btn btn-glass" style="padding: 5px 15px; font-size: 0.9rem;">Follow</button>
+                    </div>
+                    <div class="glass-card" style="text-align: center; padding: 20px;">
+                        <img loading="lazy" src="image-digi/person_marcus.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--accent-pink);">
+                        <h4 style="font-size: 1.1rem;">Marcus Doe <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
+                        <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 10px;">+620 followers (7d)</p>
+                        <button class="btn btn-glass" style="padding: 5px 15px; font-size: 0.9rem;">Follow</button>
+                    </div>
+                    <div class="glass-card" style="text-align: center; padding: 20px;">
+                        <img loading="lazy" src="image-digi/person_elena.webp" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid #00ff00;">
+                        <h4 style="font-size: 1.1rem;">Elena Rust <i class="fa-solid fa-circle-check text-secondary" style="color: var(--accent-neon-blue); font-size: 0.8rem;"></i></h4>
+                        <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 10px;">+400 followers (7d)</p>
+                        <button class="btn btn-glass" style="padding: 5px 15px; font-size: 0.9rem;">Follow</button>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -304,6 +342,30 @@
                     });
                 }
             }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const followBtns = document.querySelectorAll('.btn-follow');
+            // If they don't have .btn-follow, select by text
+            const allBtns = document.querySelectorAll('.btn');
+            allBtns.forEach(btn => {
+                if (btn.innerText.trim() === 'Follow') {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        if (this.innerText.includes('Following')) {
+                            this.innerText = 'Follow';
+                            this.classList.remove('btn-primary');
+                            this.classList.add('btn-glass');
+                        } else {
+                            this.innerText = 'Following';
+                            this.classList.remove('btn-glass');
+                            this.classList.add('btn-primary');
+                        }
+                    });
+                }
+            });
         });
     </script>
 </body>
